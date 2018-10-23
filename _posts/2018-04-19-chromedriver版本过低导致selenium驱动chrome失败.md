@@ -14,7 +14,7 @@ tags:
 ---
 
 ### 错误示例
-![报错截图](https://github.com/muyalei/muyalei.github.io/blob/master/img/chromedriver%E7%89%88%E6%9C%AC%E6%8A%A5%E9%94%99.png)
+![报错截图]()
 
 ### 解决方法
 1.更新chromedriver版本
