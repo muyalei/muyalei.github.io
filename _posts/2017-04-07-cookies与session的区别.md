@@ -1,3 +1,11 @@
+---
+layout: default
+title: cookie与session
+author: 穆亚磊
+tags:
+   - web
+---
+
 ### cookie 和session 的区别详解
 
 这些都是基础知识，不过有必要做深入了解。先简单介绍一下。
