@@ -14,18 +14,18 @@ tags:
 
 1.导入包的问题，如下面的情况，我想把scrapy目录下的items.py里面的Class导入时出现的问题。 
 ##### 项目目录 
-！[2018-02-28-关于pycharm导入scrapy项目的问题1.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%981.jpg)
+![2018-02-28-关于pycharm导入scrapy项目的问题1.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%981.jpg)
 
 ##### items.py 
-！[2018-02-28-关于pycharm导入scrapy项目的问题1.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%982.jpg)
+![2018-02-28-关于pycharm导入scrapy项目的问题2.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%982.jpg)
 
 ##### 问题
-！[2018-02-28-关于pycharm导入scrapy项目的问题1.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%983.jpg)
+![2018-02-28-关于pycharm导入scrapy项目的问题3.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%983.jpg)
 
 ### 解决办法 
 第一步：项目文件下右键*Make Directory as–Source Root* 
 
-！[2018-02-28-关于pycharm导入scrapy项目的问题1.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%984.jpg)
+![2018-02-28-关于pycharm导入scrapy项目的问题4.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%984.jpg)
 这样子可以保证<br> 
 *from items import WebcrawlerScrapyItem* <br>
 在项目中没有错误。<br> 
@@ -38,14 +38,14 @@ tags:
 “..”表示在上一级目录下找 <br>
 最终的效果如下： 
 
-！[2018-02-28-关于pycharm导入scrapy项目的问题1.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%985.jpg)
+![2018-02-28-关于pycharm导入scrapy项目的问题5.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%985.jpg)
 
 第三步：<br> 
 1、运行scrapy crawl [爬虫名称] 命令，就没问题了<br> 
 2、最近遇到的问题，在二级目录下运行一个.py文件，但是用”..”和 Mark as Source Root 等方法都没有用，这是python3.0以上出现的问题，可以采用以下的办法解决：</br> 
 假设我要运行下面的pictureSpider_demo.py文件 
 
-！[2018-02-28-关于pycharm导入scrapy项目的问题1.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%986.jpg)
+![2018-02-28-关于pycharm导入scrapy项目的问题6.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-02-28-%E5%85%B3%E4%BA%8Epycharm%E5%AF%BC%E5%85%A5scrapy%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%97%AE%E9%A2%986.jpg)
 
 请在命令行下的执行 <br>
 *python -m webCrawler_scrapy.spiders.pictureSpider_demo.py* 
