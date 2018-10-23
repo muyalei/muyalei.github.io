@@ -36,8 +36,7 @@ xposed安装方法：
 安装并启用[justtrustme模块](https://github.com/Fuzion24/JustTrustMe)
 
 注意，安装justtrustme后，需要勾选上，才算启用:
-![勾选以启用](https://github.com/muyalei/muyalei.github.io/blob/master/img/%E5%90%AF%E7%94%A8justtrustme%E6%A8%A1%E5%9D%97.jpg)
-
+![2018-02-09-利用xposed绕过安卓SSL证书的强校验_图片.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-02-09-%E5%88%A9%E7%94%A8xposed%E7%BB%95%E8%BF%87%E5%AE%89%E5%8D%93SSL%E8%AF%81%E4%B9%A6%E7%9A%84%E5%BC%BA%E6%A0%A1%E9%AA%8C_%E5%9B%BE%E7%89%87.jpg)
 重启手机就可以抓到之前抓不到的https通信了。
 
 参考资料：

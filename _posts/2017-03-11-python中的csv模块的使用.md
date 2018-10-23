@@ -32,8 +32,7 @@ reader对象lines,lines是一个list，当调用它的方法lines.next()时，�
 文件中的文本按行打印，每一行的元素都是以逗号分隔符','分隔得来。
 
 在我的test.csv文件中，存储的数据如图：
-![python中csv模块笔记图片1.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/python%E4%B8%ADcsv%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B0%E5%9B%BE%E7%89%871.png)
-
+![2017-03-11-python中的csv模块的使用图片1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-11-python%E4%B8%AD%E7%9A%84csv%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%871.png)
 程序输出：
 ```
 ['1','2'] 
@@ -83,8 +82,7 @@ quoting等等，可以参考Dialects and Formatting Parameters
 默认值，其中以'|'为分隔符。接下来我们就可以像使用'excel'一样来使用'mydialect'了。我们来看看效果：
 
 在我test.csv中存储如下数据：
-![python中csv模块笔记图片2.jpg](https://github.com/muyalei/muyalei.github.io/blob/master/img/python%E4%B8%ADcsv%E6%A8%A1%E5%9D%97%E7%AC%94%E8%AE%B0%E5%9B%BE%E7%89%872.png)
-
+![2017-03-11-python中的csv模块的使用图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-11-python%E4%B8%AD%E7%9A%84csv%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%872.png)
 以'mydialect'风格打印：
 ```
 with open('test.csv','rb') as myFile:  

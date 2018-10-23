@@ -62,8 +62,7 @@ Cookie定义了一些HTTP请求头和HTTP响应头，通过这些HTTP头信息�
 客户端请求服务器后，如果服务器需要记录用户状态，服务器会在响应信息中包含一个Set-Cookie的响应头，客户端会根据这个响应头存储Cookie信息。再次请求服务器时，客户端会在请求信息中包含一个Cookie请求头，而服务器会根据这个请求头进行用户身份、状态等较验。
 
 下面是一个实现Cookie机制的，简单的HTTP请求过程：
-![cookie机制与cookie的实现原理](https://github.com/muyalei/muyalei.github.io/blob/master/img/cookie%E6%9C%BA%E5%88%B6%E4%B8%8Ecookie%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86.png)
-
+![2017-04-07-cookies与session的区别图片.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-04-07-cookies%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB%E5%9B%BE%E7%89%87.png)
 - 客户端请求服务器
 客户端请求IT笔录网站首页，请求头如下：
 ```
