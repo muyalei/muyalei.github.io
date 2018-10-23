@@ -1,9 +1,11 @@
 1.前置代理
-   1.前提:tor在大陆被GFW封杀，网桥、meek等方式已经不能连接到tor网络，需要前置代理服务器(海外，可以连接tor网络的服务器),选择shadowsocks
-   2.shadowsocks分服务器端与客户端两部分，有海外vps时可以自行搭建服务器端，在下述网址找到免费可用代理：
+   (1)前提:tor在大陆被GFW封杀，网桥、meek等方式已经不能连接到tor网络，需要前置代理服务器(海外，可以连接tor网络的服务器),选择shadowsocks
+ 
+   (2)shadowsocks分服务器端与客户端两部分，有海外vps时可以自行搭建服务器端，在下述网址找到免费可用代理：
      >https://unwire.hk/2017/08/16/shadowsocks-windows-macos/software/
 	 >https://www.namaho.org/ssweb/user/info
-   3.linux上安装shadowsocks客户端:
+  
+   (3)linux上安装shadowsocks客户端:
       1.pip install shadowsocks
       2.在任意目录下新建文件shadowsocks.json,内容如下:
       ```
