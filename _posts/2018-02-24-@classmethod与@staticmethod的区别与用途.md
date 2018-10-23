@@ -1,14 +1,10 @@
 ---
-layout:     post
-title:      '@classmethod与@staticmethod的区别与用途'
-subtitle:   
-date:       2018-02-24
-author:     muyalei
-header-img: 
-catalog:true
+layout:post
+title:@classmethod与@staticmethod的区别与用途
+date:2018-02-24
+author:muyalei
 tags:
     - python笔记
-
 ---
 
 转自[http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/](http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/)
