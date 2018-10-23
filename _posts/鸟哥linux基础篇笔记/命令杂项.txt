@@ -1,0 +1,93 @@
+cal 显示日历
+cal 7 2015 显示2015年7月份日历
+
+date -s 20150101 设置系统日期，具体时间被重置为00:00:00
+date -s "10:39:21 20150607"
+date +%Y%m%d --date="-1 day" 显示昨天的日期，Y表示显示完整的年份。一般用在shell script编写中。
+date +%s 显示1970-01-01至今经历的秒数
+
+bc 计算器
++、-、*、/、%、^(指数)
+quit 离开计算器
+
+ctrl+c 中断目前运行程序
+ctrl+d 结束输入，同eof，end of file 
+ctrl+z 将程序暂停，使用jobs命令查看
+
+who 查看系统当前在线用户
+
+lsusb 查看系统外挂的usb设备信息
+
+sync 将内存数据写入硬盘，关机前预设执行该指令。
+
+centos7中，开机执行程序不再写在/etc/inittab文件中，如要runlevel 3模式开机，需要执行命令systemctl set-default multi-user.target 命令，
+在/etc/inittab文件中有说明。
+
+/etc/system/logind.conf 文件设定电源相关的acpi事件，如合上笔记本盖子不休眠，需要将该文件下的handlelidswitch=suspend参数改成ignore，
+并去掉行前的#，再执行命令 systemctl restart systemd-logind 。
+
+sz、rz 快速在本地windows主机与linux服务器之间传递文件。
+
+iwconfig程序属于wireless_tools套件；
+ifconfig程序属于net_tools套件。
+
+lspci -v  用于显示系统中所有pci总线设备或连接到该总线上的所有设备的详细信息；
+ethernet controller 有线网卡；
+network controller 无线网卡；
+
+xz -z 11.txt 将11.txt压缩成11.txt.xz
+xz -d 11.txt.xz 解压11.txt.xz
+
+centos查看系统版本：
+/etc/os-release ，查看系统版本，如centos 7；
+uname -a ，查看内核版本；
+
+df -h 查看所有已挂载分区的使用情况；
+du -hs /usr/test  查看/usr/test这个目录的大小；
+
+1、某目录下文件/目录很多,列出文件/目录,可以使用 ls -ln | more -10 ,分页显示,每页显示10条；
+
+2、使用yum更新时不升级Linux内核的方法 yum -y --exclude=kernel* update --skip-broken，使用yum -y update默认会升级内核；
+
+3、requests中使用代理,首先构造代理 proxy={'http':'http://ip:port'},之后在请求中指定 proxies=proxy 即可;
+
+3、centos网速慢解决办法:
+   一、不是所谓ipv6问题 
+   二、是dns解析问题 
+   三、解决方法：开启dnsmasq服务使用本地dns缓存 
+   四、真正有用的步骤： 
+   (1)vi /etc/resolv.conf 
+   在最前面添加: nameserver 127.0.0.1 
+   其它的不用动，尤其不能相信把其它的都删空之类的话（pppoe可能可以那样干，但没有试验）。 
+   (2)vi /etc/dnsmasq.conf 
+   解除以下一行的注释(并加上ip地址)：listen-address=127.0.0.1 
+   (3)将dnsmasq.conf服务设置为开机启动 
+   五、可能某些情况下有用的方案： 
+   将4(2)中的修改换成解除resolv-file=/etc/resolv.conf的注释， 
+   其余同4，但是实际试验在我这里无效 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

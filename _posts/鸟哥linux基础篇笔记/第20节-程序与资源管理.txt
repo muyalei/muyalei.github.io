@@ -1,0 +1,247 @@
+程序（program）：可执行的二进制文件（binary file）。
+进程：在内存中进行的工作，系统服务等进程持续存在于内存中，vi、ls等命令进程执行完毕即从内存中消失。
+常驻内存中的进程主要分为两类：系统服务进程，如crond、atd等例行性命令服务；网络服务，如Aphache、postfix等，网络服务会开启
+一个特定的端口，等待客户端（client）联机。
+PID（Process ID）：某一程序被执行成为一个存在于内存中的进程，系统给予该进程一个ID，并根据触发该进程的用户/用户组权限属性给予该进程
+                   权限。
+子进程：继承父进程的权限属性。PPID 该子进程的父进程PID。
+
+
+bash 下的工作管理
+登陆系统取得bash shell 后，对该父进程bash下进行的其他子进程进行的工作进行管理。与开启tty1~tty6多个终端窗口进行工作管理相比，
+可以节约系统资源（/etc/security/limits.conf下可以限制用户开启的联机数tty个数）。
+
+& 将工作放到背景中执行（注意：是执行）。执行完毕后会在当前屏幕输出done提示信息
+tar -zpcvf /etc/11.tar.gz /etc > /etc/log.txt 2>&1 &  不让stdout、stderr显示在当前工作屏幕上影响当前工作。
+
+ctrl+z 将当前工作放到背景中暂停。
+
+jobs 查看当前背景中的工作
+-l 列出job number ，同时列出PID
+-r/s 只列出背景中在执行/停止的工作
+
+fg 将背景中的工作拿到前景处理。 fg %jobnumber 
+bg 执行在背景中暂停的工作，与ctrl+z对应。bg %jobnumber 
++ 预设被fg/bg执行的工作
+
+kill 管理背景中工作   kill -signal %jobnumber
+-l（L小写） 列出kill可以使用的讯号signal
+-1 reload
+-2 即ctrl+c
+-9 强制删除该工作
+-15 以正常方式终止该工作
+%jobnumber表示处理的是背景中的工作；
+kill -signal PID表示管理进程
+killall -signal neme 以进程名管理进程。-I 忽略大小写
+
+
+内存中进程的管理
+
+ps aux 列出当前所有在内存（/proc）中的进程。某进程的CMD后还有defunct，表示该进程为僵尸进程（zombie）
+ps -l 列出用户登陆的shell进程及其子进程。如bash及由从属于bash的su、top等进程。
+ps -lA 显示出内存中所有进程的详细信息。
+
+top 动态的持续监测（moniter）进程运行状态。top -d 刷新秒数  ，设置动态刷新的间隔
+P 以cpu使用率排序
+M 以内存使用率排序
+N 以PID排序
+k 给某进程一个signal。输入k参数，根据提示输入PID，signal即可
+r 给某进程一个nice值。PRI(新)=PRI(旧)+nice
+
+pstree -A 程序树，查看进程间的从属关系
+-p/u 同时列出该进程的PID/所属用户。
+
+free -b/k/m/g(单位) -t(显示总量)   查看内存使用情况。
+
+uname 
+-a 显示系统信息（核心名称、主机名称、核心版本、核心建立日期、该核心支持的硬件平台）
+-r 仅显示核心版本
+
+uptime 显示系统开机时间，1/5/15分钟的平均负载。
+
+netstat -tunlp 查看系统当前监听（monitor）的端口及其对应的网络进程PID。
+kill PID即可关闭指定网络进程与监听的端口。
+
+netstat -rn 查看系统路由信息，同route
+
+dmesg 查看系统开机信息
+
+PR（priority）  进程的优先执行顺序，数值越小越先被执行。
+PRI(新)=PRI(旧)+nice
+root可以调整的nice数值范围-20~19，普通用户的调整范围是0~19，且只能累加调大不能减小。PR值可以在父进程、子进程之间传递。
+nice -n nice值 command  ，预先设定进某一命令的nice值 
+renice nice值 PID  进程在运行中，直接设定nice值
+
+fuser 装置目录  ，查看正在使用该装置的进程
+fuser -ki -signal file/dir  查看正在使用某装置目录的进程，并管理该进程
+
+
+
+
+
+
+
+
+进程：触发任何一个事件时，系统都会将他定义成为一个进程，并且给予这个进程一个 ID ，称为 PID，同时依据启发这个进程的使用
+      者与相关属性关系， 给予这个 PID（process ID） 一组有效的权限设定。
+程序：可执行二进制文件。
+产生进程：执行一个程序（即可执行二进制文件）program或指令，就可以触发一个事件取得一个PID。如用户登陆主机，即产生一个对应
+      的/bin/bash进程
+
+子程序与父程序：由一个进程衍生出来的进程。如用户登录获得/bin/bash进程，用户在这个shell下进行其他操作产生的进程是/bin/bash的子程序
+                PID是进程ID，PPID是该进程的父进程ID。
+
+系统每分钟都会扫描/etc/crontab及相关设定档进行工作排程。crond、atd、syslog、Aphache等服务进程是常驻在内存当中的进程。
+
+/etc/security/limits.conf下设定用户可以同时登入的联机数。
+
+
+
+bash下的工作管理，即在单一终端接口下同时进行多个工作的管理，相比于使用tty1/tty2..进行工作管理，好处是节省内存资源：
+
+& 将工作放到背景中执行。不会被ctrl+c打断。 例cp 1.txt /etc/test/ > /dev/null 2>&1 &  ，结合数据流重导向，不影响bash下的其他操作
+
+crtl+z 将当前工作放到背景中暂停。
+
+jobs 观察目前背景工作状态
+-l 除了job number外同时列出 PID
+-r 列出正在背景中run的工作
+-s 列出正在背景中stop的工作
+带 + 的工作表示fg预设取用的工作
+
+fg 将工作进程拿到前景来处理
+
+bg 让工作在背景下运行。bg %jobnumber   如：jobs；bg ；jobs  将预设取用的工作在背景中执行。
+
+kill 管理背景中的工作。  kill -signal（用数字） %jobnumber
+-l（L小写） 查看kill可以使用的讯号signal有哪些
+-1 重载工作的设定文件，即reload进程。
+-2 同ctrl+c
+-9 强制删除一个工作。缺点是可能会有该进程相关的残留。
+-15 以正常的方式终止该进程。
+
+
+
+进程管理
+
+ps aux 列出目前所有在内存中的进程
+USER：该 process 属于那个使用者账号的？  
+PID ：该 process 的号码。  
+%CPU：该 process 使用掉的 CPU 资源百分比；  
+%MEM：该 process 所占用的物理内存百分比；  
+VSZ ：该 process 使用掉的虚拟内存量 (Kbytes)  
+RSS ：该 process 占用的固定的内存量 (Kbytes)  
+TTY ：该 process 是在那个终端机上面运作，若与终端机无关，则显示 ?，另外， tty1-tty6 是 本机上面的登入者程序，
+若为 pts/0 等等的，则表示为由网络连接进主机的程序。  
+STAT：该程序目前的状态，主要的状态有：  o R ：该程序目前正在运作，或者是可被运作；  o S ：该程序目
+前正在睡眠当中 (可说是 idle 状态啦！)，但可被某些讯号 (signal) 唤 醒。  o T ：该程序目前正在侦测或者是停止
+了；  o Z ：该程序应该已经终止，但是其父程序却无法正常的终止他，造成 zombie (疆尸) 程 序的状态 
+START：该 process 被触发启动的时间；  
+TIME ：该 process 实际使用 CPU 运作的时间。  
+COMMAND：该程序的实际指令为何？ 
+TIME ：该 process 实际使用 CPU 运作的时间。  
+COMMAND：该程序的实际指令为何？  
+
+ps -l 将目前属于自己此次登陆的PID与相关信息列出来
+# F 代表这个程序的旗标 (flag)， 4 代表使用者为 super user； 
+# S 代表这个程序的状态 (STAT)，关于各 STAT 的意义将在内文介绍； 
+# PID 没问题吧！？就是这个程序的 ID 啊！底下的 PPID 则上父程序的 ID； 
+# C CPU 使用的资源百分比 
+# PRI 这个是 Priority (优先执行序) 的缩写，详细后面介绍； 
+# NI 这个是 Nice 值，在下一小节我们会持续介绍。 
+# ADDR 这个是 kernel function，指出该程序在内存的那个部分。如果是个 running 
+# 的程序，一般就是『 - 』的啦！ 
+# SZ 使用掉的内存大小； 
+# WCHAN 目前这个程序是否正在运作当中，若为 - 表示正在运作； 
+# TTY 登入者的终端机位置啰； 
+# TIME 使用掉的 CPU 时间。 
+# CMD 所下达的指令为何！？  cmd后还接上defunct，该进程为僵尸进程。
+# 仔细看到每一个程序的 PID 与 PPID 的相关性为何喔！上头列出的三个程序中， 
+# 彼此间可是有相关性的吶！  
+
+ps -lA 查看系统当中所有进程的详细工作状态。
+
+top 动态持续检测monitor系统中进程工作状态
+第一行，显示系统已经开机时间，当前在线人数，系统1/5/15分钟平均负载
+第二行，目前监测monitor的进程数量。zombie表示僵尸进程
+第三行，cpu使用情况
+第四第五行，物理内存与虚拟内存使用情况
+在 top 执行过程当中可以使用的按键指令： 
+ ? ：显示在 top 当中可以输入的按键指令； 
+ P ：以 CPU 的使用资源排序显示； 
+ M ：以 Memory 的使用资源排序显示； 
+ N ：以 PID 来排序喔！ 
+ T ：由该 Process 使用的 CPU 时间累积 (TIME+) 排序。 
+ k ：给予某个 PID 一个讯号  (signal) 
+ r ：给予某个 PID 重新制订一个 nice 值。 
+k、r两个参数的使用，输入k/r后，根据提示输入PID，之后输入signal或者nice值即可。
+PID ：每个 process 的 ID 啦！  
+USER：该 process 所属的使用者；  
+PR ：Priority 的简写，程序的优先执行顺序，越小越早被执行；  
+NI ：Nice 的简写，与 Priority 有关，也是越小越早被执行；  
+%CPU：CPU 的使用率；  
+%MEM：内存的使用率；  
+TIME+：CPU 使用时间的累加
+注意zombie的值，0表示当前没有僵尸进程。
+
+
+pstree 
+pstree -Apu  列出系统上当前所有进程的相关性，同时列出进程的PID与所属用户
+
+
+kill -signal %jobnumber  使用在对背景工作的管理；
+kill -signal PID  对系统中进程进行管理
+killall -signal jobname  对系统中进程进行管理。如 kilall -1 syslog
+-I 忽略大小写。
+
+
+free 查看物理内存、虚拟内存使用情况。默认单位是kb
+-b/k/m/g 结果显示单位；
+-t 显示总量。如 free -m -t 
+
+
+uname 
+-a 全部的系统相关信息
+-r 系统核心版本
+Linux linux.site 2.6.12-1.1398_FC4 #1 Fri Jul 15 00:52:32 EDT 2005 i686 i686 i386 GNU/Linux 
+依次为核心名称，主机名称，核心版本，核心建立日期，支持i386以上等级的硬件平台
+
+
+netstat 用于网络监控
+netstat -tulnp 查看当前主机开放的端口及对应PID
+
+dmesg 查看开机时系统信息。
+
+
+PRI（priority） 程序执行优先级，越小被执行的优先级越高，由系统给予，用户通过调节NI（nice值）调整优先级
+root用户的nice值调节范围是 -20~19，普通用户是 0~19，普通用户只能将PRI值调高且只能调整属于自己的程序。
+nice -n nice值 程序命令 &  ，一开始就设定，如nice -n -5 vi &
+renice number PID 调整已经存在的进程的NI值。renice -5 11111
+子程序会继承父程序的nice值。
+
+
+内存中的程序都会放置在/proc目录下，查看该目录可查看系统当前进程的相关信息。每个进程的信息存放在以PID为名称的目录当中。
+
+
+fuser 找出使用某档案的进程。
+fuser -ki -signal dir/file 找出使用该dir或file的进程，并尝试给予一个signal，对该进程进行杀死或者其他操作。
+输出当中，在 PID 后面会有 c 呢？他代表的意义为： 
+c ：在当前的目录下； 
+e ：可以被执行的； 
+f ：是一个被开启的档案 
+r ：代表 root directory 
+
+
+
+losf 查看某个进程打开的档案或装置有哪些
+pidof 配合ps aux 及正则表达式，查找需要的进程内容
+
+
+
+
+
+
+
+
+
+

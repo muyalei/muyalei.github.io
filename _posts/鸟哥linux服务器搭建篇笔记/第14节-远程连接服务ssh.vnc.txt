@@ -1,0 +1,53 @@
+ssh联机过程
+每次sshd服务启动时，服务器产生一个768位的公钥，存放在服务器，当有客户端连接服务器，客户端接收公钥并主与机自身
+~/.ssh/known_hosts（记录曾经联机的服务器的公钥）或/etc/ssh/ssh_known_hosts保存的服务器公钥对比，对比通过，则主机随机产生一个256位的私钥，并将公钥、私钥
+组成的key pair 返送给服务器端，之后服务器、主机通过这个1024位的key pair 进行数据的加密传递。
+
+linux主机远程连接服务器
+ssh username@IP 或 ssh -l username IP
+linux主机与远程服务器数据传递  
+sftp username@IP  或  sftp -l username IP
+登入远程服务器后，服务器端操作指令同在本机的操作。cp、mv、mkdir等，exit退出
+执行命令前加l，表示切换到客户端主机执行操作。lcd、lmkdir、lpwd
+put 客户端主机目录或文件  远程主机目录
+get 远程主机目录或文件    客户端主机目录
+scp /etc/11.txt username@IP:/test  将本机的/etc/11.txt文件复制到远程主机的/test 目录下
+scp username@IP:/test/11.txt  /etc 将远程主机的/test/11.txt文件复制到本地的/etc 目录下
+
+/etc/ssh/sshd_config 远程服务器端ssh服务设定文件，配置后重启sshd服务生效
+
+设定某用户登入远程服务器不需要密码
+ssh-keygen -t rsa  在本机使用RSA算法产生key pair，当前用户为目标用户urser11
+将产生的key pair中的私钥id_rsa移动到 /home/user11/.ssh
+将公钥id_rsa.pub添加到服务器端authorized_keys文件中，cat id_rsa.pub >> authorized_keys 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

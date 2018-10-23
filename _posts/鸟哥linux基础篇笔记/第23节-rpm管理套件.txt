@@ -1,0 +1,77 @@
+rpm  -ivh  a.rpm b.rpm  安装a.rpm、b.rpm两个套件
+rpm  -ivh  http://xxxx/aaa.rpm 在线安装套件aaa.rpm
+
+使用rpm升级更新套件(使用光盘)：
+rpm -Uvh xx.rpm  xx.rpm这个套件在本系统不存在，则安装xx.rpm，存在旧版本，则更新到该新版本
+rpm -Fvh xx.rpm  xx.rpm这个套件在本系统不存在，不会安装该套件，存在该套件旧版本就把旧版本更新到该新版本
+
+已安装套件查询：
+rpm查询/var/lib/rpm这个数据库中的套件信息；
+rpm -q  xxx 查看是否安装套件xxx，不能带版本号；
+rpm -ql xxx 找出套件xxx的所有目录和文件；
+rpm -qi xxx 查看套件xxx的详细信息；
+rpm -qc xxx 找出套件xxx的设定文件；
+rpm -qd xxx 找出套件xxx的说明文件；
+rpm -qR xxx 查看套件xxx的相依属性；
+rpm -qf filename 找出filename这个文件属于哪个套件；
+rpm -qa 查看所有通过rpm安装到本机的套件信息，使用光盘安装即使用了rpm管理；
+未安装套件查询：
+rpm -qp[licdR] xxx.rpm  查看在光盘中但没有安装的套件xxx.rpm的相关信息；
+
+套件一致性验证：
+使用/var/lib/rpm数据库中内容与当前系统环境下的所有套件文件进行比对，验证的文件须属于某一套件；
+rpm -V xxx，列出套件xxx中被改动过的相关文件；
+rpm -Vf filename，查询该文件是否改动，显示空表示没有改动过；
+rpm -Va ，列出系统中所有改动过的套件文件；
+
+卸载套件
+rpm -e yum  卸载yum套件
+rpm --rebuilddb 重建数据库
+
+srpm管理套件：
+与rpm命令不同，srpm使用rpmbuild命令管理套件；
+rpmbuild --rebuild xxx.src.rpm ，--rebuild 参数将xx.src.rpm编译并打包成xx.rpm安装文件，之后使用rpm安装即可；
+rpmbuild --recompile xx.src.rpm，将xx.src.rpm编译、打包并安装；
+
+yum groupinstall 'Development Tools' ，使用该命令安装basic server模式下没有安装的gcc、make、kernel-header等套件
+
+xx.rpm  套件是已经被编译的binary文件，可以使用rpm直接在本机安装，但要求本机环境与xx.rpm预设环境相同 
+xx.src.rpm  包含套件的源码，当本机环境与套件预设环境不同，可以在本机重新编译成binary再安装，内含configure与makefile文件，可以直接
+用rpm安装；
+rpm套件是已经编译过的binary文件，tarball是彻底的ascii代码，其中包含了configure、makefile文件；
+使用rpm安装套件，相比于tarball方式安装套件要简单许多，但是存在属性相依问题，即安装这个套件，需要其他前驱套件已安装，yum/apt等服务
+可以分析rpm套件档案中记录的属性相依信息，自动取得本机不存在的相依属性套件，自动在线完成安装。
+
+rpm用在对光盘linux distribution中套件进行安装的情况；
+tarball用在取得了某软件释放出的原始码，将该软件安装在本机的情况；
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

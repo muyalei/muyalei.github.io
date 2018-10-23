@@ -1,0 +1,4 @@
+chkconfig --level 35 atd on  设定atd服务在以等级3、5启动时随机启动
+chkconfig --list  列出chkconfig管理的所有服务名称
+chkconfig --add atd  设定atd服务给chkconfig管理。/etc/init.d下的服务才可以交由chkconfig管理
+chkconfig --del atd  atd服务不再由chkconfig管理

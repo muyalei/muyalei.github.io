@@ -1,0 +1,30 @@
+操作系统其实就是核心与其提供的接口工具
+
+一个完整的操作系统，包括两部分：核心与其提供的接口工具、利用核心提供的接口工具所开发出来的软件。
+
+linux其实就是一个操作系统最底层的核心及其提供的核心工具。
+linux核心版本以测试版及稳定版同时开发，次版本偶数为稳定版，奇数为开发中的测试版。
+redhat、debian、suse、mandriva等等每个linux distributions使用的kernel都是http://www.kernel.org所释出的。
+
+套件的管理方式主要分为Debian的pkg及redhat的rpm两种。
+
+GNU的GPL（General Public License）
+BSD：Berkeley Software Distribution
+
+x-window本身很吃内存，假设网站时，最好不启用，使用command line形式。
+
+linux常见问题FAQ
+Linux 自己的文件数据： /usr/share/doc (在你的 PC 中)
+? CLDP 中文文件计划 http://www.linux.org.tw/CLDP/
+? Unix 的一般常见问题 http://www.csie.nctu.edu.tw/document/unixfaq/
+? The Linux Documentation Project：http://www.tldp.org/
+
+linux中几乎所有的硬件装置代号档案都在 /dev 这个目录中
+IDE硬盘机  /dev/hd[a-d]
+SCSI硬盘机 /dev/sd[a-p]
+USB随身碟  /dev/sd[a-p]
+CDROM      /dev/cdrom
+软盘机     /dev/fd[0-1]
+打印机     /dev/lp[0-2]
+鼠标       /dev/mouse
+磁带机     /dev/ht0(IDE)或dev/st0(SCSI界面)
