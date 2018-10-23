@@ -1,5 +1,5 @@
 ---
-layout:post
+layout:default
 title:@classmethod与@staticmethod的区别与用途
 date:2018-02-24
 author:muyalei
