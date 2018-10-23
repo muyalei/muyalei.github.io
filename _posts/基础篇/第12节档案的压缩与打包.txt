@@ -1,0 +1,48 @@
+tarfile 打包文件
+tarball 打包并压缩的文件
+
+tar -cvf /test test.tar 将目录/test下所有档案打包成为test.tar
+tar -tvf test.tar 查看test.tar中档案
+tar -xvf test.tar 将打包文件解开
+gzip、bzip2整合进tar命令，成为tar参数-z（使用gzip压缩）、-j（bzip2压缩）
+tar -zcvf /test test.tar.gz 将/test下档案打包后使用gzip打包
+tar -ztvf /test.tar.gz 查看tarball文件内容
+tar -zxvf /test.tar.gz 将tarball解压缩后解包
+tar -zxvf /test.tar.gz test/11 只解压test.tar.gz压缩文件中的11文件。第二个是相对路径。
+
+gzip 11.txt 压缩后只剩压缩文件11.txt.gz
+gzip -c 11.txt > 11.txt.gz 使用数据流重导向将压缩文件写另存为文件11.txt.gz，保留源文件
+gzip -d 11.txt.gz 解压gzip压缩文件
+zcat 11.txt.gz 查看压缩文件内容
+bzip2 11.txt 同样压缩后删除源文件
+-c/-d 数据流重导向/解压缩
+bzcat 11.txt.bz2 查看bzip2压缩文件内容
+
+dd if=/dev/hda of=/tmp/mbr.back bs=512 count=1 备份磁盘的MBR
+dd if=/etc/test of=/tmp/test.back 
+if(input file) /of(output file) 输入/输出文件，也可以是装置。
+bs(block size)  设定block区块大小，默认值为512kb，即一个扇区（sector）大小。
+count ，用于存储备份数据的区块个数。
+tar用来备份关键数据，dd 用来备份磁盘数据（可以备份装置），可以是整个partition或hda，可以备份系统。
+
+
+
+
+
+
+
+*.Z    compress  程序压缩的文件
+*.bz2  bzip2  程序压缩的文件
+*.gz   gzip程序压缩的文件
+*.tar  tar程序打包的数据，并没有压缩过
+*.tar.gz tar程序打包并经过gzip压缩的文件
+
+gzip       gzip  22.txt  
+参数：-d 解压缩；-c 保留原文件。zcat：读取压缩文件内容 。可以解压compress压缩的文件。
+bzip2，同gzip。解压缩：-d或bunzip2。
+压缩指令只能压缩文件，不能压缩目录。
+
+tar   tar -zcvf  /tmp/22.txt.tar.gz  22.txt  将本目录下的22.txt打包并以gzip压缩。 -jcvf 以bzip2压缩
+参数：-cvf 打包；-xvf 解包；-zxvf 解压并解包；c/x/t 打包压缩/解包解压缩/查看压缩包内容    
+
+tarball文件：打包并经过压缩的文件；tarfile文件：打包文件，没有压缩。

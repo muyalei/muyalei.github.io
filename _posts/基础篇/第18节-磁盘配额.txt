@@ -1,0 +1,185 @@
+quota使用：
+针对磁盘某分区（partition）的整个分区有效，如/dev/hda3挂载在/home下，则/home下的所有目录都受到quota设定限制；
+kernel版本2.6.x.x前的quota设定记录文件是quota.user、quota.group，2.6.x.x之后的是aquota.user、aquota.group，旧版本
+的quota记录文件转变为新版本可以直接使用命令convertquota；
+quota限制设定包括软限制、硬限制、宽限时间三方面：soft 表示一个警戒限制值，可以超越，但必须在指定时间内回归到
+其之下；hard 设定值表示允许使用的容量最大值，不允许超越；宽限时间是指 超过soft但未到达hard，降至soft值以下的
+限定时间。单位都是kb。
+
+inode 索引节点。硬盘的最小单位是扇区（sector），每个扇区512kb，文件存取的最小单位是“块”（block），通常8个扇区
+组成一个块，即4kb，硬盘上文件的元信息如文件大小、创建者、创建时间等信息被记录在特定区域inode中，系统根据文件名
+搜索文件实际上是通过文件名对应的inode号码在搜寻文件。
+
+对某分区使用quota程序限制用户/用户组的磁盘使用量，前提需要filesystem的各分区（partition）挂载点记录文件/etc/mtab
+中有对应quota旗标，在/etc/fstab 在该文件中列出的磁盘分区对应用户后加上要使用quota进行限制的用户名，用逗号分隔，
+重新挂载启用quota的partition，使quota旗标写入/etc/mtab文件中，即可对该分区使用quota。
+mount -o remount /home 重新挂载该目录
+
+quota 
+-u/g 后接用户名/用户组，查看该用户/用户组的quota限制值，不加参数表示查看当前用户的quota限制值；
+quota -vs -u yaya 查看用户yaya的quota限值
+
+quotacheck
+quotacheck -avug 针对每个partition，根据用户/用户组扫描磁盘使用情况分别建立aquota.user、aquota.group；-m 强制扫描
+ -a 扫描所有partition，在每个分区下建立aquota.user、aquota.group文件。不加-a参数，需要加上分区的
+挂载点mount_point ，如quotacheck -vug /home 
+
+edquota 针对某用户/用户组编辑quota限制值
+-u/g 指定被编辑的用户/用户组。edquota -u yaya 
+-t 设置宽限时间 edquota -t 7days
+-p 将某用户的quota设定复制给另一个用户 equota -p yaya -u muyalei 把yaya的quota设定复制给muyalei
+
+quotaon 开启quota程序
+quotaon -avug 根据/etc/mtab中filesystem的用户/用户组quota设定，开启所有带有quota旗标的partition中quota程序。
+-a 针对整个filesystem；quotaon -ug /home 开启某partition的quota程序；
+
+quotaoff 
+-a 根据/etc/mtab，关闭整个filesystem的quota程序
+-u/g 针对某用户/用户组，关闭某分区的quota，quotaoff -u yaya /home
+
+设置开机启动quota：在/etc/rc.d/rc.local下写入命令 quotaon -avug 
+
+repquota 查看磁盘配额的完整报告
+repquota -av 根据/etc/mtab，查看系统内所有带有quota旗标的partition的磁盘配额信息
+requota -aug 仅列出当前使用者与所在群组的quota限制值
+-v 不仅自己的quota值，列出所有
+
+quota使用流程：在/etc/fstab文件下某partition行写入要进行限制的用户名/用户组，重新挂载该partition，使/etc/fstab
+中对partition的quota设定更新到/etc/mtab下，使用quotacheck建立aquota.user、aquota.group文件，使用edquota编辑
+用户/用户组的quota限制值，使用quotaon开启quota程序。
+
+
+
+
+quota 磁盘配额。对root用户无效，不要对根目录/进行quota，可能无法开机。
+
+使用时限制条件：
+针对整个patition（磁盘），如 /dev/hda5挂载在/home底下，则quota运作时整个/home底下所有的目录受到限制；
+linux核心必须支持quota模块；
+新版本quota模块的预设档案为aquota.user  aquota.group ,旧版本为aquota.user(group)，使用convertquota将旧版本更新为新版本；
+仅对普通用户有效，对于root无效。
+
+quota 是一个程序，限制内容包括：
+soft 警告值，可以超过，但必须在宽限时间内降低到soft值以下；
+hard 绝对不能超过的容量。
+宽限时间：容量超过了soft还没有到hard，宽限时间自动启动，降到soft以下自动取消；
+
+
+quota基本指令
+查询：quota  quotacheck  quotastats  warnquota  repquota
+编辑：edquota  setquota
+
+/etc/mtab  档案系统（filesystem）实际挂载点（mount_point）的记录文件；使用quota的时候系统会去搜寻具有quota参数的partiton；
+/etc/fstab 档案格式的设定存放在该文件。编辑该文件启动目标partition的quota格式，在需要启动quota的partition行（如/home）defaults参数后增加usrquota，grpquota两个值，3个值用逗号分隔，
+至此，该partition加入了quota磁盘格式，quota程序在读取时是读取/etc/mtab，执行 reboot 或 remount filesystem ，以/etc/fstab改写/etc/mtab。
+也可以umount /home ， mount -a 重新挂载/home ，mount的remount功能用法 mount -o remount /home
+
+quota    quota 参数 username/groupname
+-u 后接username，显示该用户的quota限制值；-g 后接groupname，显示该群组的quota限制值；-v 显示每个filesystem的quota值；
+-s 以inode或磁盘容量的限制值来显示；
+
+quotacheck   quotacheck  参数 /mount_point      mount_point 挂载点  
+针对某一partitions扫描其磁盘quota空间，执行该命令时，该磁盘将自动被设定为只读扇区（readonly）
+-a 扫描/etc/mtab中所有含有quota支持的filesystem。使用-a参数时可省略mount_point，因为扫描的是所有filesystem
+-u 建立aquota.user
+-g 建立aquota.group
+-v 显示扫描过程；
+-m 强制进行quotacheck扫描；
+
+edquota   
+-u 进入quota的编辑界面（vi）去设定username的限制值； edquota -u username
+-g 进入quota的编辑界面去设定groupname的限制值；
+-t 修改恕限时间； edquota -t
+-p 复制范本。 edquota -p username1 -u username2  将username1这个人的quota限制值复制给username2。
+edquota下参数含义：filesystem，当前编辑的磁盘，使用df命令查看该磁盘在系统中的挂载点，如/dev/hda1挂载到/disk2下；blocks，目前
+使用者用掉的空间，单位Kb
+
+quotaon 启动quota程序 
+-u 针对使用者（aquota.user）启动quota
+-g 针对群组（aquota.group）启动quota
+-v 显示启动过程相关信息
+-a 根据/etc/mtab中的filesystem设定启动相关的quota，不加-a则后面需要带挂载点    
+例：启动所有具有quota的filesystem，quotaon -auvg  ；启动/disk2中的user quota设定值  quota -uv /disk2
+
+quotaoff  关闭quota程序，即关闭quota的限制
+quotaoff -a 根据/etc/mtab，全部filesystem的quota都关闭；
+quotaoff -u/-g  /mount_point  针对后接的挂载点关闭user quota 或者group quota
+
+
+quota程序使用场合：限制某用户或群组磁盘配额；以link的方式，在不改变原有主机架构的情况下使邮件作为可以限制的配额，方法是使用link
+将路径/var/spool/mail指向某已经做好的quota磁盘/test。
+
+
+quota程序从开始准备filesystem的支持到整个设定结束的步骤：
+编辑/etc/fstab，使partition的filesystem支持quota；
+使用quotacheck扫描要使用quota的磁盘建立quota记录文件aquota.user/aquota.group；
+使用edquota编辑每个用户或群组的可使用空间，即编辑quota限制值数据；
+再进行一次quotacheck，然后用quotaon启动quota。
+
+df -hi 查看档案系统及其挂载点。
+
+设定开机启动quota：在/etc/rc.d/rc.local下增加行/sbin/quotaon  -avug
+
+repquota 显示完整的quota结果报告。repquota -a [vug]
+-a 根据/etc/mtab搜寻具有quota标志的filesystem，并报告quota结果
+-v 输出所有的quota结果，不只是下达指令的用户自己的
+-u 显示使用者的quota限制值（默认值）
+-g 显示某群组quota值
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

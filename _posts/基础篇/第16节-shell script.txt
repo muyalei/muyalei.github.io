@@ -1,0 +1,414 @@
+编写shell script：
+#!/bin/bash 声明这个script使用的shell；
+程序内容宣告，包括本script作用及建立时间、建立人；
+环境变量宣告，将script所在目录加入PATH中，并使用export将本PATHt变成全局变量，PATH="$PATH":/xxx，或使用绝对路径；
+script内容；
+exit 0 使用exit命令中断程序， 并回传一个参数0给系统，告诉系统script成功执行；
+
+日期的表示：
+date=`date +%Y%m%d --date="-1 day"` ,将前一天的日期赋值给变量date；
+数值运算：
+num=$((运算式子))；
+
+判断：
+使用test进行判断:
+test -e filename 判断某个文件/目录是否存在，正确时echo $?返回0；
+test -f xxx 判断是否是文件；
+test -d xxx 判断是否是目录；
+test -s xxx 判断文件内容是否为 非空 ；
+test n1 -eq/ne n2 判断n1与n2相等/不相等；
+test n1 gt/lt/ge/le n2 判断n1大于/小于/大于等于/小于等于n2；
+test -z $xx 判断变量是否为空，为空是true，返回0，供&&||判断式使用；
+test -n $xx 判断变量是否为非空，非空 是true，返回0；
+test $xx1 = $xx2 判断变量/字符串是否相等，相等为true，test $xx1 != $xx2 相反；
+test -r xx -a -w xx 判断xx是否同时具有读写权限，同时满足则返回true，返回0，-a 表示 与，-o表示 或；
+test ! -r xx 判断xx是否具有读权限，不具有读权限为true，返回0，！ 表示非；
+test -L xxx 判断是否为连结文件；
+test -b/c/S/p xxx 判断是否是block device装置、character device装置、Socket档案、FIFO(pipe)档案；
+test -r/w/x xxx 判断是否具有读/写/执行权限；
+test -u/g/k xxx 判断是否具有SUID、SGID、Sticky bit权限；
+test file1 -nt file2 判断file1是否比file2新；
+test file1 -ot file2 判断file1是否比file2旧；
+test file1 -ef file2 判断file1与file2是否是同一个文件，即是否指向同一个inode，用来判断hard link；
+使用[]进行判断：
+[]中的参数，变量必须用双引号括起来，常数也要用双引号或单引号括起来，每个参数之间要有空格，使用的参数与test相同；
+
+shell script内建变量：
+/etc/init.d/network restart  其中，/etc/init.d/network是内建变量$0，restart是内建变量$1;
+
+条件判断式：
+if..then..fi式：
+if [ 条件判断式 ] &&/|| [条件判断式]；then
+   满足条件执行的动作
+elif [条件判断式]；then
+    第一个条件不满足，但满足该条件时执行的动作
+else 
+    当前两个条件不满足时执行的动作
+fi
+条件判断式中的&&表示 与，||表示 或；
+使用exit 0 中断程序，程序将不再向下执行，提高效率；
+当有很多判断条件时，可反复使用if..then..fi....if..then..fi....进行判断；
+适用于对变量取值不确定的比对，执行不同的程序； 
+case...esac式：
+case $1 in
+     "变量的第一种取值"）
+     程序段
+      ；；
+      "变量的第二种取值"）
+      程序段
+      ；；
+      *）
+      取值不是既定变量，执行的程序段
+      exit 1
+      ；；
+esac
+适用于有多个既定变量，变量去不同值时执行不同的程序代码，如 service network restart，$1、$2都是既定变量中的某一个；
+linux中的程序script多是用这种方式写的；
+
+循环：
+while [判断条件] && [条件判断式]
+      do
+      程序段
+done     
+       exit 0
+表示当判断条件成立时，就执行循环；
+until [判断条件] || [判断条件]
+       do 
+       程序段
+done
+       exit 0 
+表示当判断条件成立时，就停止循环，否则将一直循环直到条件满足；
+符合条件就循环，不知道循环的次数，使用这两种循环语句；
+for ((初始值；限制值；执行步阶))
+     do
+     执行程序
+done 
+     exit 0
+已经知道循环的次数，使用for循环语句；
+
+script追踪与排除debug：
+sh -n script.sh  查询script.sh这个脚本的语法是否存在错误，但不执行该脚本；
+sh -x script.sh  显示脚本的执行过程；
+
+printf、sed、awk
+
+
+
+
+
+shell是文字接口底下让用户与系统沟通的一个工具接口
+
+shell script 是利用shell的功能写的一个程序，这个程序使用纯文字文件，将一些shell的语法与指令写在里面，搭配正则表达式、
+管线命令、数据流重导向等功能；内容包括前置的说明介绍，PATH，程序，exit 0 代表script执行完毕离开script并回传一个值0给
+系统；通过 && 、||、或者 if..then控制程序执行
+
+ ./shell.sh 、 sh shell.sh  执行script 
+
+变量内容由用户输入：
+read -p  "please input your number :"  firstnu
+
+
+
+利用date创建以日期为文件名的文件
+
+date1=`date --date='-2 day' +%Y%m%d`
+如创建以前天、昨天、今天日期命名的文件：
+read -p "Please input the filename what you want: " fileuser
+filename=${fileuser:-"filename"}
+date1=`date --date='2 days ago' +%Y%m%d`
+date2=`date --date='1 days ago' +%Y%m%d`
+date3=`date +%Y%m%d`
+file1="$filename""$date1"
+file2="$filename""$date2"
+file3="$filename""$date3"
+touch $file1
+touch $file2
+touch $file3
+
+
+
+数值运算
+
++、-、*、/、%（取余）
+使用格式：var=$((运算内容)) ，如两变量相乘 aa=$(($firstnu*$secondnu))  也可以使用 declare -i total=$firstnu*$secondnu
+
+
+
+test指令的测试功能
+
+关于某个文件名称的侦测（是否存在及该文件类型）； test -e filename
+-e 是否存在该文件或目录； ! -e 是否不存在（！-e 之间有空格）  
+-f 该档案是否为文件（file）     -d
+-b、-c、-S、-p、-L
+
+文件的权限侦测     test -r filename
+-r  是否有可读取权限  -w  -x 
+-u、-g、-k
+-s 是否为空白档案
+
+两个文件之间的比较   test file1 -nt file2
+-nt 判断file1是否比file2更新（newer than）
+-ot 判断file1是否比file2旧
+-ef 判断file1与file2是否为同一个文件，可用在 hard link的判断上，判断两个文件是否指向同一个inode
+
+两个整数之间的判断  test n1 -eq n2
+-eq 相等
+-ne 不相等
+-gt n1大于n2（greater than）
+-lt n1小于n2（less than）
+-ge 大于等于
+-le 小于等于
+
+判断字符串的数据
+test -z string 判断字符串是否为空，为空字符串则true
+test -n string 判断字符串是否不为空，不为空则true，-n参数可省略
+test str1 = str2 判断str1是否等于str2，相等为true； != 不等为true
+
+通过与、或、非进行多重条件判断 test -r filename -a -x filename
+-a 两个条件同时满足，回传true（and）； -o 、！
+
+
+
+判断指令 [] 
+
+与test指令类似，被括起来的每个数据必须用空格来分隔，变量最好用双引号""括起来，常量最好用单引号或
+双引号括起来； test指令中的部分参数在该指令中同样适用；
+[ 空格 "$HOME" 空格  == 空格 "$MAIL" 空格 ]
+
+该指令经常用在条件判断式 if ...then ...fi 的情况中；
+
+
+
+shell script的预设变量：$0、$1、$2...
+
+执行的script文件名为$0，后接的第一个参数为$1，第二个参数为$2...
+
+sh  sh07.sh  aaa  bbb  ccc 
+      $0      $1  $2   $3
+
+
+
+
+条件判断式  if...then
+
+在shell script中，没有使用if...then时，&&、|| 根据上个指令的回传值决定下一条指令的执行，进而控制程序执行，在
+if...then条件判断式中，&&、||含义为 与、或 
+
+if [条件判断式]；then
+          当条件判断式成立时，可以进行的指令工作内容；  （此处有多个条件时可用&&（and）、||（or）分隔）
+fi      
+
+if [ 条件判断式 ]; then
+当条件判断式成立时，可以进行的指令工作内容；
+else
+当条件判断式不成立时，可以进行的指令工作内容；
+fi
+
+if [ 条件判断式一 ]; then
+当条件判断式一成立时，可以进行的指令工作内容；
+elif [ 条件判断式二 ]; then
+当条件判断式二成立时，可以进行的指令工作内容；
+else
+当条件判断式一与二均不成立时，可以进行的指令工作内容；
+fi
+
+
+netstat 指令可用于查询目前主机开启的网络服务端口；netst	-tuln 查看目前主机已经启动的服务；
+
+declare指令：
+-a ：将后面的 variable 定义成为数组 (array)
+-i ：将后面接的 variable 定义成为整数数字 (integer)
+-x ：用法与 export 一样，就是将后面的 variable 变成环境变量；
+-r ：将一个 variable 的变量设定成为 readonly ，该变量不可被更改内容，也不能 unset
+
+
+date可以计算从19710101到现在的秒数，需要使用 %s 参数，可用于对日期的倒计时，如距离生日多久、距离退伍多久的时间的计算；
+
+declare -i date_dem=`date --date="$date2" +%s`
+declare -i date_now=`date +%s`
+declare -i date_total_s=$(($date_dem-$date_now))
+declare -i date_d=$(($date_total_s/60/60/24))
+if [ "$date_total_s" -lt "0" ]; then
+echo "You had been demobilization before: " $((-1*$date_d)) " ago"
+else
+declare -i date_h=$(($(($date_total_s-$date_d*60*60*24))/60/60))
+echo "You will be demobilized after $date_d days and $date_h hours."
+fi
+
+
+
+case...in...esac 判断式
+
+if..then..fi 是通过对比的方式对变量进行分辨，如果条件符合就进行某些动作，通过多个层次的对比判断（elif）来进行多个
+变量的程序的编写，case..in 是针对变量取不同值时进行对应的动作，更适合于多变量的处理；
+
+case $变量名称 in
+   "第一个变量内容")
+       程序段
+        ;;
+   "第二个变量内容")
+       程序段
+       ;;
+    *)
+       不包含第一个变量内容与第二个变量内容的其它程序执行段
+       exit 1
+       ;;
+esac
+
+case..in 中获取变量有两种方式：直接下达式，在脚本运行参数中给出，通过$1读取；交互式，通过read读取输入赋值给变量；
+
+
+
+函数function 
+
+在shell script中，函数是一段模块化的程序代码，编写一段代码，给与其一个函数名，在其他程序代码中使用到相同的程序
+代码段时，调用该函数名即可，当调用 fname 时，程序段即被执行；fname是自订的执行指令的名称，当使用fname时，编写的
+程序段即被执行；需要放置在程序段前
+
+使用语法：
+   function fname() {
+           程序段
+   }
+
+function printit(){
+echo -n "Your choice is "
+}
+echo "This program will print your selection !"
+case $1 in
+"one")
+printit; echo $1 | tr 'a-z' 'A-Z'   
+;;
+"two")
+printit; echo $1 | tr 'a-z' 'A-Z'
+;;
+"three")
+printit; echo $1 | tr 'a-z' 'A-Z'
+;;
+*)
+echo "Usage {one|two|three}"
+;;
+esac
+
+与shell script类似，function有自己的内建变量 $0、$1...，scritp后接的参数（如 sh03.sh aaa bbb）是script的$0、$1，在
+sh03本程序内全局使用，在function调用中出现的参数如 fname aaa 这个aaa为function的$1，在function被调用时在funtion内部
+使用，与全局无关
+
+function printit(){
+echo "Your choice is $1"
+}
+echo "This program will print your selection !"
+case $1 in
+"one")
+printit 1
+;;
+"two")
+printit 2
+;;
+
+输入one时，输出为function的内建变量$1的值1
+
+
+
+
+循环(loop)
+
+while do done 、until do done  符合某一条件时进行循环； for..do..done 已经知道要循环次数，或者for..in..do..done要
+在哪些个常量之间循环；
+
+
+while [ condition ]          
+do
+         程序段落
+done
+表示当条件 condition 成立时，就不断循环下去，当条件 condition 不成立时停止循环；
+
+s=0
+i=0
+while [ "$i" != "100" ]
+do
+i=$(($i+1))
+s=$(($s+$i))
+done
+
+until [ condition ]
+do
+        程序段落
+done
+与while do done相反，当条件condition不成立时循环下去，直到条件 condition 成立，停止循环；
+
+until [ "$yn" == "yes" ] || [ "$yn" == "YES" ]
+do
+read -p "Please input yes/YES to stop this program: " yn
+done
+
+
+
+for..do..done 、 for..in..do..done循环
+
+在某一数值范围内循环的情形：
+for (( 初始值; 限制值; 执行步阶 ))
+do
+             程序段
+done
+
+初始值：某个变量在循环当中的起始值，直接以类似 i=1 设定好；
+限制值：当变量的值在这个限制值的范围内，就继续进行循环。例如 i<=100；
+执行步阶：每作一次循环时，变量的变化量，例如 i=i+1，步阶为1时可写为i++；
+
+例：计算1+2+3+...+100
+s=0
+for ((i=1;i<=100;i++))
+do   
+      s=$(($s+$i))
+done
+
+在某几个常量之间循环的情形：
+for var in con1 con2 con3 ...
+do
+            程序段
+done
+
+第1/2/3次循环时，变量var的内容分别为con1/con2/con3
+
+例：
+
+for animal in dog cat elephant
+do
+    echo "there are" "$animal"s..
+done
+
+
+shell script的追踪与debug
+
+sh 参数：-n 不执行script，只是查询语法问题，语法正常无错误默认显示为空；-x 将script执行结果与产生该结果使用到的
+        script语句显示在屏幕上（常用）；-v 在执行script前，先将script内容输出到屏幕上；
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

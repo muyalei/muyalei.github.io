@@ -1,0 +1,91 @@
+yum -s 动作类型 套件 
+
+-s 需确认时默认回答yes
+
+/etc/yum.conf yum工具的主要设定文件，设定环境参数；
+/etc/yum.repos.d/CentOS-Base.repo  设定使用的yum server，在变量mirrorlist最后加上国码&cc=cn，选择使用中国境内的yum server；
+
+针对单个套件：
+yum install xxx ，安装套件xxx；
+yum update xxx，升级套件xxx，或者yum update 升级所有套件；
+yum remove xxx，移除使用yum安装的套件xxx；
+yum search xxx，在yum server上搜寻套件xxx；
+yum list ，列出yum server上所有的套件名称，类似rpm -qa；
+yum info ，类似yum -qai；
+yum clean xxx，下载的文件存在在/var/cache/yum，使用该命令删除下载文件的packages、header等内容；
+针对套件组：
+yum grouplist，列出yum server上的所有套件组；
+yum groupinfo xxx，查看xxx套件组中包含的套件名；
+yum groupinstall xxx，安装xxx套件组包含的所有套件，如 yum grouplist "Development Tools"；
+yum groupupdate xxx，升级xxx套件组中所有套件；
+yum groupremove xxx，删除使用yum工具安装的套件组xxx；
+
+系统版本升级(如4.2升级到4.3)：
+/etc/yum.conf文件末尾加入行plugins=1   ；
+设定/etc/yum.repos.d/CentOS-Base.repo ，选择yum server；
+yum upgrade ，系统升级；
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

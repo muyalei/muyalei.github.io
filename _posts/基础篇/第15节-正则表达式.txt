@@ -1,0 +1,229 @@
+正则表达式是字符/字符串搜寻时用的表示法规则，结合支持正则表达式的工具vi、grep、sed、awk等，以行为单位，针对行
+搜寻/取代/删除字符串。
+正则表达式必须与支持正则表达式的工具使用，工具利用正则表达式搜寻字符/字符串提取出符合条件的行/字段。
+
+grep 'test' /etc/passwd 搜寻该文件中有test的行，把该行提取出来
+ls -lnr | grep test 在STDOUT中搜寻test字符，将test字符串所在的行提取出来
+-i 忽略大小写
+-v 反向选择，将不含该字符串的行提取出来
+-n 输出行号
+
+基础正则表达式：
+[] 字符集合。
+[]中字符表示一个待搜寻字符。grep 't[ae]st' /etc/test 在文件每行中搜寻字符tast、test，把含有这两个字符串的行取出来
+[]中 - 表示连续。[0-9]表示任意数字（012..9）
+[^]  ^在[]中表示反向选择。grep  '[^a-z]' /etc/test 不含小写字母的行
+
+^ 在每一行搜寻开头的字符/字符串，判断是否符合搜寻条件。
+grep '^the' /etc/test 、grep '^[a-z]' /etc/test 在每一行搜寻以 the或小写字母 开头的行
+$ 搜寻行结尾的字符/字符串。word$、x$
+
+. 一定有一个任意字符
+* 前面的字符存在0个或多个 。goo*d ，搜寻god，good，goood，gooo....d
+.* 同万用字符中的 *，有0个或多个任意字符。
+\  跳脱字符
+x\{n,m\} 限制重复字符的次数，前一个字符重复n、n+1..m次。 {}有特殊含义，使用\跳脱。
+grep  'go\{2,5\}d' /etc/test 搜寻good、goood、gooood、goooood 这5个 
+
+拓展正则表达式：
++ 前一个任意字符存在1个或多个。grep 'go+d' /etc/test 搜寻god、good、gooo..d
+？0个或1个前一个任意字符。grep 'go？d' /etc/test 搜寻 gd 、god
+| 或 的方式搜寻。 grep 'god|good' /etc/test 搜寻god、good
+（） 组字符集合。grep 'g(la|oo)d' /etc/test  搜寻glad、good。 (xyz)+ 组重复1个或多个
+egrep 支持的是拓展正则表达式
+
+
+sed  参数  '动作'
+参数：-n 仅显示sed处理的数据，-r 使用拓展正则表达式,-e 处理多个动作时每个动作前加-e参数
+动作：  'n[，m]function'    动作需要用 '' 括起来
+a 在当前行的下一行增加 nl 11.txt | sed '2a have a tea' ，增加的内容使用 \ 换行进行多行输入
+i 在当前行的上一行增加
+d 删除
+c 取代n[，m]行的内容
+p 将选择的行打印出来。与-n一起使用，sed -n '3,5p' 11.txt
+s 取代n[，m]行内容的指定字符串。nl 11.txt | sed '2,5s/word1/word2/g' 将2-5行中的word1取代为word2
+sed可以处理前一个命令的STDOUT,也可以处理后接的文件。
+
+awk  '条件1 {动作1} 条件2 {动作2}..'  filename
+awk侧重于将每行数据分成 字段 进行处理,变量$n代指不同字段
+awk内置变量：NR每一行字段数，NF当前处理的是哪一行，FS分隔符（默认分隔符是空格）
+
+diff  ascii文件比对。
+diff -bBi 原始比对文件  标准文件。b/B/i 忽略字符串间距 、空白行、大小写的不同。
+
+
+
+
+
+
+
+
+
+
+正 则 表 达 式：
+
+定义：正则表达式是透过一些特殊字符的排列，用以 搜寻/取代/删除 一列或多列文字字符串，简单的说，正则表达式就是用在字符串
+处理上的表示式。
+
+必须在支持正则表达式的工具中才能使用正则表达式
+
+正则表达式的特殊字符与一般在指令列输入指令的万用字符不同，正则表达式应用于支持正则表达式的工具（grep、awk等
+等）中，当不在这些工具中使用时，这些特殊符号为普通的万用符，如cp test* /tmp 把所有以test开头的文件复制到/tmp
+下 cp不支持正则表达式 
+
+
+grep 用于搜寻某一文件中的指定字符串、input/output数据的处理；grep 'set' /tmp/1.txt，在文件1.txt中寻找含有
+     字符串set的行并且将其列出来
+
+grep 截取字符串；-i 忽略大小写；-v 反向选择 ；-n 显示出字符串所在行号 ；grep 以整行为单位进行数据截取
+grep -n  'the' regular_express.txt 在文件regular_express.txt当中搜寻字符串the，把所在行数据拿出来
+并且显示所在行号 
+
+grep -n 't[ae]st' regular_express.txt 在该文件中搜寻含有tast、test字符串的行并将其连带行号列出
+
+grep -n '[`g]oo' 1.txt 在1.txt中搜寻含有oo字符串且其前不带g的行  [`x]表示搜寻不含字符串x的行，[`a-z]不含小写字母
+
+grep -n '[0-9]' 1.txt 在1.txt中搜寻含有数字的行
+
+grep -n '`the' 1.txt 在文件1.txt中搜寻以the开头的行   引用符`在[]外代表行首，在[]内代表 非，如截取非字母开头的
+行 grep -n '`[`a-zA-Z]' 1.txt
+
+grep -n '\.$' 1.txt 截取以.结尾的行。用\对.进行转义
+
+grep -n '`$' 1.txt 截取文件1.txt中的空白行，并标明行号
+
+正则表达式中，点号 . 代表一定有一个任意字符；* 代表重复0个或者多个前面的任意字符，grep -n 'oo*' 1.txt表示
+截取至少含有1个o的行
+
+ .* 代表0个或多个任意字符。grep -n 'g.*g' 1.txt,截取开头结尾都是g的字符串所在的行。
+
+{} 限定任意字符的范围
+grep -n 'o\{2\}' 1.txt     截取文件1.txt中含有两个oo的字符串所在的行
+grep -n 'go\{2,5\}g' 1.txt 截取文件1.txt中以g开头和结尾且中间有2-5个连续o的字符串所在的行
+grep -n 'o\{2,\}' 1.txt    截取文件1.txt中含有2个o的字符串所在的行
+
+
+延伸正则表达式
+
+
+
++  代表重复一个或多个前一个任意字符。egrep -n 'go+d' 1.txt 搜寻god、good、goooood等字符，并将其所在行列出；同 .*
+
+？ 代表0个或一个前一个任意字符 egrep -n 'go?d' 1.txt  搜寻god good
+
+|  用或（or）的方式截取行
+grep -v '^$' 1.txt | grep -v '^#'  截取1.txt中不是空行且不是以#为开头的行，用延伸正则表达式表示为
+egrep -v '^$|^#' 1.txt  截取不是空行或者不是以#开头的行
+egrep -n 'gd|good|dog' 1.txt 截取含有gd、good、dog字符串所在的行
+
+（）找出群组字符串
+egrep -n 'g(la|oo)d' 1.txt 截取glad、good字符串所在的行；echo AxyzxyzxyzxyzC | grep 'A(xyz)+C' 截取开头为A
+结尾为C中间有1个或多个xyz字符串所在的行
+
+注意：！在万用字符中是 非 的意思，在正则表达式中是一个普通字符，正则表达式中 非 为引用符 ` ；
+
+
+
+printf 格式化打印； printf  '打印格式'  实际内容
+
+nl 打开文件并显示行号
+
+
+sed工具，对STDIN数据进行分析，处理后，将结果输出到STDOUT；   sed  参数  动作 
+
+参数：
+-n 加上-n参数后，只有被sed处理过的那一行才会被列出来，通常与动作p一同使用
+-e 直接在指令列模式下进行sed的动作编辑，默认存在，可不加；   sed后面要加两个以上的动作时，要在每个动作前加上 -e 参数；
+-r 使sed的动作支持扩展性正则表达式的语法，默认是基础型正则表达式；
+
+动作：
+
+'n1,n2动作' 进行动作的行数，sed后接的动作必须用''括住
+
+a 新增，其后接字符串，这些字符串会在当前行的下一行出现；nl 1.txt | sed '2a drink tea' 第二行后面加上一行，
+  内容为 drink tea；在第二行后加上2行，sed '2a drink tea \ 按回车后再输入 or drink beer?' ,使用 \
+
+c 取代，其后接字符串，这些字符串会取代n1，n2之间的行；nl 1.txt | sed '2,5c No any data' 将2到5行的数据取代
+  为No any data
+
+d 删除   nl /etc/passwd | sed '2,5d'，列出文件/etc/passwd的内容，并打印行号，同时删除2~5行 ；'2,$d'删除2到最后一行
+
+i 插入，其后接字符串，在当前行的上一行出现 ；nl 1.txt | sed '2i drink tea' 在第二行前加上drink tea 这行
+
+p 打印，将选择的行打印，与 -n 参数配合使用，只显示要打印的行，没有-n 参数会出现重复；
+  nl test.txt | sed -n '2,5p' 只列出2到5行
+
+s 取代，取代指定行下的字符串  sed '1,20s/old/new/g'； ifconfig eth0 | grep 'inet' | sed 's/`.*addr://g' | \ 
+  按下回车后再输入 sed  's/Bcast.*$//g'  使ifconfig eth0后只显示ip ；
+  cat /etc/man.config | grep 'MAN' | sed 's/#.*$//g' | \ 按下回车后再输入sed '/`$/d' 列出/etc/man.config 
+  文件中的内容，有MAN的设定就拿出来，但不要说明内容
+
+
+
+
+awk工具
+awk工具可以处理后接的文件，也可以读取来自前个指令的STDOUT；awk以 行 为一次处理的单位，以字段为最小的处理单位；
+awk主要处理每一行的字段内的数据，预设的字段分隔符为 空格键 或 tab键 ；
+
+常见使用格式    awk  '条件类型1{动作1}  条件类型2{动作2}...' filename 
+last | awk  '{print $1 "\t" $3}'   $1/$3,第一、三列；$0是一个变量，代表一整列的资料，第一行的$0即代表第一行所有字段信息
+
+awk内建变量
+NF 每一行（$0）拥有的字段总数；NR 目前awk所处理的是 第几行 的数据；FS 目前的分隔字符，预设是空格；
+last | awk  '{print $1 "\t lines:"  NR  "\t columes:"  NF}' 打印第一列数据，并且显示当前处理的是第几行、该行拥有的字段总数；
+
+awk的逻辑运算字符  >、<、>=、<=、==、!=
+cat /etc/passwd | awk  '{FS=":"}  $3 < 10 {print $1 "\t" $3}' 在文件/etc/passwd中以 ：为分隔符，查阅第三列小于10的数据，且仅
+列出第一列与第三列的数据；定义的分隔符是从文件的第二行开始起效的，第一行仍然以预设的空格为分隔符，使用BEGIN将第一行的分隔符
+也变为 ： ；
+
+利用awk进行计算
+cat 1.txt | \ 
+awk  'NR==1{printf "%10s %10s %10s %10s\n",$1,$2,$3,$4,"Total"}   awk支持if，该句可写为awk  '{if(NR==1) printf 
+NR>=2{total = $2 + $3 + $4
+printf "%10s %10d %10d %10d %10.2f\n",$1,$2,$3,$4,total}'   将第2、3、4列的数值相加后的和赋值给变量total，并且将处理结果
+进行格式化打印；不同于bash shell ，awk工具中，变量可以直接使用，不需要加上$；
+
+
+
+
+文件对比  diff  cmp 
+
+使用格式  diff -bBi from-file to-file  ；参数： -b，忽略一行当中仅是空格数量不同的差异，如about me 与 about   me ；
+
+-B 忽略空白行的差异；-i 忽略大小写的不同； from-file 原始比对的文件，to-file 目的比对的文件，这两个文件可以 - 取代，-代表STDIN；
+
+diff /etc/passwd  /tmp/etc/passwdtest  ； diff还可以用于比对目录
+
+
+cmp  -s  file1 file2  
+
+-s 将所有不同点的 位 都找出来；默认下cmp只会找出第一个不同的位；
+
+diff是以 行 为单位进行比对，cmp则是以 位 为单位进行比对，cmp可用于二进制文件的比对；
+
+
+patch 指令
+
+
+pr 对打印文件进行设置，如标题、页码等等
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
