@@ -1,0 +1,19 @@
+---
+layout:     post
+title:      ubuntu16.04安装chrome、pycharm等软件
+subtitle:   
+date:       2018-03-04
+author:     muyalei
+header-img: img/post-bg-ios9-web.jpg
+catalog: true
+tags:
+    - ubuntu
+---
+
+
+1.安装chrome[教程路径](https://jingyan.baidu.com/article/335530da98061b19cb41c31d.html)
+2.安装pycharm：
+  
+  pycharm官网下载对应版本，解压，执行bin目录下的pycharm.sh文件。
+  
+  之后命令行打开pycharm，也是执行该目录下的pycharm.sh文件。

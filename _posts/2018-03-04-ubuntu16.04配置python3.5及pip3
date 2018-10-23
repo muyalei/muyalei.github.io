@@ -1,0 +1,22 @@
+---
+layout:     post
+title:      ubuntu16.4配置python3.5及pip3
+subtitle:   
+date:       2018-03-04
+author:     muyalei
+header-img: img/post-bg-ios9-web.jpg
+catalog: true
+tags:
+    - ubuntu
+---
+
+
+  Ubuntu16.04 Server 安装完毕后自己带有 Python3.5.2版本，自行可以升级即可。<br>
+  Ubuntu16.04 Desktop 是否自带python3 没有测试，不确定。如果没有自带python3.5，```sudo apt-get install python3-pip```安装即可。<br>
+  不要使用```pip3 install --upgrade pip``` 命令升级默认的pip，会导致python2.7的pip用不了！<br>
+  如果不小心把python2的pip升级成python3的，用如下命令重新给python2安装pip:
+  ```
+   wget https://bootstrap.pypa.io/get-pip.py
+   sudo python  get-pip.py 
+  ```
+  
