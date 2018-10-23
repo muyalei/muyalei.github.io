@@ -1,3 +1,10 @@
+---
+layout: default
+title: python中csv模块的使用
+author: 穆亚磊
+tags:：
+   - python模块
+---
 #### csv简介
 CSV (Comma Separated Values)，即逗号分隔值（也称字符分隔值，因为分隔符可以不是逗号），是一种常用的文本
 格式，用以存储表格数据，包括数字或者字符。很多程序在处理数据时都会碰到csv这种格式的文件，它的使用是比
