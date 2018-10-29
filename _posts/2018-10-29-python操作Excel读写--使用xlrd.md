@@ -34,6 +34,7 @@ tags:
     table = data.sheet_by_name(u'Sheet1') #通过名称获取
  
     获取整行和整列的值（数组）
+
  　　
     table.row_values(i)
  
@@ -41,6 +42,7 @@ tags:
  
     获取行数和列数
 　　
+
     nrows = table.nrows
  
     ncols = table.ncols
