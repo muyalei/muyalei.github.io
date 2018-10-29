@@ -38,7 +38,8 @@ Issue Date: 09-17-2013
 
 　　3) Name:输入bleedfly Company:输入 bleedfly.com
 
-　　4) Serial number: 03-29-002542 
+　　4) Serial number: 03-29-002542
+ 
 　　　 License key: ADGB7V 9SHE34 Y2BST3 K78ZKF ADUPW4 K819ZW 4HVJCE P1NYRC
 
 　　5) Issue date: 09-17-2013
