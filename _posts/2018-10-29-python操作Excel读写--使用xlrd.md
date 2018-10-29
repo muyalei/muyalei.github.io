@@ -36,7 +36,7 @@ tags:
     获取整行和整列的值（数组）
 
  　　
-    table.row_values(i)
+    >table.row_values(i)
  
     table.col_values(i)
  
