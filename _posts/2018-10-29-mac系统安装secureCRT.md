@@ -9,7 +9,7 @@ tag:
 
 文章转载自[https://www.cnblogs.com/python-nameless/p/6925579.html](https://www.cnblogs.com/python-nameless/p/6925579.html)
 
-1. 先[下载SecureCRT和破解文件]()默认下载到了当前用户的”下载”目录中
+1. 先[下载SecureCRT和破解文件](https://github.com/muyalei/muyalei.github.io/tree/gh-pages/tools)默认下载到了当前用户的”下载”目录中
 
 2. 在”Finder”中 打开 “scrt-7.3.0-657.osx_x64.dmg” 并将 SecureCRT复制到”应用程序”中. 这时SecureCRT的路径是: /Applications/SecureCRT.app/Contents/MacOS/SecureCRT
 
