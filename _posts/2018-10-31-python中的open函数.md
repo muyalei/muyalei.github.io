@@ -48,9 +48,11 @@ test = [ "test1\n", "test2\n", "test3\n" ]
     f.close()
 ```
 （1）a+与w+模式的区别
+
 ![2018-10-31-python中的open方法_图片2.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-10-31-python%E4%B8%AD%E7%9A%84open%E5%87%BD%E6%95%B0_%E5%9B%BE%E7%89%872.jpg)
 
 （2）a+与r+模式
+
 ![2018-10-31-python中的open方法_图片3.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-10-31-python%E4%B8%AD%E7%9A%84open%E5%87%BD%E6%95%B0_%E5%9B%BE%E7%89%873.jpg)
 
 在写入文件前，我们在上面那段代码中加上一句 seek（6），用来定位写入文件写入位置。
