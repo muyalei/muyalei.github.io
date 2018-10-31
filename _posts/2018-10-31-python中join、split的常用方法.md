@@ -47,5 +47,5 @@ b.split("..",2)
  
 b.split("..",-1) 
 ['my', 'name', 'is', 'bob'] 
- 
-可以看出 b.split("..",-1)等价于b.split("..") 
+``` 
+可以看出b.split("..",-1)等价于b.split("..") 
