@@ -19,7 +19,7 @@ Console.ReadLine();
 ```
 结果：
 
-![2018-10-31-\r,\n,\r\n的区别_图片1.jpg]()
+![2018-10-31-\r,\n,\r\n的区别_图片1.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-10-31-%5Cr%2C%5Cn%2C%5Cr%5Cn%E7%9A%84%E5%8C%BA%E5%88%AB_%E5%9B%BE%E7%89%871.jpg)
 #### 回车、换行的区别  
 他们间的区别其实是个回车换行的问题
 
@@ -51,7 +51,7 @@ Unix系统里，每行结尾只有“<换行>”，即"\n"；Windows系统里面
 
 `$ echo -en '12\n34\r56\n\r78\r\n' > tmp.txt`
 
-![2018-10-31-\r,\n,\r\n的区别_图片2.jpg]()
+![2018-10-31-\r,\n,\r\n的区别_图片2.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-10-31-%5Cr%2C%5Cn%2C%5Cr%5Cn%E7%9A%84%E5%8C%BA%E5%88%AB_%E5%9B%BE%E7%89%872.jpg)
 
 分别在Windws和Linux中查看此文件可知:
 
