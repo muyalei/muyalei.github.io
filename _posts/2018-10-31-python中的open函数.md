@@ -20,7 +20,7 @@ closefd的取值，是与传入的文件参数有关，默认情况下为True，
 ### 二、file() 与open()
 两者都能够打开文件，对文件进行操作，也具有相似的用法和参数，但是，在我看来，这两种文件打开方式有本质的区别，file为文件类，用file()来打开文件，相当于这是在构造文件类，而用open()打开文件，是用python的内建函数来操作。
 ### 三、参数Mode的基本取值
-![2018-10-31-python中的open函数]()
+![2018-10-31-python中的open函数_图片1.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-10-31-python%E4%B8%AD%E7%9A%84open%E5%87%BD%E6%95%B0_%E5%9B%BE%E7%89%871.jpg)
 
 r、w、a为打开文件的基本模式，对应着只读、只写、追加模式；
 b、t、+、U这四个字符，与以上的文件打开模式组合使用，二进制模式，文本模式，读写模式、通用换行符，根据实际情况组合使用、
@@ -48,10 +48,10 @@ test = [ "test1\n", "test2\n", "test3\n" ]
     f.close()
 ```
 （1）a+与w+模式的区别
-![2018-10-31-python中的open方法_图片2.jpg]()
+![2018-10-31-python中的open方法_图片2.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-10-31-python%E4%B8%AD%E7%9A%84open%E5%87%BD%E6%95%B0_%E5%9B%BE%E7%89%872.jpg)
 
 （2）a+与r+模式
-![2018-10-31-python中的open方法_图片3.jpg]()
+![2018-10-31-python中的open方法_图片3.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-10-31-python%E4%B8%AD%E7%9A%84open%E5%87%BD%E6%95%B0_%E5%9B%BE%E7%89%873.jpg)
 
 在写入文件前，我们在上面那段代码中加上一句 seek（6），用来定位写入文件写入位置。
 
