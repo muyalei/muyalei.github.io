@@ -167,9 +167,9 @@ if __name__ == '__main__':
 在介绍DLL方法的时候本来想介绍直接向API传入图片数据（不读取文件）进行识别的，但折腾PIL库没有成功，不过网上倒有通过opencv成功的例子，但opencv太过重量级这里就不介绍了，感兴趣的话可以看参考链接。
 
 ### 参考
-- [tesseract-ocr/tesseract: Tesseract Open Source OCR Engine (main repository)](tesseract-ocr/tesseract: Tesseract Open Source OCR Engine (main repository))
-- [PyTesser Home Page](PyTesser Home Page)
-- [python - How to recognize data not filename using ctypes and tesseract 3.0.2? - Stack Overflow](python - How to recognize data not filename using ctypes and tesseract 3.0.2? - Stack Overflow)
-- [opencv - Using C API of tesseract 3.02 with ctypes and cv2 in python - Stack Overflow](opencv - Using C API of tesseract 3.02 with ctypes and cv2 in python - Stack Overflow)
+-  [tesseract-ocr/tesseract: Tesseract Open Source OCR Engine (main repository)](tesseract-ocr/tesseract: Tesseract Open Source OCR Engine (main repository))
+-  [PyTesser Home Page](PyTesser Home Page)
+-  [python - How to recognize data not filename using ctypes and tesseract 3.0.2? - Stack Overflow](python - How to recognize data not filename using ctypes and tesseract 3.0.2? - Stack Overflow)
+-  [opencv - Using C API of tesseract 3.02 with ctypes and cv2 in python - Stack Overflow](opencv - Using C API of tesseract 3.02 with ctypes and cv2 in python - Stack Overflow)
 
 
