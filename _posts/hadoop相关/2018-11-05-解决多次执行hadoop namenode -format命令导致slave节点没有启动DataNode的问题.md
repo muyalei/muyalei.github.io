@@ -2,7 +2,7 @@
 layout: default
 author: muyalei
 date: 2018-11-05
-title:解决多次执行hadoop namenode -format命令导致slave节点没有启动DataNode的问题
+title: 解决多次执行hadoop namenode -format命令导致slave节点没有启动DataNode的问题
 tags:
    - hadoop
 ---
