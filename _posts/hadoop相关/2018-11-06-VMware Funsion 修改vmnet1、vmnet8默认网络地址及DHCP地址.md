@@ -134,7 +134,7 @@ host vmnet8 {
  
  
 # NAT gateway address
-ip = 192.168.73.2   **注意：vmware fusion的默认网关地址是x.x.x.2**
+ip = 192.168.73.2 
 netmask = 255.255.255.0
  
 # VMnet device if not specified on command line
@@ -218,3 +218,9 @@ nbdsTimeout = 3
 # /Applications/Vmware\ Fusion.app/Contents/Library/vmnet-cli -c
 # /Applications/Vmware\ Fusion.app/Contents/Library/vmnet-cli -start
 ```
+
+---
+***
+**个人正理：**
+
+1. NAT模式下，vmware fusion 的默认网关地址是 x.x.x.2 
