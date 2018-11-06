@@ -7,6 +7,8 @@ tags:
    - 虚拟机
 ---
 
+转载自[https://blog.csdn.net/force_eagle/article/details/48418085](https://blog.csdn.net/force_eagle/article/details/48418085)
+
 vmnet1 & vmnet8 的配置文件位于 "/Applications/Vmware Fusion.app/Contents/Library" , 可修改默认地址也，vmnet8 还可以添加映射端口。
 VMware Funsion 版本为 8.
 ```
