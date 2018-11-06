@@ -2,7 +2,7 @@
 layout: default
 author: muyalei
 date: 2018-11-06
-title: "hadoop报错：WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicabl”"
+title: "hadoop报错：WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicabl"
 tags:
    - hadoop
 ---
