@@ -7,6 +7,8 @@ tags:
    - hadoop
 ---
 
+转载自[https://blog.csdn.net/l1028386804/article/details/51538611](https://blog.csdn.net/l1028386804/article/details/51538611)
+
 安装Hadoop的时候直接用的bin版本，根据教程安装好之后运行的时候发现出现了：WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable 错误，百度很多都说是版本（32,64）问题，需要重新编译源码，历经一天的时间源码重新编译完成之后，再次运行仍旧有这个错误，google的解决方案是：
 
 1. 执行：` export HADOOP_ROOT_LOGGER=DEBUG,console`
