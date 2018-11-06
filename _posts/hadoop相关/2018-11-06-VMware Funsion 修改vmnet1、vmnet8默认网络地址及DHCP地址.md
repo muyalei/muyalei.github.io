@@ -221,6 +221,6 @@ nbdsTimeout = 3
 
 ---
 ***
-**个人正理：**
+**个人整理：**
 
 1. NAT模式下，vmware fusion 的默认网关地址是 x.x.x.2 
