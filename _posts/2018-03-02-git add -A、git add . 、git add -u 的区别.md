@@ -77,7 +77,7 @@ git status
 git版本不同会有所区别：
 
 Git Version 1.x: 
-![]()
+![2018-03-02-git add -A、git add . 、git add -u 的区别_图片1.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-03-02-git%20add%20-A、git%20add%20.%20、git%20add%20-u%20的区别_图片1.jpg)
 
 Git Version 2.x: 
-![]()
+![2018-03-02-git add -A、git add . 、git add -u 的区别_图片2.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-03-02-git%20add%20-A、git%20add%20.%20、git%20add%20-u%20的区别_图片2.jpg)
