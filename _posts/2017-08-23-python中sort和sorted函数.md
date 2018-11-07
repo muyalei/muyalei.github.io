@@ -11,7 +11,7 @@ tags:
 
 python中列表的内置函数sort（）可以对列表中的元素进行排序，而全局性的sorted（）函数则对所有可迭代的序列都是适用的；并且sort（）函数是内置函数，会改变当前对象，而sorted（）函数只会返回一个排序后的当前对象的副本，而不会改变当前对象。
 
-1. **内置函数sort（）**
+### 内置函数sort（）
 
 原型：sort（fun，key，reverse=False）
 
@@ -77,7 +77,9 @@ operator.itemgetter(item) operator.itemgetter(*items)这个函数会调用所传
 - attrgetter
 
 operator.attrgetter(attr) operator.attrgetter(*attrs)这个函数返回一个带有操作数中的attr属性的可调用对象，如果多个属性被传入，那么返回带有这些属性的元组。这些属性的名字里可以包含包含多个子名字例如：f = attrgetter('name'), 调用f(b) 将返回b.name.f = attrgetter('name', 'date'), 调用 f(b) 将返回(b.name, b.date).f = attrgetter('name.first', 'name.last'), 调用f(b) 将返回 (b.name.first, b.name.last). 
-2. **全局函数sorted（）**
+
+
+### 全局函数sorted（）
 
 对于sorted（）函数中key的重写，和sort（）函数中是一样的，所以刚刚对于sort（）中讲解的方法，都是适用于sorted（）函数中，在下面的解释中我也就不再列举了，并且下面将要讲解的key的重写也同样是适用于sort（）函数的，那么为什么不再sort（）函数中列举完呢，那是为了不偏不倚，给大家一个客观地理解。
 
