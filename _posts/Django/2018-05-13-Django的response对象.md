@@ -9,9 +9,9 @@ tags:
 
 ***整理自[https://www.cnblogs.com/scolia/p/5635546.html](https://www.cnblogs.com/scolia/p/5635546.html)***
 
-    回顾 HTTP 协议的通信核心，无非就是请求报文和响应报文之间的交互。而请求报文由客户端生成，也就是用户的浏览器；响应报文则由服务器生成，作为web应用的开发者，大多数工作就是构造一个合适的响应报文。在 django 中，请求报文已经被封装成了 HttpRequest 对象，该对象的创建是自动的，且会传递给视图函数作为第一个参数。而 HttpResponse 对象则需要 web 开发者自己创建，一般在视图函数中 return 回去。下面我们就来看看 HttpResponse 对象的各种细节。
+回顾 HTTP 协议的通信核心，无非就是请求报文和响应报文之间的交互。而请求报文由客户端生成，也就是用户的浏览器；响应报文则由服务器生成，作为web应用的开发者，大多数工作就是构造一个合适的响应报文。在 django 中，请求报文已经被封装成了 HttpRequest 对象，该对象的创建是自动的，且会传递给视图函数作为第一个参数。而 HttpResponse 对象则需要 web 开发者自己创建，一般在视图函数中 return 回去。下面我们就来看看 HttpResponse 对象的各种细节。
 
-    首先，这个对象由 HttpResponse 类创建，这个类位于 django.http 模块中，所以在使用的时候还先从模块中导入这个类。
+首先，这个对象由 HttpResponse 类创建，这个类位于 django.http 模块中，所以在使用的时候还先从模块中导入这个类。
 
 例如：
 ```
