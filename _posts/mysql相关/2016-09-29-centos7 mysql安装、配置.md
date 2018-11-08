@@ -161,7 +161,7 @@ mysql配置文件为/etc/my.cnf
 default-character-set =utf8
 ```
 这里的字符编码必须和/usr/share/mysql/charsets/Index.xml中一致。
-![]()
+![2016-09-29-centos7 mysql安装、配置_图片](2016-09-29-centos7 mysql安装、配置_图片)
 
 ### 2、远程连接设置
 把在所有数据库的所有表的所有权限赋值给位于所有IP地址的root用户。
