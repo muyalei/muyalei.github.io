@@ -218,3 +218,348 @@ class Girl(models.Model):
 # 铁锤，钢弹，如花
 ```
 
+
+
+
+#### TIPS:
+1. modles.py中class设置的数据,本身返回为一个类,如果想直接返回某一个字段的值,可以定义`__str__`,比如:
+```
+class TypeUser(models.Model):
+    name = models.CharFiled(max_length=32)
+    def __str__(self):
+        return self.name
+```
+
+2. 在设置ForeignKey时,参数中的第一个参数为表名,\*\*需要注意的是,加不加引号有区别:加引号后表的定义顺序可以随便,但不加引号必须按照顺序来:
+```
+class userinfo(models.Model):
+    nid = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=30, verbose_name='用户名',editable=False)
+    email = models.EmailField(db_index=True)
+    memo = models.TextField()
+    img = models.ImageField(upload_to='upload')
+    user_type = models.ForeignKey("UserType", null=True, blank=True)# unique
+    # user_type = models.OneToOneField("UserType", null=True, blank=True)# unique
+    # ctime = models.DateTimeField(auto_now_add=True)
+    # uptime = models.DateTimeField(auto_now=True)
+
+    # gender = models.ForeignKey(Gender)
+    gender_choices = (
+        (0, "男"),
+        (1, "女"),
+    )
+    gender = models.IntegerField(choices=gender_choices,default=1)
+
+class UserType(models.Model):
+    name = models.CharField(max_length=32)
+    def __str__(self):
+        return self.name
+```
+3. 多对多,有两种创建方式
+
+   1. 自建第三张表
+   
+   2. 自动创建,比如:
+      ```
+      #自建第三张表
+      class B2G(models.Model):
+          boy = models.ForeignKey('Boy')
+          girl = models.ForeignKey('Girl')
+
+      class Boy(models.Model):
+          name = models.CharField(max_length=32)
+          # 吴文煜，王建，王志刚，杜宝强
+
+      class Girl(models.Model):
+          name = models.CharField(max_length=32)
+          #自动创建
+          f = models.ManyToManyField(Boy)
+      ```
+
+多对多详情参考：[http://www.cnblogs.com/zknublx/p/5959295.html](http://www.cnblogs.com/zknublx/p/5959295.html)
+
+4. queryset
+
+从数据库中提取出来的数据为queryset类型,是Django中的一种特殊类型.
+```
+w = models.Simp.objects.all()
+print(w, type(w))
+[<Simp: chenc>, <Simp: zan>, <Simp: zhangsan>]<class 'django.db.models.query.QuerySet'>
+```
+可以看到，从数据库取出个数据看起来像包含对象的列表。而实际上整个数据为django中的特殊类型QuerySet。
+
+如果需要查看原来的SQL语句,可以使用`queryset.query`:
+
+`print(w.query)`
+
+5. values() 和 vlue_list() 与 all()区别
+
+.all()是取得所有列的数据，可以加.values()取出某一列，每一个元素为一个字典：
+```
+obj = model.UserInfo.objects.filter(name='alex').values('id','email')
+# select id from userinfo where name = 'alex'
+
+queryset -> python，Django的类
+[{'id':1},{'id': 2},]
+```
+values_list()，获取到的元素为一个个元组,也可以加多个参数来获取多列:
+```
+obj = model.UserInfo.objects.filter(name='alex').value_list('id','email')
+# select id from userinfo where name = 'alex'
+
+queryset -> python，Django的类
+[(1,'1@qq.com'),(2,'alex@11.com'),]
+```
+
+### 表操作
+#### 基本操作
+```
+# 增
+    #
+    # models.Tb1.objects.create(c1='xx', c2='oo')  增加一条数据，可以接受字典类型数据 **kwargs
+
+    # obj = models.Tb1(c1='xx', c2='oo')
+    # obj.save()
+
+    # 查
+    #
+    # models.Tb1.objects.get(id=123)         # 获取单条数据，不存在则报错（不建议）
+    # models.Tb1.objects.all()               # 获取全部
+    # models.Tb1.objects.filter(name='seven') # 获取指定条件的数据
+
+    # 删
+    #
+    # models.Tb1.objects.filter(name='seven').delete() # 删除指定条件的数据
+
+    # 改
+    # models.Tb1.objects.filter(name='seven').update(gender='0')  # 将指定条件的数据更新，均支持 **kwargs
+    # obj = models.Tb1.objects.get(id=1)
+    # obj.c1 = '111'
+    # obj.save()                                                 # 修改单条数据
+```
+
+#### 进阶操作(了不起的双下划线)
+利用双下划线将字段和对应的操作连接起来
+```
+# 获取个数
+    #
+    # models.Tb1.objects.filter(name='seven').count()
+
+    # 大于，小于
+    #
+    # models.Tb1.objects.filter(id__gt=1)              # 获取id大于1的值
+    # models.Tb1.objects.filter(id__lt=10)             # 获取id小于10的值
+    # models.Tb1.objects.filter(id__lt=10, id__gt=1)   # 获取id大于1 且 小于10的值
+
+    # in
+    #
+    # models.Tb1.objects.filter(id__in=[11, 22, 33])   # 获取id等于11、22、33的数据
+    # models.Tb1.objects.exclude(id__in=[11, 22, 33])  # not in
+
+    # contains
+    #
+    # models.Tb1.objects.filter(name__contains="ven")
+    # models.Tb1.objects.filter(name__icontains="ven") # icontains大小写不敏感
+    # models.Tb1.objects.exclude(name__icontains="ven")
+
+    # range
+    #
+    # models.Tb1.objects.filter(id__range=[1, 2])   # 范围bettwen and
+
+    # 其他类似
+    #
+    # startswith，istartswith, endswith, iendswith,
+
+    # order by
+    #
+    # models.Tb1.objects.filter(name='seven').order_by('id')    # asc
+    # models.Tb1.objects.filter(name='seven').order_by('-id')   # desc
+
+    # limit 、offset
+    #
+    # models.Tb1.objects.all()[10:20]
+
+    # group by
+    from django.db.models import Count, Min, Max, Sum
+    # models.Tb1.objects.filter(c1=1).values('id').annotate(c=Count('num'))
+    # SELECT "app01_tb1"."id", COUNT("app01_tb1"."num") AS "c" FROM "app01_tb1" WHERE "app01_tb1"."c1" = 1 GROUP BY "app01_tb1"."id"
+```
+
+
+
+
+#### 连表操作(了不起的双下划线)
+利用双下划线和` _set `将表之间的操作连接起来
+
+数据库表结构:
+```
+class UserProfile(models.Model):
+    user_info = models.OneToOneField('UserInfo')
+    username = models.CharField(max_length=64)
+    password = models.CharField(max_length=64)
+
+    def __unicode__(self):
+        return self.username
+
+
+class UserInfo(models.Model):
+    user_type_choice = (
+        (0, u'普通用户'),
+        (1, u'高级用户'),
+    )
+    user_type = models.IntegerField(choices=user_type_choice)
+    name = models.CharField(max_length=32)
+    email = models.CharField(max_length=32)
+    address = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return self.name
+
+
+class UserGroup(models.Model):
+
+    caption = models.CharField(max_length=64)
+
+    user_info = models.ManyToManyField('UserInfo')
+
+    def __unicode__(self):
+        return self.caption
+
+
+class Host(models.Model):
+    hostname = models.CharField(max_length=64)
+    ip = models.GenericIPAddressField()
+    user_group = models.ForeignKey('UserGroup')
+
+    def __unicode__(self):
+        return self.hostname
+```
+一对一操作:
+```
+user_info_obj = models.UserInfo.objects.filter(id=1).first()
+print user_info_obj.user_type
+print user_info_obj.get_user_type_display()
+print user_info_obj.userprofile.password
+ 
+user_info_obj = models.UserInfo.objects.filter(id=1).values('email', 'userprofile__username').first()
+print user_info_obj.keys()
+print user_info_obj.values()
+```
+一对多操作,类似于一对一:
+
+1、搜索条件使用 __ 连接
+
+2、获取值时使用 .    连接
+
+多对多操作:
+```
+user_info_obj = models.UserInfo.objects.get(name=u'武沛齐')
+user_info_objs = models.UserInfo.objects.all()
+ 
+group_obj = models.UserGroup.objects.get(caption='CEO')
+group_objs = models.UserGroup.objects.all()
+ 
+# 添加数据
+#group_obj.user_info.add(user_info_obj)
+#group_obj.user_info.add(*user_info_objs)
+ 
+# 删除数据
+#group_obj.user_info.remove(user_info_obj)
+#group_obj.user_info.remove(*user_info_objs)
+ 
+# 添加数据
+#user_info_obj.usergroup_set.add(group_obj)
+#user_info_obj.usergroup_set.add(*group_objs)
+ 
+# 删除数据
+#user_info_obj.usergroup_set.remove(group_obj)
+#user_info_obj.usergroup_set.remove(*group_objs)
+ 
+# 获取数据
+#print group_obj.user_info.all()
+#print group_obj.user_info.all().filter(id=1)
+ 
+# 获取数据
+#print user_info_obj.usergroup_set.all()
+#print user_info_obj.usergroup_set.all().filter(caption='CEO')
+#print user_info_obj.usergroup_set.all().filter(caption='DBA')
+```
+
+其他操作:
+```
+# F 使用查询条件的值
+    #
+    # from django.db.models import F
+    # models.Tb1.objects.update(num=F('num')+1)
+
+    # Q 构建搜索条件
+    from django.db.models import Q
+    # con = Q()
+    #
+    # q1 = Q()
+    # q1.connector = 'OR'
+    # q1.children.append(('id', 1))
+    # q1.children.append(('id', 10))
+    # q1.children.append(('id', 9))
+    #
+    # q2 = Q()
+    # q2.connector = 'OR'
+    # q2.children.append(('c1', 1))
+    # q2.children.append(('c1', 10))
+    # q2.children.append(('c1', 9))
+    #
+    # con.add(q1, 'AND')
+    # con.add(q2, 'AND')
+    #
+    # models.Tb1.objects.filter(con)
+
+    #
+    # from django.db import connection
+    # cursor = connection.cursor()
+    # cursor.execute("""SELECT * from tb where name = %s""", ['Lennon'])
+    # row = cursor.fetchone()
+```
+**xx_set中的`_set`是多对多的固定搭配**
+
+
+
+
+
+### 扩展
+#### 自定义上传
+```
+def upload_file(request):
+    if request.method == "POST":
+        obj = request.FILES.get('fafafa')
+        f = open(obj.name, 'wb')
+        for chunk in obj.chunks():
+            f.write(chunk)
+        f.close()
+    return render(request, 'file.html')
+```
+form上传文件实例
+```
+class FileForm(forms.Form):
+    ExcelFile = forms.FileField()
+```
+models.py:
+```
+from django.db import models
+
+class UploadFile(models.Model):
+    userid = models.CharField(max_length = 30)
+    file = models.FileField(upload_to = './upload/')
+    date = models.DateTimeField(auto_now_add=True)
+```
+view.py:
+```
+def UploadFile(request):
+    uf = AssetForm.FileForm(request.POST,request.FILES)
+    if uf.is_valid():
+            upload = models.UploadFile()
+            upload.userid = 1
+            upload.file = uf.cleaned_data['ExcelFile']
+            upload.save()
+            
+            print upload.file
+```
