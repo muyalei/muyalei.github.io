@@ -69,7 +69,7 @@ mysql>drop database mydb;
 ```
 
 
-####修改指定用户密码。
+#### 修改指定用户密码。
 ```
 @>mysql -u root -p
 @>密码
