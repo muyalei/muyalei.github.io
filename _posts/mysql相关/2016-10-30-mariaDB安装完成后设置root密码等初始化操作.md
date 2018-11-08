@@ -13,11 +13,9 @@ tags:
 1.以root身份在终端登陆(必须)
 
 2.输入 mysqladmin -u root -p password ex
-
 后面的 ex 是要设置的密码
 
 3.回车后出现 Enter password 
-
 输入就密码，如果没有，直接回车
 
  
