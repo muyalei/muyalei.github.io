@@ -54,7 +54,7 @@ tags:
     - 长整形
     - integer_field_ranges = {
 
-　　      'SmallIntegerField': (-32768, 32767),
+          'SmallIntegerField': (-32768, 32767),
 
 　　　　  'IntegerField': (-2147483648, 2147483647),
 
