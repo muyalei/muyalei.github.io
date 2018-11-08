@@ -11,48 +11,49 @@ tags:
 
 ### django模型models常用字段
 1. models.AutoField　　
-  - 自增列 = int(11)
-  - 如果没有的话，默认会生成一个名称为 id 的列
-  - 如果要显式的自定义一个自增列，必须设置primary_key=True。
+   - 自增列 = int(11)
+   - 如果没有的话，默认会生成一个名称为 id 的列
+   - 如果要显式的自定义一个自增列，必须设置primary_key=True。
  
 2. models.CharField　　
-  - 字符串字段
-　- 必须设置max_length参数
+   - 字符串字段
+   - 必须设置max_length参数
  
 3. models.BooleanField　　
-  - 布尔类型=tinyint(1)
-　- 不能为空，可添加Blank=True
+   - 布尔类型=tinyint(1)
+ 　- 不能为空，可添加Blank=True
  
 4. models.ComaSeparatedIntegerField　　
-  - 用逗号分割的数字=varchar
-　- 继承CharField，所以必须 max_lenght 参数
+   - 用逗号分割的数字=varchar
+   - 继承CharField，所以必须 max_lenght 参数
  
 5. models.DateField
-  - 日期类型 date
-　- DateField.auto_now：保存时自动设置该字段为现在日期，最后修改日期
-  - DateField.auto_now_add：当该对象第一次被创建是自动设置该字段为现在日期，创建日期。
+   - 日期类型 date
+ 　- DateField.auto_now：保存时自动设置该字段为现在日期，最后修改日期
+   - DateField.auto_now_add：当该对象第一次被创建是自动设置该字段为现在日期，创建日期。
  
 6. models.DateTimeField　　
-  - 日期时间类型 datetime
-　- 同DateField的参数
+   - 日期时间类型 datetime
+ 　- 同DateField的参数
  
 7. models.Decimal　　
-  - 十进制小数类型 = decimal
-  - DecimalField.max_digits：数字中允许的最大位数
-  - DecimalField.decimal_places：存储的十进制位数
+   - 十进制小数类型 = decimal
+   - DecimalField.max_digits：数字中允许的最大位数
+   - DecimalField.decimal_places：存储的十进制位数
  
 8. models.EmailField　　
-　- 一个带有检查 Email 合法性的 CharField
+   - 一个带有检查 Email 合法性的 CharField
  
 9. models.FloatField　　
-  - 浮点类型 = double
+   - 浮点类型 = double
  
 10. models.IntegerField　　
    - 整形
  
 11. models.BigIntegerField　　
-    - 长整形
-　　- integer_field_ranges = {
+   - 长整形
+   - 
+   integer_field_ranges = {
 
 　　      'SmallIntegerField': (-32768, 32767),
 
@@ -63,16 +64,16 @@ tags:
 　　　　  'PositiveSmallIntegerField': (0, 32767),
 
 　　　　  'PositiveIntegerField': (0, 2147483647),
-　　  }
+   }
     
 12. models.GenericIPAddressField　　
    - 一个带有检查 IP地址合法性的 CharField
  
 13. models.NullBooleanField　　
-    - 允许为空的布尔类型
+   - 允许为空的布尔类型
  
 14. models.PositiveIntegerFiel　　
-    - 正整数
+   - 正整数
  
 15. models.PositiveSmallIntegerField　　
    - 正smallInteger
@@ -82,7 +83,7 @@ tags:
  
 17. models.SmallIntegerField　　
    - 数字
-　 - 数据库中的字段有：tinyint、smallint、int、bigint
+   - 数据库中的字段有：tinyint、smallint、int、bigint
  
 18. models.TextField　　
    - 大文本。默认对应的form标签是textarea。
@@ -113,9 +114,9 @@ tags:
    - FilePathField.match：用于过滤路径下文件名的正则表达式，该表达式将用在文件名上（不包括路径）。
    - FilePathField.recursive：True 或 False，默认为 False，指定是否应包括所有子目录的路径。
      
-例如：FilePathField(path="/home/images", match="foo.*", recursive=True)
+     例如：FilePathField(path="/home/images", match="foo.*", recursive=True)
 
-将匹配“/home/images/foo.gif”但不匹配“/home/images/foo/bar.gif”    
+     将匹配“/home/images/foo.gif”但不匹配“/home/images/foo/bar.gif”    
 
 ### django模型models字段常用参数
  
