@@ -112,9 +112,8 @@ tags:
 24. models.FilePathField(path=None[, math=None, recursive=False, max_length=100, **options])
     - FilePathField.path：文件的绝对路径，必填
     - FilePathField.match：用于过滤路径下文件名的正则表达式，该表达式将用在文件名上（不包括路径）。
-    - FilePathField.recursive：True 或 False，默认为 False，指定是否应包括所有子目录的路径。
-     
-      例如：FilePathField(path="/home/images", match="foo.*", recursive=True)
+    - FilePathField.recursive：True 或 False，默认为 False，指定是否应包括所有子目录的路径。 
+    - 例如：FilePathField(path="/home/images", match="foo.*", recursive=True)
 
       将匹配“/home/images/foo.gif”但不匹配“/home/images/foo/bar.gif”    
 
