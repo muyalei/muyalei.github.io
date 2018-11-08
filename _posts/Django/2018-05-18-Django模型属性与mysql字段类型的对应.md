@@ -48,11 +48,11 @@ tags:
    - 浮点类型 = double
  
 10. models.IntegerField　　
-   - 整形
+    - 整形
  
 11. models.BigIntegerField　　
-   - 长整形
-   -
+    - 长整形
+    -
  
      integer_field_ranges = {
 
