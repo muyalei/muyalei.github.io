@@ -52,9 +52,7 @@ tags:
  
 11. models.BigIntegerField　　
     - 长整形
-    -
- 
-     integer_field_ranges = {
+    - integer_field_ranges = {
 
 　　      'SmallIntegerField': (-32768, 32767),
 
@@ -66,79 +64,79 @@ tags:
 
 　　　　  'PositiveIntegerField': (0, 2147483647),
   
-     }
+      }
     
 12. models.GenericIPAddressField　　
-   - 一个带有检查 IP地址合法性的 CharField
+    - 一个带有检查 IP地址合法性的 CharField
  
 13. models.NullBooleanField　　
-   - 允许为空的布尔类型
+    - 允许为空的布尔类型
  
 14. models.PositiveIntegerFiel　　
-   - 正整数
+    - 正整数
  
 15. models.PositiveSmallIntegerField　　
-   - 正smallInteger
+    - 正smallInteger
  
 16. models.SlugField　　
-   - 减号、下划线、字母、数字
+    - 减号、下划线、字母、数字
  
 17. models.SmallIntegerField　　
-   - 数字
-   - 数据库中的字段有：tinyint、smallint、int、bigint
+    - 数字
+    - 数据库中的字段有：tinyint、smallint、int、bigint
  
 18. models.TextField　　
-   - 大文本。默认对应的form标签是textarea。
+    - 大文本。默认对应的form标签是textarea。
  
 19. models.TimeField　　
-   - 时间 HH:MM[:ss[.uuuuuu]]
+    - 时间 HH:MM[:ss[.uuuuuu]]
  
 20. models.URLField　　
-   - 一个带有URL合法性校验的CharField。
+    - 一个带有URL合法性校验的CharField。
  
 21. models.BinaryField　　
-   - 二进制
-   - 存储二进制数据。不能使用filter函数获得QuerySet。
+    - 二进制
+    - 存储二进制数据。不能使用filter函数获得QuerySet。
  
 22. models.ImageField   
-   - 图片
-   - ImageField.height_field、ImageField.width_field：如果提供这两个参数，则图片将按提供的高度和宽度规格保存。
-   - 该字段要求 Python Imaging 库Pillow。
-   - 会检查上传的对象是否是一个合法图片。
+    - 图片
+    - ImageField.height_field、ImageField.width_field：如果提供这两个参数，则图片将按提供的高度和宽度规格保存。
+    - 该字段要求 Python Imaging 库Pillow。
+    - 会检查上传的对象是否是一个合法图片。
  
 23. models.FileField(upload_to=None[, max_length=100, ** options])
-   - 文件
-   - FileField.upload_to：一个用于保存上传文件的本地文件系统路径，该路径由 MEDIA_ROOT 中设置
-   - 这个字段不能设置primary_key和unique选项.在数据库中存储类型是varchar，默认最大长度为100
+    - 文件
+    - FileField.upload_to：一个用于保存上传文件的本地文件系统路径，该路径由 MEDIA_ROOT 中设置
+    - 这个字段不能设置primary_key和unique选项.在数据库中存储类型是varchar，默认最大长度为100
  
 24. models.FilePathField(path=None[, math=None, recursive=False, max_length=100, **options])
-   - FilePathField.path：文件的绝对路径，必填
-   - FilePathField.match：用于过滤路径下文件名的正则表达式，该表达式将用在文件名上（不包括路径）。
-   - FilePathField.recursive：True 或 False，默认为 False，指定是否应包括所有子目录的路径。
+    - FilePathField.path：文件的绝对路径，必填
+    - FilePathField.match：用于过滤路径下文件名的正则表达式，该表达式将用在文件名上（不包括路径）。
+    - FilePathField.recursive：True 或 False，默认为 False，指定是否应包括所有子目录的路径。
      
-     例如：FilePathField(path="/home/images", match="foo.*", recursive=True)
+      例如：FilePathField(path="/home/images", match="foo.*", recursive=True)
 
-     将匹配“/home/images/foo.gif”但不匹配“/home/images/foo/bar.gif”    
+      将匹配“/home/images/foo.gif”但不匹配“/home/images/foo/bar.gif”    
 
 ### django模型models字段常用参数
  
 1. null
-  - 如果是True，Django会在数据库中将此字段的值置为NULL，默认值是False
+   - 如果是True，Django会在数据库中将此字段的值置为NULL，默认值是False
  
 2. blank
-　- 如果为True时django的 Admin 中添加数据时可允许空值，可以不填。如果为False则必须填。默认是False。
-  - null纯粹是与数据库有关系的。而blank是与页面必填项验证有关的
+   - 如果为True时django的 Admin 中添加数据时可允许空值，可以不填。如果为False则必须填。默认是False。
+   - null纯粹是与数据库有关系的。而blank是与页面必填项验证有关的
  
 3. primary_key = False
-　- 主键，对AutoField设置主键后，就会代替原来的自增 id 列
+   - 主键，对AutoField设置主键后，就会代替原来的自增 id 列
  
 4. auto_now 和 auto_now_add
-　- auto_now   自动创建---无论添加或修改，都是当前操作的时间
-　- auto_now_add  自动创建---永远是创建时的时间
+   - auto_now   自动创建---无论添加或修改，都是当前操作的时间
+   - auto_now_add  自动创建---永远是创建时的时间
  
 5. choices
-  - 一个二维的元组被用作choices，如果这样定义，Django会select box代替普通的文本框，
-  - 并且限定choices的值是元组中的值
+   - 一个二维的元组被用作choices，如果这样定义，Django会select box代替普通的文本框，
+   - 并且限定choices的值是元组中的值
   ```
       GENDER_CHOICE = (
             (u'M', u'Male'),
