@@ -206,8 +206,7 @@ class UserInfo(models.Model):
 
 执行结果：
 
-![2018-05-18-Django模型属性与mysql字段类型的对应_图片]()
-
+![2018-05-18-Django模型属性与mysql字段类型的对应_图片](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-05-18-Django模型属性与mysql字段类型的对应_图片.png)
 ### 常见异常处理
 - *ERRORS：*
 
