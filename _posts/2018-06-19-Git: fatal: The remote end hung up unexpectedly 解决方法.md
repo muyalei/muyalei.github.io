@@ -2,7 +2,7 @@
 layout: default
 author: muyalei
 date: 2018-06-19
-title: Git: fatal: The remote end hung up unexpectedly 解决方法
+title: "Git: fatal: The remote end hung up unexpectedly 解决方法"
 tags:
    - git
 ---
