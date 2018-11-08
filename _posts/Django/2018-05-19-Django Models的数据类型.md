@@ -7,6 +7,8 @@ tags:
    - django
 ---
 
+***转载自[http://www.cnblogs.com/zknublx/p/5944779.html](http://www.cnblogs.com/zknublx/p/5944779.html)***
+
 ## Django中的页面管理后台
 Djano中自带admin后台管理模块,可以通过web页面去管理,有点想php-admin,使用步骤:
 
