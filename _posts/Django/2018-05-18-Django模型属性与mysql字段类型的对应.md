@@ -52,8 +52,9 @@ tags:
  
 11. models.BigIntegerField　　
    - 长整形
-   - 
-   integer_field_ranges = {
+   -
+ 
+     integer_field_ranges = {
 
 　　      'SmallIntegerField': (-32768, 32767),
 
@@ -64,7 +65,8 @@ tags:
 　　　　  'PositiveSmallIntegerField': (0, 32767),
 
 　　　　  'PositiveIntegerField': (0, 2147483647),
-   }
+  
+     }
     
 12. models.GenericIPAddressField　　
    - 一个带有检查 IP地址合法性的 CharField
