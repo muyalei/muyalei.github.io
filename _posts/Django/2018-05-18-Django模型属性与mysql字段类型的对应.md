@@ -10,6 +10,8 @@ tags:
     - Django
 ---
 
+转自[http://www.cnblogs.com/PythonHomePage/p/7634390.html](http://www.cnblogs.com/PythonHomePage/p/7634390.html)
+
 ### django模型models常用字段
 1.models.AutoField　　
   - 自增列 = int(11)
@@ -232,4 +234,3 @@ Type 'exit' to exit this prompt
 
 
 转自[http://www.cnblogs.com/PythonHomePage/p/7634390.html](http://www.cnblogs.com/PythonHomePage/p/7634390.html)
-                
