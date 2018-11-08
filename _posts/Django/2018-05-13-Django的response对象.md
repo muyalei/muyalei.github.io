@@ -13,91 +13,90 @@ tags:
 
 首先，这个对象由 HttpResponse 类创建，这个类位于 django.http 模块中，所以在使用的时候还先从模块中导入这个类。
 
-例如：`from django.http import HttpResponse`，然后，我们需要知道传递什么参数，这个时候先看看其构造函数是怎么样的。
+例如：`from django.http import HttpResponse`
+
+然后，我们需要知道传递什么参数，这个时候先看看其构造函数是怎么样的。
 ```
 HttpResponse.__init__(content='', content_type=None, status=200, reason=None, charset=None) 
 ```
-　　content：可以是一个迭代器或字符串。如果是一个迭代器，HttpResponse 将立即处理这个迭代器, 把它的内容转成字符串，并丢弃这个迭代器。如果你需要从迭代器到客户端的数据响应以数据流的形式, 你必须用 StreamingHttpResponse 类代替；如果是一个字符串（迭代器处理后的或手动传入的），那么这个字符串将作为相应报文的主体内容，也就是说如果是一个 http 文档，那么这个文档将会放入响应报文的主体中，最后在浏览器中显示，这也是最为常用的方式之一。
+- content：可以是一个迭代器或字符串。如果是一个迭代器，HttpResponse 将立即处理这个迭代器, 把它的内容转成字符串，并丢弃这个迭代器。如果你需要从迭代器到客户端的数据响应以数据流的形式, 你必须用 StreamingHttpResponse 类代替；如果是一个字符串（迭代器处理后的或手动传入的），那么这个字符串将作为相应报文的主体内容，也就是说如果是一个 http 文档，那么这个文档将会放入响应报文的主体中，最后在浏览器中显示，这也是最为常用的方式之一。
 
-　　content_type：用于指定 MIME 类型和编码，例如：“text/html; charset=utf-8”。客户端需要知道主体是什么类型的资源，才能调用相应的插件或内置的程序去处理。如果不传入，也就是为 None 时，将使用 DEFAULT_CONTENT_TYPE 的值来指定 MIME 类型，这个值默认为：'text/html';使用 DEFAULT_CHARSET 的值来指定文件编码，默认为：'utf-8'。
+- content_type：用于指定 MIME 类型和编码，例如：“text/html; charset=utf-8”。客户端需要知道主体是什么类型的资源，才能调用相应的插件或内置的程序去处理。如果不传入，也就是为 None 时，将使用 DEFAULT_CONTENT_TYPE 的值来指定 MIME 类型，这个值默认为：'text/html';使用 DEFAULT_CHARSET 的值来指定文件编码，默认为：'utf-8'。
 
-　　status：响应状态码，200代表成功，一般不需要改变，除非有特殊要求。
+- status：响应状态码，200代表成功，一般不需要改变，除非有特殊要求。
 
-　　reason：原因短语，也就是 200 ok 中的 ‘ok’，因为客户端是根据状态码来判断响应是否成功的，所以 reason 的影响几乎为 0 ，只是对人的提醒而已。如果没有指定, 则使用默认响应短语。也就是 200 就对应于 ok，404 就对应于 not found。
+- reason：原因短语，也就是 200 ok 中的 ‘ok’，因为客户端是根据状态码来判断响应是否成功的，所以 reason 的影响几乎为 0 ，只是对人的提醒而已。如果没有指定, 则使用默认响应短语。也就是 200 就对应于 ok，404 就对应于 not found。
 
-　　charset：在response中被编码的字符集。如果没有给定（也就是为None），将会从 content_type 中提取，如果提取不成功， 那么 DEFAULT_CHARSET 的设定将被使用。
+- charset：在response中被编码的字符集。如果没有给定（也就是为None），将会从 content_type 中提取，如果提取不成功， 那么 DEFAULT_CHARSET 的设定将被使用。
  
 同样的，我们可以使用相关的属性去查看这些值：
 
+- `HttpResponse.content` ：表示内容的字符串，对应于我们传入的 content 参数的值。
 
-`HttpResponse.content` ：表示内容的字符串，对应于我们传入的 content 参数的值。
+- `HttpResponse.charset` ：一个表示编码的字符串，对应于 charset 参数，如果实例化的时候没有给定，将从 content_type 中解析出来，如果解析失败，将使用 DEFAULT_CHARSET 的值。
 
-`HttpResponse.charset` ：一个表示编码的字符串，对应于 charset 参数，如果实例化的时候没有给定，将从 content_type 中解析出来，如果解析失败，将使用 DEFAULT_CHARSET 的值。
+- `HttpResponse.status_code` :表示响应的状态码。在 1.9 中除非 reason_phrase 属性被显式的设置，否则在构造函数外修改状态码时，也会修改 reason_phrase 属性。也就是说，当我们在创建实例的时候，并没有设置 reason ，原来的状态码是 200 ，当我们在构造器外修改这个属性的时候，如修改成 404，那么 reason_phrase 属性就变成对应的 not found。
 
-`HttpResponse.status_code` :表示响应的状态码。在 1.9 中除非 reason_phrase 属性被显式的设置，否则在构造函数外修改状态码时，也会修改 reason_phrase 属性。也就是说，当我们在创建实例的时候，并没有设置 reason ，原来的状态码是 200 ，当我们在构造器外修改这个属性的时候，如修改成 404，那么 reason_phrase 属性就变成对应的 not found。
+- `HttpResponse.reason_phrase` ：表示响应的原因短语，对应于 reason 参数。在1.9中 reason_phrase 不再默认为全部大写字母。现在使用 HTTP 标准的默认原因短语。除非显式设置，reason_phrase 由status_code 的值的确定。
 
-`HttpResponse.reason_phrase` ：表示响应的原因短语，对应于 reason 参数。在1.9中 reason_phrase 不再默认为全部大写字母。现在使用 HTTP 标准的默认原因短语。除非显式设置，reason_phrase 由status_code 的值的确定。
+- `HttpResponse.streaming` ：这个选项总是 False。由于这个属性的存在，使得中间件（middleware）能够区别对待流式 response 和常规 response 。
 
-`HttpResponse.streaming` ：这个选项总是 False。由于这个属性的存在，使得中间件（middleware）能够区别对待流式 response 和常规 response 。
+- `HttpResponse.closed` ：如果响应已关闭，则是 True 的。
 
-`HttpResponse.closed` ：如果响应已关闭，则是 True 的。
+- `HttpResponse.__setitem__(header, value)` :由给定的首部名称和值设定相应的报文首部。 header 和 value 都应该是字符串类型。
 
-`HttpResponse.__setitem__(header, value)` :由给定的首部名称和值设定相应的报文首部。 header 和 value 都应该是字符串类型。
+- `HttpResponse.__delitem__(header)`:根据给定的首部名称来删除报文中的首部。如果对应的首部不存在将沉默地（不引发异常）失败。不区分大小写。
 
-`HttpResponse.__delitem__(header)`:根据给定的首部名称来删除报文中的首部。如果对应的首部不存在将沉默地（不引发异常）失败。不区分大小写。
+- `HttpResponse.__getitem__(header)`: 根据首部名称返回其值。不区分大小写。
 
-`HttpResponse.__getitem__(header)`: 根据首部名称返回其值。不区分大小写。
+- `HttpResponse.has_header(header)`: 通过检查首部中是否有给定的首部名称（不区分大小写），来返回 True 或 False 。
 
-`HttpResponse.has_header(header)`: 通过检查首部中是否有给定的首部名称（不区分大小写），来返回 True 或 False 。
+- `HttpResponse.setdefault(header, value)`: 设置一个首部，除非该首部 header 已经存在了。
 
-`HttpResponse.setdefault(header, value)`: 设置一个首部，除非该首部 header 已经存在了。
-
- 另外，我们还可以使用类字典的方法来设置首部，例如：
+另外，我们还可以使用类字典的方法来设置首部，例如：
 ```
 >>> response = HttpResponse()
 >>> response['Age'] = 120
 >>> del response['Age']
 ```
 
-注意：当调用 del 去删除的首部不存在时，会引发 KeyError 异常。 
+*注意*：当调用 del 去删除的首部不存在时，会引发 KeyError 异常。 
 
-　　但是，当我们设定 Cache-Control 首部和 Vary 首部时，推荐使用 patch_cache_control() 和 patch_vary_headers()方法，可以从 django.utils.cache 中导入它们。因为这两个首部通常有多个值，这些值都要逗号隔开。"patch" 方法可以确保这些值，例如由中间件添加的值不会被改变。而字典形式添加的，同名键的不同值会发生冲突，只有最后一个值有效。
+但是，当我们设定 Cache-Control 首部和 Vary 首部时，推荐使用 patch_cache_control() 和 patch_vary_headers()方法，可以从 django.utils.cache 中导入它们。因为这两个首部通常有多个值，这些值都要逗号隔开。"patch" 方法可以确保这些值，例如由中间件添加的值不会被改变。而字典形式添加的，同名键的不同值会发生冲突，只有最后一个值有效。
 
-　　另外，虽然标准的 HTTP 报文中要求首部的每一行都要使用换行符隔开，但是 django 已经帮我们做了这些，所以我们不用重复的添加换行符了，否则会触发 BadHeaderError 异常。
+另外，虽然标准的 HTTP 报文中要求首部的每一行都要使用换行符隔开，但是 django 已经帮我们做了这些，所以我们不用重复的添加换行符了，否则会触发 BadHeaderError 异常。
 
 `HttpResponse.set_cookie(key, value='', max_age=None, expires=None, path='/', domain=None, secure=None, httponly=False)` 
 
-　　设置一个Cookie。参数与Python 标准库中的 Morsel Cookie 对象相同。
+设置一个Cookie。参数与Python 标准库中的 Morsel Cookie 对象相同。
 
-　　key：键名，字符串形式。
+- key：键名，字符串形式。
 
-　　value：对应的值，字符串形式。
+- value：对应的值，字符串形式。
 
-　　max_age：cookie 过期的相对时间，单位是秒。如果为None，则当浏览器关闭的时候过期。如果设置了 max_age 而没有设置 expires，则 expires 将根据 max_age 的值计算出来。
+- max_age：cookie 过期的相对时间，单位是秒。如果为None，则当浏览器关闭的时候过期。如果设置了 max_age 而没有设置 expires，则 expires 将根据 max_age 的值计算出来。
 
-　　expires：设置 cookie 过期的绝对时间。应该是一个 UTC "Wdy, DD-Mon-YY HH:MM:SS GMT" 格式的字符串，或者一个 datetime.datetime 对象。如果 expires 是一个datetime 对象，则 max_age 会通过计算得到。
+- expires：设置 cookie 过期的绝对时间。应该是一个 UTC "Wdy, DD-Mon-YY HH:MM:SS GMT" 格式的字符串，或者一个 datetime.datetime 对象。如果 expires 是一个datetime 对象，则 max_age 会通过计算得到。
 
-　　path:一个字符串，表示客户端回送 cookie 的路径，如果为‘/’，则表示该域名下的所以路径都将回送 cookie，如果是‘/blog/’；则在访问‘/blog/abc’或者‘/blog/def’等，所有包含该前缀的路径时，客户端都会回送 cookie。
+- path:一个字符串，表示客户端回送 cookie 的路径，如果为‘/’，则表示该域名下的所以路径都将回送 cookie，如果是‘/blog/’；则在访问‘/blog/abc’或者‘/blog/def’等，所有包含该前缀的路径时，客户端都会回送 cookie。
 
-　　domain：cookie有效的域。例如，其值为‘.scolia.com’时，那么在访问 www.scolia.com 或者 test.scolia.com 之类的时，都会回送 cookie ，当然通常会和 path 配合在一起使用。根据 HTTP 协议的要求，这个值必要要两到三个句点，从而防止出现 ‘.com’、‘.edu’、‘va.us’等形式的域名。当域为高层域时，只要两个句点就可以了，而高层域包括：.com、.edu、.net、.org、.gov、.mil、.int、.biz、.info、.name、 .museum、.coop、.aero、和.pro。其他的域则需要至少三个。
+- domain：cookie有效的域。例如，其值为‘.scolia.com’时，那么在访问 www.scolia.com 或者 test.scolia.com 之类的时，都会回送 cookie ，当然通常会和 path 配合在一起使用。根据 HTTP 协议的要求，这个值必要要两到三个句点，从而防止出现 ‘.com’、‘.edu’、‘va.us’等形式的域名。当域为高层域时，只要两个句点就可以了，而高层域包括：.com、.edu、.net、.org、.gov、.mil、.int、.biz、.info、.name、 .museum、.coop、.aero、和.pro。其他的域则需要至少三个。
 
-　　secure：当其为 True 时，表示只要在 https 连接的情况下才会回送cookie
+- secure：当其为 True 时，表示只要在 https 连接的情况下才会回送cookie
 
-　　httponly：当其为 True 时，JavaScript 等就不能访问对应的cookie了。当然这个标记并不是cookie标准中的，但目前市面上常用的浏览器都支持。灵活使用可以提供数据的安全性。
+- httponly：当其为 True 时，JavaScript 等就不能访问对应的cookie了。当然这个标记并不是cookie标准中的，但目前市面上常用的浏览器都支持。灵活使用可以提供数据的安全性。
 
-注意:
-
-　　RFC 2109 和RFC 6265 都声明客户端至少应该支持 4096 个字节的Cookie。对于许多浏览器，这也是最大的大小。如果视图存储大于 4096 个字节的 Cookie，Django 不会引发异常，但是浏览器将不能正确设置 Cookie。
+注意:RFC 2109 和RFC 6265 都声明客户端至少应该支持 4096 个字节的Cookie。对于许多浏览器，这也是最大的大小。如果视图存储大于 4096 个字节的 Cookie，Django 不会引发异常，但是浏览器将不能正确设置 Cookie。
 
 `HttpResponse.set_signed_cookie(key, value, salt='', max_age=None, expires=None, path='/', domain=None, secure=None, httponly=True)` 
 
-　　与 set_cookie() 类似，但是在设置之前将用密钥签名，也就是常说的加盐处理。通常与 HttpRequest.get_signed_cookie() 一起使用。你可以使用可选的 salt 参数来增加密钥强度，但需要记住在调用 HttpRequest.get_signed_cookie() 时，也要把使用的 salt 参数传入，用于解密。
+与 set_cookie() 类似，但是在设置之前将用密钥签名，也就是常说的加盐处理。通常与 HttpRequest.get_signed_cookie() 一起使用。你可以使用可选的 salt 参数来增加密钥强度，但需要记住在调用 HttpRequest.get_signed_cookie() 时，也要把使用的 salt 参数传入，用于解密。
 
 `HttpResponse.delete_cookie(key, path='/', domain=None)` 
 
-　　在cookie中删除指定的 key 及其对应的 value。如果 key 不存在则什么也不发生，也就是不会引发异常。
+在cookie中删除指定的 key 及其对应的 value。如果 key 不存在则什么也不发生，也就是不会引发异常。
 
-　　由于 Cookie 的工作方式，path 和 domain 应该与 set_cookie() 中使用的值相同 —— 否则 Cookie 不会删掉。
+由于 Cookie 的工作方式，path 和 domain 应该与 set_cookie() 中使用的值相同 —— 否则 Cookie 不会删掉。
 
 `HttpResponse.write(content)` 
 
