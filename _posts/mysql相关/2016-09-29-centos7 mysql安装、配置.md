@@ -7,7 +7,7 @@ tags:
    - mysql
 ---
 
-转载自[https://www.cnblogs.com/starof/p/4680083.html](https://www.cnblogs.com/starof/p/4680083.html)
+***转载自[https://www.cnblogs.com/starof/p/4680083.html](https://www.cnblogs.com/starof/p/4680083.html)***
 
 ## 一、系统环境
 yum update升级以后的系统版本为
