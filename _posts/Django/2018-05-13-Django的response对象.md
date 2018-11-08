@@ -13,11 +13,7 @@ tags:
 
 首先，这个对象由 HttpResponse 类创建，这个类位于 django.http 模块中，所以在使用的时候还先从模块中导入这个类。
 
-例如：
-```
-from django.http import HttpResponse
-```
-　　然后，我们需要知道传递什么参数，这个时候先看看其构造函数是怎么样的。
+例如：`from django.http import HttpResponse`，然后，我们需要知道传递什么参数，这个时候先看看其构造函数是怎么样的。
 ```
 HttpResponse.__init__(content='', content_type=None, status=200, reason=None, charset=None) 
 ```
