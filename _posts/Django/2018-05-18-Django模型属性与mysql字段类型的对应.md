@@ -29,7 +29,7 @@ tags:
  
 5. models.DateField
    - 日期类型 date
- 　- DateField.auto_now：保存时自动设置该字段为现在日期，最后修改日期
+   - DateField.auto_now：保存时自动设置该字段为现在日期，最后修改日期
    - DateField.auto_now_add：当该对象第一次被创建是自动设置该字段为现在日期，创建日期。
  
 6. models.DateTimeField　　
@@ -134,17 +134,20 @@ tags:
    - auto_now_add  自动创建---永远是创建时的时间
  
 5. choices
-   - 一个二维的元组被用作choices，如果这样定义，Django会select box代替普通的文本框，
-   - 并且限定choices的值是元组中的值
-  ```
-      GENDER_CHOICE = (
-            (u'M', u'Male'),
-            (u'F', u'Female'),
-      )
-      gender = models.CharField(max_length=2,choices = GENDER_CHOICE)
-    ```
+   - 一个二维的元组被用作choices，如果这样定义，Django会select box代替普通的文本框，并且限定choices的值是元组中的值
+
+     GENDER_CHOICE = (
+
+         (u'M', u'Male'),
+
+         (u'F', u'Female'),
+
+     )
+
+     gender = models.CharField(max_length=2,choices = GENDER_CHOICE)
+
 6. max_length
-  ```字段长度
+   - 字段长度
  
 7. default
    - 默认值
@@ -153,31 +156,31 @@ tags:
    - Admin中字段的显示名称，如果不设置该参数时，则与属性名。
  
 9. db_column　　
-  - 数据库中的字段名称
+   - 数据库中的字段名称
  
 10. unique=True　　
-   - 不允许重复
+    - 不允许重复
  
 11. db_index = True　　
-   - 数据库索引
+    - 数据库索引
  
 12. editable=True　　
-   - 在Admin里是否可编辑
+    - 在Admin里是否可编辑
  
 13. error_messages=None　　
-   - 错误提示
+    - 错误提示
  
 14. auto_created=False　　
-   - 自动创建
+    - 自动创建
  
 15. help_text　　
-   - 在Admin中提示帮助信息
+    - 在Admin中提示帮助信息
  
 16. validators=[]
-   - 验证器
+    - 验证器
  
 17. upload-to
-   - 文件上传时的保存上传文件的目录
+    - 文件上传时的保存上传文件的目录
 
 ```
 models.py
@@ -200,37 +203,54 @@ class UserInfo(models.Model):
     CV = models.FilePathField()     #个人简历文件
     createDate = models.DateTimeField()     #帐号申请时间
 ```
-执行结果：<br />
-![wait](wait)
+
+执行结果：
+
+![2018-05-18-Django模型属性与mysql字段类型的对应_图片]()
 
 ### 常见异常处理
-1. 
-  - ERRORS：<br />
-    web.UserInfo.photo: (fields.E210) Cannot use ImageField because Pillow is not installed.<br />
-    HINT: Get Pillow at https://pypi.python.org/pypi/Pillow or run command "pip install Pillow".<br />
-    原因：<br />      
-    这是因为使用了ImageField()字段，该字段是直接在数据库中存储图片的，数据库中实际存储时要使用python的Pillow模块对图片进行处理后才能存储进去。因此因需使用pip install Pillow 安装该模块即可解决该报错。
-2.
-  - ERRORS：
-                在执行python manage.py makemigrations 时需要手动选择处理方法：
-                You are trying to add a non-nullable field 'CV' to userinfo without a default; we can't do that (the database                     needs something to populate existing rows).
-Please select a fix:
- 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
- 2) Quit, and let me add a default in models.py
-Select an option: 1
-Please enter the default value now, as valid Python
-The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
-Type 'exit' to exit this prompt
->>> timezone.now
-     原因：       
-             这是因为UserInfo数据表中已经有了"userName"和"passWord" 这两个字段，当在新增字段时就会出现这种Warning。是由于django框架在生成SQL语句时发现数据表不为空，担心新增不为Null的字段添加到该表中时，表中以前的数据行在填充这些字段时需要填充的值不明确，所以才会询问用户处理方式。
-            选1，则会在已存在行中添加null,选2，则会要求在models.py中添加默认值。
-            在models.py中设置默认值的方法：
-                     host = models.GenericIPAddressField(default = '127.0.0.1')
+- *ERRORS：*
+
+  web.UserInfo.photo: (fields.E210) Cannot use ImageField because Pillow is not installed.
+  HINT: Get Pillow at https://pypi.python.org/pypi/Pillow or run command "pip install Pillow".
+
+  *原因：*
+      
+  这是因为使用了ImageField()字段，该字段是直接在数据库中存储图片的，数据库中实际存储时要使用python的Pillow模块对图片进行处理后才能存储进去。因此因需使用pip install Pillow 安装该模块即可解决该报错。
+
+- *ERRORS：*
+  
+  在执行python manage.py makemigrations 时需要手动选择处理方法：
+                
+  You are trying to add a non-nullable field 'CV' to userinfo without a default; we can't do that (the database 
+needs something to populate existing rows).
+
+  Please select a fix:
  
-    3)  执行python makemigrations正常，但是执行python migrate 报错，之后再执行无法生效的处理办法
+  1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+
+  2) Quit, and let me add a default in models.py
+
+  Select an option: 1
+
+  Please enter the default value now, as valid Python
+  
+  The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
+
+  Type 'exit' to exit this prompt
+
+  >>> timezone.now
+     
+  *原因：*       
  
- 参照：http://blog.csdn.net/qq_25730711/article/details/60327344 处理。
+  这是因为UserInfo数据表中已经有了"userName"和"passWord" 这两个字段，当在新增字段时就会出现这种Warning。是由于django框架在生成SQL语句时发现数据表不为空，担心新增不为Null的字段添加到该表中时，表中以前的数据行在填充这些字段时需要填充的值不明确，所以才会询问用户处理方式。
+            
+  选1，则会在已存在行中添加null,选2，则会要求在models.py中添加默认值。
+            
+  在models.py中设置默认值的方法：`host = models.GenericIPAddressField(default = '127.0.0.1')`
+ 
+- 执行python makemigrations正常，但是执行python migrate 报错，之后再执行无法生效的处理办法
+ 
+  参照：[http://blog.csdn.net/qq_25730711/article/details/60327344](http://blog.csdn.net/qq_25730711/article/details/60327344) 处理。
 
 
-转自[http://www.cnblogs.com/PythonHomePage/p/7634390.html](http://www.cnblogs.com/PythonHomePage/p/7634390.html)
