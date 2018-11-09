@@ -2,7 +2,7 @@
 layout: default
 author: muyalei
 date: 2018-05-18
-title: 运行Django项目报错：Invalid HTTP_HOST header: '192.168.1.111:8000'. You may need to add '192.168.1.111' to ALLOWED_HOSTS
+title: "运行Django项目报错：Invalid HTTP_HOST header: '192.168.1.111:8000'. You may need to add '192.168.1.111' to ALLOWED_HOSTS"
 tags:
    - Django
 ---
