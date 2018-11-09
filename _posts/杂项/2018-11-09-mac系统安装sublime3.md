@@ -13,7 +13,7 @@ tags:
 
 现在可用sublime3，下面我也以sublime3的下载安装过程为例。
 
-首先需要下载sublime安装包，下载链接 [http://www.sublimetext.com/3](http://www.sublimetext.com/3)，链接进去后界面如下所示，点击红框中链接即可下载安装包，将安装包保存到电脑相应位置即可。
+首先需要下载sublime安装包，下载链接 [http://www.sublimetext.com/3](http://www.sublimetext.com/3)（备用下载链接：[https://github.com/muyalei/muyalei.github.io/blob/gh-pages/tools/Sublime%20Text%20Build%203176.dmg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/tools/Sublime%20Text%20Build%203176.dmg)），链接进去后界面如下所示，点击红框中链接即可下载安装包，将安装包保存到电脑相应位置即可。
 
 ![2018-11-09-mac系统安装sublime3_图片1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-09-mac%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85sublime3_%E5%9B%BE%E7%89%871.png)
 
