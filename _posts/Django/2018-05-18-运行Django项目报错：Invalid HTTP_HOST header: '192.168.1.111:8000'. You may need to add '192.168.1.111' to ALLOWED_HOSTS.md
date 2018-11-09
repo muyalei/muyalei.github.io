@@ -9,6 +9,9 @@ tags:
 
 ***转载自[http://www.mamicode.com/info-detail-1978434.html](http://www.mamicode.com/info-detail-1978434.html)***
 
+
+报错信息如下：
+
 Request Method:	GET
 
 Request URL:	http://202.201.38.70:8000/angular
@@ -45,4 +48,4 @@ Server time:	Tue, 29 Aug 2017 09:56:31 +0000
 
 在我们创建的项目里修改setting.py文件
 
-ALLOWED_HOSTS = [‘*‘]  ＃在这里请求的host添加了*
+ALLOWED_HOSTS = [‘\*‘]  ＃在这里请求的host添加了*
