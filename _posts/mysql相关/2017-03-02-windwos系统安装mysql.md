@@ -1,4 +1,4 @@
-----
+---
 layout: default
 author: muyalei
 date: 2018-03-02
@@ -34,4 +34,20 @@ tags:
 
 下面这里是解决关于applying security settings错误解决(网上一般的解决方案是说这样是因为不彻底删除mysql造成的。所以，这个错误的解决方案与删除mysql的内容一样)、以及彻底删除mysql重新安装的方式
 
-
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片21.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片21.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片22.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片22.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片23.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片23.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片24.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片24.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片25.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片25.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片26.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片26.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片27.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片27.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片28.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片28.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片29.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片29.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片30.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片30.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片31.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片31.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片32.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片32.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片33.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片33.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片34.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片34.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片35.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片35.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片36.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片36.jpg)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片37.jpg](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2017-03-02-windows系统安装mysql_图片/2017-03-02-windows系统安装mysql_图片37.jpg)
