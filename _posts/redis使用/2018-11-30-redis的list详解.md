@@ -56,10 +56,10 @@ tags:
    print r.brpoplpush(src="11",dst="22",timeout=2)  #输出的结果是3
    print r.brpoplpush(src="44",dst="22",timeout=2)  #键44 不存在，输出的结果是None
    ```
-   键 11 的值：  
+   键 11 的值：<br/>  
    ![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片2.png)
 
-   键22 的值：
+   键22 的值：<br/>
    ![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片3.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片3.png)
 
 6. Lindex 命令用于通过索引获取列表中的元素。你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推。<br/>
