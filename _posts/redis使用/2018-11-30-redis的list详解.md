@@ -28,7 +28,7 @@ tags:
    print r.rpush("2",4,5)   #输出的结果是5
    ```
    数据格式：　　　　　　　　　　
-   ![]()
+   ![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片1.png)
 
 3. Blpop 命令移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。<br/>
    如果列表为空，返回一个 None 。 否则，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，第二个元素是被弹出元素的值。
@@ -57,10 +57,10 @@ tags:
    print r.brpoplpush(src="44",dst="22",timeout=2)  #键44 不存在，输出的结果是None
    ```
    键 11 的值：  
-   ![]()
+   ![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片2.png)
 
    键22 的值：
-   ![]()
+   ![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片3.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片3.png)
 
 6. Lindex 命令用于通过索引获取列表中的元素。你也可以使用负数下标，以 -1 表示列表的最后一个元素， -2 表示列表的倒数第二个元素，以此类推。<br/>
    列表中下标为指定索引值的元素。 如果指定索引值不在列表的区间范围内，返回 None 。
@@ -81,7 +81,7 @@ tags:
    print r.linsert("7","BEFORE","2",12)    #输出的结果是2
    ```
    插入后的结果是：
-   ![]()
+   ![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片4.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的list详解_图片4.png)
 
 8. Llen 命令用于返回列表的长度。 如果列表 key 不存在，则 key 被解释为一个空列表，返回 0 。 如果 key 不是列表类型，返回一个错误。
    ```
