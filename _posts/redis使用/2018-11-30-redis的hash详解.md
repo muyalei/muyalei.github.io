@@ -51,8 +51,8 @@ print r.hgetall("2")    # 因为字典名2 不存在，所以返回的结果是 
 ``` 
 
 在数据库中存储的数据格式
-![]()
-![]()
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的hash详解_图片1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的hash详解_图片1.png)
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的hash详解_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-11-30-redis的hash详解_图片2.png)
 
 6. Hincrby 命令用于为哈希表中的字段值加上指定增量值。<br/>
 增量也可以为负数，相当于对指定字段进行减法操作。<br/>
