@@ -7,6 +7,7 @@ tags:
    - sqoop相关
 ---
 
+***当前环境 hadoop2.8.3+hive2.3.4+sqoop1.4.7***
 
 1、错误信息：
 
@@ -50,3 +51,12 @@ tags:
 
    *参考自[java.lang.ClassNotFoundException](java.lang.ClassNotFoundException)*
 
+4、错误信息：
+
+   `ERROR sqoop.Sqoop: Got exception running Sqoop: java.lang.RuntimeException: Could not load db driver class: com.mysql.jdbc.Driver`
+
+   解决方法：
+   
+   将hive/lib目录下的 mysql-connector-java-"版本号"-bin.jar 复制到 sqoop/lib目录下。
+
+   *参考[https://blog.csdn.net/qq_35732963/article/details/56009705](https://blog.csdn.net/qq_35732963/article/details/56009705)*
