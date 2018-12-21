@@ -63,12 +63,12 @@ tags:
 
 5、sqoop分隔符问题<br/>
    在将mysql 中的数据导入到hive中，mysql 中的数据如下:<br/>
-   ![2018-12-21-sqoop使用_图片1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-12-21-sqoop%E4%BD%BF%E7%94%A8_%E5%9B%BE%E7%89%871.    png)
+   ![2018-12-21-sqoop使用_图片1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-12-21-sqoop%E4%BD%BF%E7%94%A8_%E5%9B%BE%E7%89%871.png)
  
    XH=1在mysql中这是一条数据，但是数据对应的某一列数据有换行符。<br/>
-   在进行sqoop import 数据时，如果不加其他参数，导入的数据默认的列分隔符是’\001’，默认的行分隔符是’\n’。也就像下面的数据那样，在导入时出现换行符时hive以为>    这条数据已经结束，并将其后面输入的数据当做另一条数据。<br/> 
+   在进行sqoop import 数据时，如果不加其他参数，导入的数据默认的列分隔符是’\001’，默认的行分隔符是’\n’。也就像下面的数据那样，在导入时出现换行符时hive以为 这条数据已经结束，并将其后面输入的数据当做另一条数据。<br/> 
    因而hive 默认会解析成两条数据，这样就造成导入数据时出现了数据跟原表不一致的问题。如下图所示：<br/>
-   ![2018-12-21-sqoop使用_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-12-21-sqoop%E4%BD%BF%E7%94%A8_%E5%9B%BE%E7%89%872.    png)
+   ![2018-12-21-sqoop使用_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2018-12-21-sqoop%E4%BD%BF%E7%94%A8_%E5%9B%BE%E7%89%872.png)
    
    解决方法：<br/>
    加上参数–hive-drop-import-delims来把导入数据中包含的hive默认的分隔符去掉 <br/>
