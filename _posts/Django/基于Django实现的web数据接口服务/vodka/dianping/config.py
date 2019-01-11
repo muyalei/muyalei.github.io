@@ -1,4 +1,1 @@
-HOST = "192.168.21.178"
-USER = "mdc_write"
-PASSWORD = "NDkzZDI0Yz!@1l"
-PORT = 3308
+

@@ -1,4 +1,4 @@
-HOST = "192.168.21.178"
-USER = "mdc_write"
-PASSWORD = "NDkzZDI0Yz!@1l"
-PORT = 3308
+HOST = "线上环境mysql地址"
+USER = "xxx"
+PASSWORD = "xxx"
+PORT = xxx

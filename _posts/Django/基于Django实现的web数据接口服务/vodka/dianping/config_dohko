@@ -1,4 +1,4 @@
-HOST = "dohko.mysql.001.master.hualala.com"
-USER = "root"
-PASSWORD = "hualaladev"
-PORT = 3306
+HOST = "哗啦啦测试库"
+USER = "xxx"
+PASSWORD = "xxx"
+PORT = xxx
