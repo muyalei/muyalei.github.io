@@ -14,7 +14,7 @@ tags:
 各版本chromedriver下载地址：[http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html)
 
 chromedriver与chrome浏览器版本对应关系：
-
+```
 chromedriver版本	支持的Chrome版本<br/>
 v2.41	            v67-69<br/>  
 v2.40	            v66-68<br/>  
@@ -54,7 +54,7 @@ v2.7	            v30-33<br/>
 v2.6	            v29-32<br/>  
 v2.5	            v29-32<br/>  
 v2.4	            v29-32<br/>  
-
+```
 
 将下载的chromedriver移动到/usr/local/bin目录下，解压，chromedriver --version检查版本。<br/>
 将chromedriver添加进环境变量：<br/>
