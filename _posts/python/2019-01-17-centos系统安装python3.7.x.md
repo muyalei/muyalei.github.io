@@ -49,6 +49,10 @@ cd Python-3.5.1/
 　　配置编译，因为上面依赖包是用yum安装而不是自己编译的，所以都是安装在系统默认目录下，因此各种选项不用加默认即可生效：
 
 ./configure --prefix=/usr/python --enable-shared CFLAGS=-fPIC
+
+这里可能报错`configure: error: no acceptable C compiler found in $PATH`，解决办法：`yum install gcc -y`
+
+
       补充一下：这里加上--enable-shared和-fPIC之后可以将python3的动态链接库编译出来，默认情况编译完lib下面只有python3.xm.a这样的文件，python本身可以正常使用，但是如果编译第三方库需要python接口的比如caffe等，则会报错；所以这里建议按照上面的方式配置，另外如果openssl不使用系统yum安装的，而是使用自己编译的比较新的版本可以使用--with-openssl=/usr/local/openssl这种方式指定，后面目录为openssl实际安装的目录，另外编译完还要将openssl的lib目录加入ld运行时目录中即可. 
 
 　　接下来编译源码：
