@@ -16,15 +16,11 @@ tags:
 
 下载正版原版程序:
 
-[https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2-win64.msi]
-
-[https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2-win32.msi]
-
-[https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2.dmg]
-
-[https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2_amd64.tar.gz]
- 
-[https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2.tar.gz]
+https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2-win64.msi<br/>
+https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2-win32.msi<br/>
+https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2.dmg<br/>
+https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2_amd64.tar.gz<br/>
+https://www.charlesproxy.com/assets/release/4.2/charles-proxy-4.2.tar.gz<br/>
 
 最新版v4.2.0破解文件下载:<br/>
 链接: [https://pan.baidu.com/s/1sl4YMK1](https://pan.baidu.com/s/1sl4YMK1) 密码: b8cy
@@ -44,7 +40,7 @@ gitoschina码云源码: [http://git.oschina.net/iYoungDone/charlesloader](http:/
 
 ### 个人添加：
 
-1、注意，要先正常启动一次安装好的charles，再替换破解文件！！）
+1、注意，要先正常启动一次安装好的charles，再替换破解文件！！
 
 2、mac版charlesdmg文件及破解文件防丢失地址：[https://github.com/muyalei/muyalei.github.io/tree/gh-pages/tools/charles_mac%E7%A0%B4%E8%A7%A3%E7%89%88](https://github.com/muyalei/muyalei.github.io/tree/gh-pages/tools/charles_mac%E7%A0%B4%E8%A7%A3%E7%89%88)
 
