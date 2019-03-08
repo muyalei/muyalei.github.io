@@ -7,7 +7,7 @@ tags:
    - 抓包
 ---
 
-***转载自[https://www.52pojie.cn/thread-619994-1-1.html](https://www.52pojie.cn/thread-619994-1-1.html)***
+***整理自[https://www.52pojie.cn/thread-619994-1-1.html](https://www.52pojie.cn/thread-619994-1-1.html)***
 
 
 # charles-proxy 抓包工具 v4.2 Win + Mac + Linux全平台破解
@@ -40,6 +40,13 @@ gitoschina码云源码: [http://git.oschina.net/iYoungDone/charlesloader](http:/
  
 1.Windows 平台,将下载的charles.jar文件覆盖到安装目录下的lib文件夹下即可完成破解!<br/>
 2.Mac 平台,将下载的charles.jar文件右键 Charles.app 显示包内容,覆盖到Content->Java下即可完成破解!
+
+
+### 个人添加：
+
+1、注意，要先正常启动一次安装好的charles，再替换破解文件！！）
+
+2、mac版charlesdmg文件及破解文件防丢失地址：[https://github.com/muyalei/muyalei.github.io/tree/gh-pages/tools/charles_mac%E7%A0%B4%E8%A7%A3%E7%89%88](https://github.com/muyalei/muyalei.github.io/tree/gh-pages/tools/charles_mac%E7%A0%B4%E8%A7%A3%E7%89%88)
 
 
 
