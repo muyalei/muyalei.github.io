@@ -8,7 +8,7 @@ tags:
 ---
 
 
-***转自[https://www.cnblogs.com/meitian/p/7157990.html](https://www.cnblogs.com/meitian/p/7157990.html)***
+***整理自[https://www.cnblogs.com/meitian/p/7157990.html](https://www.cnblogs.com/meitian/p/7157990.html)***
 
 
 ### 安装破解版Charles
