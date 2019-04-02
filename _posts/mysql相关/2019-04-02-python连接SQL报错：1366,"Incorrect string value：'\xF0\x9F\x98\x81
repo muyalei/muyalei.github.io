@@ -1,0 +1,57 @@
+---
+layout: default
+author: muyalei
+date: 2019-04-02
+title: python连接SQL报错：1366, "Incorrect string value: '\\xF0\\x9F\\x98\\x81
+tags:
+   - mysql相关
+---
+
+
+***整理自[https://blog.csdn.net/diyiday/article/details/80743028](https://blog.csdn.net/diyiday/article/details/80743028)***
+
+
+问题描述：Python从百度地图抓取消息保存到MySQL数据中，对应数据库字段为varchar以及TEXT，字符编码utf-8。部分插入成功，部分插入失败，报错如下。 
+error：1366, “Incorrect string value: ‘\xF0\x9F\x98\x81’
+
+是因为mysql不能识别4个字节的utf8编码的字符，抛出了异常，这应该也是问题的根源。☺、��、类似于这种4个字节，将对应字符类型换成将对应的数据类型改为utf8mb4类型，同时连接类型也要改成utf8mb4_general_ci
+
+![2019-04-02-python连接SQL报错：1366, "Incorrect string value- '\\xF0\\x9F\\x98\\x81_图片1.png]()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
