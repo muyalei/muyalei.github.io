@@ -1,5 +1,3 @@
----
-layout: default
 author: muyalei
 date: 2019-04-02
 title: python爬虫破解js加密的cookie
@@ -18,13 +16,13 @@ tags:
 　　
 打开Fiddler软件，用浏览器打开目标站点(http://www.kuaidaili.com/proxylist/2/) 。可以发现浏览器对这个页面加载了两次，第一次返回521，第二次才正常返回数据。很多没有写过网站或是爬虫经验不足的童鞋，可能就会觉得奇怪为什么会这样？为什么浏览器可能正常返回数据而代码却不行？
 
-![]()
+![2019-04-02-python爬虫破解js加密的cookie_图片1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-04-02-python%E7%88%AC%E8%99%AB%E7%A0%B4%E8%A7%A3js%E5%8A%A0%E5%AF%86%E7%9A%84cookie_%E5%9B%BE%E7%89%871.png)
 
 仔细观察两次返回的结果可以发现：
 
-![]()
+![2019-04-02-python爬虫破解js加密的cookie_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-04-02-python%E7%88%AC%E8%99%AB%E7%A0%B4%E8%A7%A3js%E5%8A%A0%E5%AF%86%E7%9A%84cookie_%E5%9B%BE%E7%89%872.png)
 
-![]()
+![2019-04-02-python爬虫破解js加密的cookie_图片3.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-04-02-python%E7%88%AC%E8%99%AB%E7%A0%B4%E8%A7%A3js%E5%8A%A0%E5%AF%86%E7%9A%84cookie_%E5%9B%BE%E7%89%873.png)
 
 1、第二次请求比第一次请求的Cookie内容多了个这个_ydclearance=0c316df6ea04c5281b421aa8-5570-47ae-9768-2510d9fe9107-1490254971
  
@@ -61,7 +59,7 @@ function lq(VA) {
  
 但是前端经验丰富的童鞋马上就能想到还有种方法可解，那就是利用浏览器的JS代码调试功能。这样一切就迎刃而解，新建一个html文件，将第一次返回的html原文复制进去，保存用浏览器打开，在eval之前打上断点，看到这样的输出:
 
-![]()
+![2019-04-02-python爬虫破解js加密的cookie_图片4.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-04-02-python%E7%88%AC%E8%99%AB%E7%A0%B4%E8%A7%A3js%E5%8A%A0%E5%AF%86%E7%9A%84cookie_%E5%9B%BE%E7%89%874.png)
  
     可以看到这个变量po为document.cookie='_ydclearance=0c316df6ea04c5281b421aa8-5570-47ae-9768-2510d9fe9107-1490254971; expires=Thu, 23-Mar-17 07:42:51 GMT; domain=.kuaidaili.com; path=/'; window.document.location=document.URL,下面还有个eval("qo=eval;qo(po);")。JS里面的eval和Python的差不多，第二句的意思就是将eval方法赋给qo。然后去eval字符串po。而字符串po的前半段的意思是给浏览器添加Cooklie,后半段window.document.location=document.URL是刷新当前页面。
 
@@ -100,7 +98,7 @@ first_html = getHtml(TARGET_URL)
 
 由于返回的是html，并不单纯的JS函数，所以需要用正则提取JS函数的参数的参数。
 
-![]()
+![2019-04-02-python爬虫破解js加密的cookie_图片5.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-04-02-python%E7%88%AC%E8%99%AB%E7%A0%B4%E8%A7%A3js%E5%8A%A0%E5%AF%86%E7%9A%84cookie_%E5%9B%BE%E7%89%875.png)
 
 ```
 #提取其中的JS加密函数
