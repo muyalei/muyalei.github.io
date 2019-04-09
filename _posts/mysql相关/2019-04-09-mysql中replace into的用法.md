@@ -45,7 +45,7 @@ REPLACE INTO test(title,uid) VALUES ('1234657','1001');
 受影响的行: 2
 时间: 0.140s
 ```
-![2019-04-09-mysql中replace into的用法_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-04-09-mysql%E4%B8%ADreplace%20into%E7%9A%84%E7%94%A8%E6%B3%95_%E5%9B%BE%E7%89%871.png)
+![2019-04-09-mysql中replace into的用法_图片2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-04-09-mysql%E4%B8%ADreplace%20into%E7%9A%84%E7%94%A8%E6%B3%95_%E5%9B%BE%E7%89%872.png)
 
 replace into t(id, update_time) values(1, now());
 
