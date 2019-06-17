@@ -2,7 +2,7 @@
 layout: default
 author: muyalei
 date: 2019-06-17
-title: "\u"开头的字符串转中文
+title: "\\u"开头的字符串转中文
 tags 
    - python相关
 ---
