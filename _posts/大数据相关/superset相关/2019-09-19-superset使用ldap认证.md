@@ -217,8 +217,96 @@ class AuthLDAPView(AuthView):
 一定要先确认下ldap返回的信息，我就遇到了一个大坑，ldap服务器中的'cn'字段存的是用户名字的汉字,'username'存的是用户名字的拼音， 参数AUTH_LDAP_UID_FIELD = 'cn'（试过用'username'，只能用'cn'查询），导致superset/config.py配置完后，用户名的英文/密码输入进去，登录认证失败，换成用户名汉字/密码输入，认证通过。对ldap服务器不了解，不知道是不是ldap服务设置得有问题，cn、username这两个字段的值调换一下，这样就可以用用户名拼音/密码登录了。
 
 
+### 六、python中使用ldap认证
+
+1、python-ldap模块实例代码：
+```
+pip3 install python-ldap
+
+import ldap
+con = ldap.initialize('ldap://ip:port')
+con.simple_bind_s('xxx','xxx') #测试时，不带@xx.com
+result = con.search_s('ou=huaaa,dc=huaa,dc=com',ldap.SCOPE_SUBTREE,'cn=xxx')
+print(result)
+```
+2、ldap3实例代码
+
+```
+!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 
+import json
+import ldap3
+
+ldap_url = 'ldap://ip:port'
+user_dn = r"xx" #测试时，没带 @xx.com
+password = "xxx"
+base_dn = "DC=hualala,DC=com"
+page_size = 500  # 设置每页返回的条数
+
+
+def get_ldap3():
+    conn = ldap3.Connection(server=ldap_url, user=user_dn, password=password)
+    print('Bind with password {!r} ...'.format(password))
+    result = conn.bind()
+    if result:
+        print("Success bind!")
+
+        count = 0
+        users = list()
+        for resp in conn.extend.standard.paged_search(
+            search_base=base_dn, search_filter='(objectClass=user)', attributes=ldap3.ALL_ATTRIBUTES, paged_size=500
+        ):
+
+            try:
+                attributes = resp.get("attributes")
+
+                is_exclude = False
+                for exclude in ["HealthMailb", "SystemMailbox", "Discovery", "Exchange"]:
+                    if attributes.get("name").find(exclude) > 0:
+                        is_exclude = True
+
+                if is_exclude is True:
+                    continue
+
+                count = count + 1
+
+                # pass
+                attributes = resp.get("attributes")
+                user_info = dict(
+                    dn=resp.get("dn"),
+                    cn=attributes.get("cn"),
+                    title=attributes.get("title"),
+                    givenName=attributes.get("givenName"),
+                    displayName=attributes.get("displayName"),
+                    department=attributes.get("department"),
+                    company=attributes.get("company"),
+                    name=attributes.get("name"),
+                    email=attributes.get("mail"),
+                    username=attributes.get("sAMAccountName")
+                )
+
+                users.append(user_info)
+            except Exception as e:
+                pass
+        return users, count
+
+
+def main():
+
+    data, count = get_ldap3()
+
+    data = json.dumps(data)
+    print("总共人数为：{}".format(count))
+
+    with open("./user_from_ldap.json", "wb+") as f:
+        f.write(data.encode("utf-8"))
+
+
+if __name__ == "__main__":
+    main()
+```
 
 
 
