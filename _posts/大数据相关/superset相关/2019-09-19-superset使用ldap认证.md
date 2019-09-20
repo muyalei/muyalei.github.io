@@ -59,7 +59,8 @@ AUTH_LDAP_UID_FIELD = 'cn' #ldap服务不了解，我试了其他字段，只能
 AUTH_LDAP_BIND_USER = "xxx" #问运维
 AUTH_LDAP_BIND_PASSWORD = 'xxxx' #问运维
 
-#下面两个参数也要配置，这两个参数指定用户ldap认证登录后， 注册用户的权限。（如果不配置这两个参数，打开superset的web页面后页面显示不全）
+#下面两个参数也要配置，这两个参数指定用户ldap认证登录后， 注册用户的权限。（如果不配置这两个参数，打开superset的web页面后页面显示不全。）
+#用户注册的权限可以是admin、Admin、Alpha、Public、Gamma、granter、sql_lab
 AUTH_ROLE_ADMIN = 'admin'
 AUTH_USER_REGISTRATION_ROLE = "admin"
 ```
