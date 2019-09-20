@@ -21,7 +21,7 @@ names = ['Bob', 'Alice', 'Guido']
 for index, value in enumerate(names):
     print(f'{index}: {value}')
 输出：
-0  Bob
+0 Bob
 1 Alice
 2 Guido 
 ``` 
