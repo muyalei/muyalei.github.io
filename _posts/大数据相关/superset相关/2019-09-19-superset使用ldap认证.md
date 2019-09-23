@@ -69,7 +69,7 @@ AUTH_USER_REGISTRATION_ROLE = "admin"
 
 相关代码主要是在flask_appbuilder/security/views.py、flask_appbuilder/security/manager.py下，在superset/config.py中配置登录认证方式是ldap认证后，views.py中的login函数处理来自localhost:3000/login/的登录请求，代码如下：
 ```
-class AuthLDAPView(AuthView):
+393 class AuthLDAPView(AuthView):
 394     login_template = 'appbuilder/general/security/login_ldap.html'
 395 
 396     @expose('/login/', methods=['GET', 'POST'])
@@ -219,7 +219,7 @@ class AuthLDAPView(AuthView):
 
 ### 五、注意问题
 
-一定要先确认下ldap返回的信息，我就遇到了一个大坑，ldap服务器中的'cn'字段存的是用户名字的汉字,'username'存的是用户名字的拼音， 参数AUTH_LDAP_UID_FIELD = 'cn'（试过用'username'，只能用'cn'查询），导致superset/config.py配置完后，用户名的英文/密码输入进去，登录认证失败，换成用户名汉字/密码输入，认证通过。对ldap服务器不了解，不知道是不是ldap服务设置得有问题，cn、username这两个字段的值调换一下，这样就可以用用户名拼音/密码登录了。
+一定要先确认下ldap返回的信息，我就遇到了一个大坑，ldap服务器中的'cn'字段存的是用户名字的汉字,'username'存的是用户名字的拼音， 参数AUTH_LDAP_UID_FIELD = 'cn'（试过用'username'，只能用'cn'查询），导致superset/config.py配置完后，用户名的英文/密码输入进去，登录认证失败，换成用户名汉字/密码输入，认证通过。对ldap服务器不了解，不知道是不是ldap服务设的不标准（或者说有问题？），cn、username这两个字段的值应该调换一下，这样就可以用用户名拼音/密码登录了。
 
 
 ### 六、python中使用ldap认证
