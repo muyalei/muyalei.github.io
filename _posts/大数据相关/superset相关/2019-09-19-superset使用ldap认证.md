@@ -29,7 +29,7 @@ pip下载的依赖会按照其脚本找相应的版本，可能处于某些插�
 
 初始化superset：</p >
 ```
-##本地初始化时，去掉了命令行前的`python`，直接执行命令，也是可以的
+##本地实际初始化时，去掉了命令行前的`python`，直接执行命令，也是可以的
 #一些基本设定
 python fabmanager create-admin --app superset  
 
