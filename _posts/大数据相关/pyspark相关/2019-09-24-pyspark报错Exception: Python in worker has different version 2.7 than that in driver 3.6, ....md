@@ -8,6 +8,9 @@ tags:
 ---
 
 
+***错误产生描述：***
+
+使用`pip3 install pyspark`安装pyspark后，使用时报标题中错误信息：
 
 ***报错完整信息：*** 
 
@@ -15,7 +18,7 @@ Exception: Python in worker has different version 2.7 than that in driver 3.6, P
 
 ***解决办法：***
 
-修改~/.bash_profile文件，增加下列行：
+1、修改~/.bash_profile文件，增加下列行：
 ```
 #更改系统默认python版本为python3
 alias python="/usr/local/bin/python3"
@@ -24,7 +27,7 @@ export PYSPARK_PYTHON=/usr/local/bin/python3
 export PYSPARK_DRIVER_PYTHON=/usr/local/bin/python3
 ```
 
-
+2、修改的环境变量立即生效：`source .bash_profile`
 
 
 
