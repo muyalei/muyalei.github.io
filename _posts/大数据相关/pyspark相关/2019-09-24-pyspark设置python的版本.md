@@ -7,6 +7,7 @@ tags:
     - pyspar相关
 ---
 
+### 一、整理他人信息
 
 ***整理自[https://blog.csdn.net/abc_321a/article/details/82589836](https://blog.csdn.net/abc_321a/article/details/82589836)***
 
@@ -26,8 +27,7 @@ tags:
 ![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-09-24-pyspark%E8%AE%BE%E7%BD%AEpython%E7%9A%84%E7%89%88%E6%9C%AC_%E5%9B%BE%E7%89%872.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-09-24-pyspark%E8%AE%BE%E7%BD%AEpython%E7%9A%84%E7%89%88%E6%9C%AC_%E5%9B%BE%E7%89%872.png)
 
 
-
-
+***注意：***我自己是通过`pip install pyspark`安装的pyspark 2.4.4，找不到spark-env.sh这个文件，但在site-packages/pyspark/bin目录下的pyspark文件中找到了同样的修改python版本的代码语句。
 
 
 
