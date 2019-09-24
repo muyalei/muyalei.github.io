@@ -1,7 +1,7 @@
 ---
 layout: default
 author: muyalei 
-title: Exception: Python in worker has different version 2.7 than that in driver 3.6, ...
+title: "Exception: Python in worker has different version 2.7 than that in driver 3.6, ..."
 date: 2019-09-24
 tags:
     - pyspark相关
