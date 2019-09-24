@@ -19,11 +19,11 @@ tags:
 
 3.修改spark安装包bin目录下的pyspark，修改下图红色方框的位置，将原来PYSPARK_PYTHON=python改成PYSPARK_PYTHON=python3，同样的，其他子节点也都需要修改
 
-![]()
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-09-24-pyspark%E8%AE%BE%E7%BD%AEpython%E7%9A%84%E7%89%88%E6%9C%AC_%E5%9B%BE%E7%89%871.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-09-24-pyspark%E8%AE%BE%E7%BD%AEpython%E7%9A%84%E7%89%88%E6%9C%AC_%E5%9B%BE%E7%89%871.png)
 
 4.重启Spark，启动pyspark,可发现python的版本已切换成3.6.4的版本
 
-![]()
+![https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-09-24-pyspark%E8%AE%BE%E7%BD%AEpython%E7%9A%84%E7%89%88%E6%9C%AC_%E5%9B%BE%E7%89%872.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-09-24-pyspark%E8%AE%BE%E7%BD%AEpython%E7%9A%84%E7%89%88%E6%9C%AC_%E5%9B%BE%E7%89%872.png)
 
 
 
