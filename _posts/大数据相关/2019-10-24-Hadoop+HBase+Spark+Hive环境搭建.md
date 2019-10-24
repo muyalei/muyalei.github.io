@@ -323,4 +323,751 @@ jps
 成功启动后，可以访问 Web 界面 http://localhost:50070 查看 NameNode 和 Datanode 信息，还可以在线查看 HDFS 中的文件。
 
 
+## 2.6 Hadoop配置（集群模式）
+
+###2.6.1 设置静态IP（以主节点为例）
+
+编辑文件/etc/network/interfaces
+
+```
+vim /etc/network/interfaces
+```
+
+在文件后面添加如下配置信息（eth0是网卡名，需要根据实际情况更改）
+
+```
+auto eth0 #网卡名
+iface eth0 inet static
+address 192.168.1.2 #静态IP（可根据实际情况自由设置）
+netmask 255.255.255.0 #子网掩码
+gateway 192.168.1.1 #网关
+dns-nameservers 192.168.1.1 #DNS服务器地址，与网关相同即可
+```
+
+编辑文件/etc/resolve.conf
+
+```
+vim /etc/resolve.conf
+```
+
+在文件中添加如下配置信息
+
+```
+nameserver 192.168.1.1
+```
+
+此dns在系统重启后会失效，编辑文件/etc/resolvconf/resolv.conf.d/base
+
+```
+vim /etc/resolvconf/resolv.conf.d/base
+```
+
+添加如下内容，从而永久保存DNS配置
+
+```
+nameserver 192.168.1.1
+```
+
+运行如下命令重启网络
+
+```
+/etc/init.d/networking restart
+```
+
+如果重启后无效，则重启系统。
+
+重启后如果发现找不到网卡，则启用系统托管网卡
+
+```
+vim /etc/NetworkManager/NetworkManager.conf
+```
+
+修改
+
+```
+managed=false
+```
+
+为
+
+```
+managed=true
+```
+
+运行如下命令重启网络
+
+```
+/etc/init.d/networking restart
+```
+
+如果重启后无效，则重启系统。
+
+### 2.6.2 配置hosts文件(每台主机都要配置)
+
+修改主机名
+
+```
+vim /etc/hostname
+```
+
+提示：主节点设置为master，从节点设置为slave1、slave2等等。
+
+编辑文件/etc/hosts
+
+```
+vim /etc/hosts
+```
+
+将以下数据复制进入集群的各个主机中
+
+```
+192.168.1.2     master
+192.168.1.11    slave1
+```
+
+注意：若再增加一个从机，则添加slave2的信息
+
+使用以下指令在master主机中进行测试，可使用类似指令在slave1上测试：
+
+```
+ping slave1
+```
+
+如果ping的通，说明网络连接正常，否则请检查网络连接或者IP信息是否正确。
+
+### 2.6.3 SSH无密码登陆节点（master上配置）
+
+这个操作是要让 master 节点可以无密码 SSH 登陆到各个 slave 节点上。
+
+首先生成 master 节点的公匙，在 master节点的终端中执行（因为改过主机名，所以还需要删掉原有的再重新生成一次）：
+
+```
+cd ~/.ssh               # 如果没有该目录，先执行一次ssh localhost
+rm ./id_rsa*            # 删除之前生成的公匙（如果有）
+ssh-keygen -t rsa       # 一直按回车就可以
+```
+
+让 master 节点需能无密码 SSH 本机，在 master 节点上执行：
+
+```
+cat ./id_rsa.pub >> ./authorized_keys
+```
+
+完成后可执行 ssh master 验证一下（可能需要输入 yes，成功后执行 exit 返回原来的终端）。接着在 master 节点将上公匙传输到 slave1节点：
+
+```
+scp ~/.ssh/id_rsa.pub root@slave1:/root/
+```
+
+scp 是 secure copy 的简写，用于在 Linux 下进行远程拷贝文件，类似于 cp 命令，不过 cp 只能在本机中拷贝。执行 scp 时会要求输入 slave1 上 root 用户的密码。
+
+接着在 slave1 节点上，将 ssh 公匙加入授权
+
+```
+mkdir /root/.ssh       # 如果不存在该文件夹需先创建，若已存在则忽略
+cat /root/id_rsa.pub >> /root/.ssh/authorized_keys
+rm /root/id_rsa.pub    # 用完就可以删掉了
+```
+
+如果有其他 slave 节点，也要执行将 master 公匙传输到 slave 节点、在 slave 节点上加入授权这两步。
+
+这样，在 master 节点上就可以无密码 SSH 到各个 slave 节点了，可在 master 节点上执行如下命令进行检验：
+
+```
+ssh root@slave1
+```
+
+如果不需要密码，则配置成功。
+
+### 2.6.4 修改Hadoop配置文件（master上配置）
+
+修改配置文件 core-site.xml (gedit /usr/local/hadoop/etc/hadoop/core-site.xml)，将当中的
+
+```
+<configuration>
+</configuration>
+```
+
+修改为下面配置：
+
+```
+<configuration>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>file:/usr/local/hadoop/tmp</value>
+        <description>Abase for other temporary directories.</description>
+    </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://master:9000</value>
+    </property>
+</configuration>
+```
+
+同样的，修改配置文件 hdfs-site.xml(gedit /usr/local/hadoop/etc/hadoop/hdfs-site.xml)：
+
+```
+<configuration>
+        <property>
+                <name>dfs.namenode.secondary.http-address</name>
+                <value>Master:50090</value>
+        </property>
+        <property>
+                <name>dfs.replication</name>
+                <value>2</value>
+        </property>
+        <property>
+                <name>dfs.namenode.name.dir</name>
+                <value>file:/usr/local/hadoop/tmp/dfs/name</value>
+        </property>
+        <property>
+                <name>dfs.datanode.data.dir</name>
+                <value>file:/usr/local/hadoop/tmp/dfs/data</value>
+        </property>
+</configuration>
+```
+
+修改文件 mapred-site.xml （可能需要先重命名，默认文件名为 mapred-site.xml.template），然后配置修改如下：
+
+```
+<configuration>
+        <property>
+                <name>mapreduce.framework.name</name>
+                <value>yarn</value>
+        </property>
+        <property>
+                <name>mapreduce.jobhistory.address</name>
+                <value>master:10020</value>
+        </property>
+        <property>
+                <name>mapreduce.jobhistory.webapp.address</name>
+                <value>master:19888</value>
+        </property>
+</configuration>
+```
+
+配置yarn-site.xml(gedit /usr/local/hadoop/etc/hadoop/yarn-site.xml)
+
+```
+<configuration>
+<property>
+     <name>yarn.resourcemanager.hostname</name>
+     <value>master</value>
+</property>
+<property>
+     <name>yarn.nodemanager.resource.memory-mb</name>
+     <value>10240</value>
+</property>
+<property>
+     <name>yarn.nodemanager.aux-services</name>
+     <value>mapreduce_shuffle</value>
+</property>
+</configuration>
+```
+
+修改文件 hadoop-env.sh (gedit /usr/local/hadoop/etc/hadoop/hadoop-env.sh)，在文件开始处添加Hadoop和Java环境变量。
+
+```
+export JAVA_HOME=/usr/local/java
+export HADOOP_HOME=/usr/local/hadoop
+export PATH=$PATH:/usr/local/hadoop/bin
+```
+
+配置slaves(gedit /usr/local/hadoop/etc/hadoop/slaves)，删除默认的localhost，增加从节点:
+
+```
+slave1
+```
+
+注意：若再增加一个从机，再添加slave2
+
+配置好后，将 master 上的 /usr/local/hadoop 文件夹复制到各个节点上。
+
+```
+sudo rm -rf /usr/local/hadoop/tmp     # 删除 Hadoop 临时文件
+sudo rm -rf /usr/local/hadoop/logs   # 删除日志文件
+scp -r /usr/local/hadoop slave1:/usr/local
+```
+
+注意：每台从机上需要配置Hadoop的环境变量
+
+在master节点上启动hadoop
+
+```
+/usr/local/hadoop/bin/hdfs namenode -format
+/usr/local/hadoop/sbin/start-all.sh
+```
+
+成功启动后，运行jps命令
+
+```
+source /etc/profile
+jps
+```
+
+如果安装成功，master节点会有NameNode进程，slave节点会有DataNode进程。
+
+成功启动后，可以访问 Web 界面 http://master:50070 查看 NameNode 和 Datanode 信息，还可以在线查看 HDFS 中的文件。
+
+
+# 3.安装HBase数据库
+
+HBase是一个分布式的、面向列的开源数据库,源于Google的一篇论文《BigTable：一个结构化数据的分布式存储系统》。HBase以表的形式存储数据，表有行和列组成，列划分为若干个列族/列簇(column family)。欲了解HBase的官方资讯，请访问HBase官方网站。HBase的运行有三种模式：单机模式、伪分布式模式、分布式模式。
+单机模式：在一台计算机上安装和使用HBase，不涉及数据的分布式存储；伪分布式模式：在一台计算机上模拟一个小的集群；分布式模式：使用多台计算机实现物理意义上的分布式存储。这里出于学习目的，我们只重点讨论伪分布式模式。
+
+## 3.1HBase安装
+
+下载 hbase-2.0.0-bin.tar.gz 文件，并将文件移到/usr/local目录下
+
+```
+mv hbase-2.0.0-bin.tar.gz /usr/local
+```
+
+解压
+
+```
+tar -zxvf hbase-2.0.0-bin.tar.gz
+```
+
+文件夹重命名
+
+```
+mv hbase-2.0.0 hbase
+```
+
+将hbase下的bin目录添加到path中，这样，启动hbase就无需到/usr/local/hbase目录下，大大的方便了hbase的使用。教程下面的部分还是切换到了/usr/local/hbase目录操作，有助于初学者理解运行过程，熟练之后可以不必切换。
+
+编辑/etc/profile文件
+
+```
+vim /etc/profile
+```
+
+在/etc/profile文件尾行添加如下内容：
+
+```
+export HBASE_HOME=/usr/local/hbase
+export PATH=$HBASE_HOME/bin:$PATH
+export HBASE_MANAGES_ZK=true
+```
+
+编辑完成后，按 esc 退出编辑模式，然后输入:+wq ，按回车保存（也可以按shift + zz 进行保存），最后再执行source命令使上述配置在当前终端立即生效，命令如下：
+
+```
+source /etc/profile
+```
+
+查看HBase版本，确定hbase安装成功,命令如下：
+
+```
+hbase version
+```
+
+## 3.2HBase伪分布模式配置
+
+配置/usr/local/hbase/conf/hbase-site.xml，打开并编辑hbase-site.xml，命令如下：
+
+```
+gedit /usr/local/hbase/conf/hbase-site.xml
+```
+
+在启动HBase前需要设置属性hbase.rootdir，用于指定HBase数据的存储位置，因为如果不设置的话，hbase.rootdir默认为/tmp/hbase-${user.name},这意味着每次重启系统都会丢失数据。此处设置为HBase安装目录下的hbase-tmp文件夹即（/usr/local/hbase/hbase-tmp）,添加配置如下：
+
+```
+<configuration>
+        <property>
+                <name>hbase.rootdir</name>
+                <value>hdfs://localhost:9000/hbase</value>
+        </property>
+        <property>
+                <name>hbase.cluster.distributed</name>
+                <value>true</value>
+        </property>
+</configuration>
+```
+
+打开文件（gedit /usr/local/hbase/conf/hbase-env.sh）添加java环境变量
+
+```
+export JAVA_HOME=/usr/local/java
+export HBASE_HOME=/usr/local/hbase
+export PATH=$PATH:/usr/local/hbase/bin
+export HBASE_MANAGES_ZK=true
+```
+
+## 3.3 HBase集群模式配置
+
+修改master节点的配置文件hbase-site.xml(gedit /usr/local/hbase/conf/hbase-site.xml)
+
+```
+   <configuration>
+        <property>
+                <name>hbase.rootdir</name>
+                <value>hdfs://master:9000/hbase</value>
+        </property>
+        <property>
+                <name>hbase.cluster.distributed</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.quorum</name>
+                <value>master,slave1</value>
+        </property>
+        <property>
+                <name>hbase.temp.dir</name>
+                <value>/usr/local/hbase/tmp</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.property.dataDir</name>
+                <value>/usr/local/hbase/tmp/zookeeper</value>
+        </property>
+        <property>
+                <name>hbase.master.info.port</name>
+                <value>16010</value>
+        </property>
+</configuration>
+```
+
+注意：若再增加一个从机，hbase.zookeeper.quorum 添加slave2
+
+修改配置文件regionservers(gedit /usr/local/hbase/conf/regionservers)，删除里面的localhosts,改为：
+
+```
+master
+slave1
+```
+
+若再增加一个从机，添加slave2
+
+传送Hbase至其它slave节点(从机不需下载安装包，由主机传送过去即可，从机环境变量需要配置)，即将配置好的hbase文件夹传送到各个节点对应位置上：
+```
+scp -r /usr/local/hbase root@slave1:/usr/local/
+```
+
+注意：每台从机上需要配置HBase的环境变量
+
+## 3.4 HBase集群模式配置（使用外置的zookeeper）
+
+在3.3的基础上，修改/etc/profile、/usr/local/hbase/conf/hbase-env.sh文件的配置
+
+```
+export HBASE_MANAGES_ZK=false
+```
+
+修改/usr/local/hbase/conf/hbase-site.xml文件的配置，将hbase.zookeeper.quorum属性设置为zookpeer的各个节点
+
+```
+<property>
+         <name>hbase.zookeeper.quorum</name>
+         <value>zk1:2181,zk2:2181,zk3:2181</value>
+</property>
+```
+
+将/etc/profile和/usr/local/hbase/conf文件夹复制到regionserver节点
+
+```
+scp /etc/profile slave1:/etc
+scp -r /usr/local/hbase/conf/ slave1:/usr/local/hbase
+scp /etc/profile slave2:/etc
+scp -r /usr/local/hbase/conf/ slave2:/usr/local/hbase
+scp /etc/profile slave3:/etc
+scp -r /usr/local/hbase/conf/ slave3:/usr/local/hbase
+```
+
+## 3.5 测试运行
+
+首先切换目录至HBase安装目录/usr/local/hbase；再启动HBase。命令如下：
+
+```
+/usr/local/hadoop/sbin/start-all.sh  #启动hadoop，如果已启动，则不用执行该命令
+/usr/local/hbase/start-hbase.sh     #启动hbase
+hbase shell                           #进入hbase shell，如果可以进入说明HBase安装成功了
+```
+
+停止HBase运行,命令如下：
+
+```
+bin/stop-hbase.sh
+```
+
+如果hbase启动成功，则使用jps命令会出现如下进程
+
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_3.png]()
+
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_4.png]()
+
+
+# 4. 安装Spark内存计算引擎
+
+Apache Spark 是一个新兴的大数据处理通用引擎，提供了分布式的内存抽象。Spark 最大的特点就是快，可比 Hadoop MapReduce 的处理速度快 100 倍。Spark基于Hadoop环境，Hadoop YARN为Spark提供资源调度框架，Hadoop HDFS为Spark提供底层的分布式文件存储。
+
+## 4.1. Spark安装
+
+Spark的安装过程较为简单，在已安装好 Hadoop 的前提下，经过简单配置即可使用，首先下载 spark-2.3.0-bin-hadoop2.7.tgz 文件，并将文件移到/usr/local目录下
+
+```
+mv spark-2.3.0-bin-hadoop2.7.tgz /usr/local
+```
+
+解压
+
+```
+cd /usr/local
+tar -zxvf spark-2.3.0-bin-hadoop2.7.tgz
+```
+
+文件夹重命名
+
+```
+mv spark-2.3.0 spark
+```
+
+编辑/etc/profile文件，添加环境变量
+
+```
+vim /etc/profile
+```
+
+在/etc/profile文件尾行添加如下内容：
+
+```
+export SPARK_HOME=/usr/local/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+```
+
+编辑完成后，保存退出，再执行source命令使上述配置在当前终端立即生效，命令如下：
+
+```
+source /etc/profile
+```
+
+## 4.2. Spark单机配置
+
+配置文件spark-env.sh
+
+```
+cd /usr/local/spark
+cp ./conf/spark-env.sh.template ./conf/spark-env.sh
+```
+
+编辑spark-env.sh文件(vim ./conf/spark-env.sh)，在第一行添加以下配置信息:
+
+```
+export JAVA_HOME=/usr/local/java
+export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+export HADOOP_HDFS_HOME=/usr/local/hadoop
+export SPARK_HOME=/usr/local/spark
+export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath)
+SPARK_MASTER_WEBUI_PORT=8079
+```
+
+## 4.3. Spark集群配置
+
+在master上配置文件spark-env.sh
+
+```
+cd /usr/local/spark
+cp ./conf/spark-env.sh.template ./conf/spark-env.sh
+```
+
+编辑spark-env.sh文件(vim ./conf/spark-env.sh)，在第一行添加以下配置信息:
+
+```
+export JAVA_HOME=/usr/local/java
+export SCALA_HOME=/usr/local/scala
+export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+export HADOOP_HDFS_HOME=/usr/local/hadoop
+export SPARK_HOME=/usr/local/spark
+export SPARK_MASTER_IP=master
+export SPARK_MASTER_PORT=7077
+export SPARK_MASTER_HOST=master
+export SPARK_WORKER_CORES=2
+export SPARK_WORKER_PORT=8901
+export SPARK_WORKER_INSTANCES=1
+export SPARK_WORKER_MEMORY=2g
+export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath)
+export SPARK_MASTER_WEBUI_PORT=8079
+```
+
+保存并刷新配置：
+
+```
+source spark-env.sh
+```
+
+配置从机列表：
+
+```
+cp slaves.template slaves
+gedit slaves
+```
+
+在最后加上：
+
+```
+master
+slave1
+```
+
+把主机的spark文件夹复制到从机，复制脚本如下：
+
+```
+scp -r /usr/local/spark root@slave1:/usr/local
+```
+
+注意：每台从机上需要配置Spark的环境变量
+
+## 4.4 验证Spark安装和配置
+
+通过运行Spark自带的示例，验证Spark是否安装成功。
+
+```
+cd /usr/local/spark
+./sbin/start-all.sh
+bin/run-example SparkPi 2>&1 | grep "Pi is"
+```
+
+运行结果如下图所示，可以得到π 的 14位小数近似值：
+
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_5.png]()
+
+在主机的浏览器输入http://master:8079（集群模式）或者http://localhost:8079(单机模式)就可以看到有两个节点在spark集群上。
+
+# 5. 安装hive
+
+Hive是一个架构在Hadoop之上的数据仓库基础工具，用来处理结构化数据，为大数据查询和分析提供方便。最初，Hive是由Facebook开发，后来由Apache软件基金会开发，并作为进一步将它作为名义下Apache Hive为一个开源项目。Hive 不是一个关系数据库，也不是一个设计用于联机事务处（OLTP）实时查询和行级更新的语言。简单的说，Hive就是在Hadoop上架了一层SQL接口，可以将SQL翻译成MapReduce去Hadoop上执行，这样就使得数据开发和分析人员很方便的使用SQL来完成海量数据的统计和分析，而不必使用编程语言开发MapReduce那么麻烦。
+
+## 5.1. Hive安装
+
+下载 apache-hive-1.2.2-bin.tar.gz 文件，并将文件移到/usr/local目录下
+
+```
+mv apache-hive-1.2.2-bin.tar.gz /usr/local
+```
+
+解压
+
+```
+tar -zxvf apache-hive-1.2.2-bin.tar.gz
+```
+
+文件夹重命名
+
+```
+mv apache-hive-1.2.2 hive
+```
+
+编辑/etc/profile文件，配置环境变量
+
+```
+vim /etc/profile
+```
+
+在/etc/profile文件尾行添加如下内容：
+
+```
+export HIVE_HOME=/usr/local/hive
+export PATH=$PATH:$HIVE_HOME/bin
+```
+
+编辑完成后，保存退出，再执行source命令使上述配置在当前终端立即生效，命令如下：
+
+```
+source /etc/profile
+```
+
+## 5.2. 安装并配置MySQL
+
+我们采用MySQL数据库保存Hive的元数据，而不是采用Hive自带的derby来存储元数据。ubuntu下Mysql的安装比较简单，直接运行如下命令。在安装过程中，会要求配置用户名和密码，这个一定要记住。
+
+```
+apt-get install mysql-server
+```
+
+启动并登陆mysql shell
+
+```
+service mysql start
+mysql -u root -p  #登陆shell界面
+```
+
+新建hive数据库
+
+```
+#这个hive数据库与hive-site.xml中localhost:3306/hive的hive对应，用来保存hive元数据
+mysql> create database hive; 
+```
+
+将hive数据库的字符编码设置为latin1（重要）
+
+```
+mysql> alter database hive character set latin1;
+```
+
+## 5.3. Hive配置
+
+修改/usr/local/hive/conf下的hive-site.xml，执行如下命令：
+
+```
+cd /usr/local/hive/conf
+mv hive-default.xml.template hive-default.xml
+```
+
+上面命令是将hive-default.xml.template重命名为hive-default.xml，然后，使用vim编辑器新建一个配置文件hive-site.xml，命令如下：
+
+```
+cd /usr/local/hive/conf
+vim hive-site.xml
+```
+
+在hive-site.xml中添加如下配置信息，其中：USERNAME和PASSWORD是MySQL的用户名和密码。
+
+```
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:mysql://localhost:3306/hive?createDatabaseIfNotExist=true</value>
+    <description>JDBC connect string for a JDBC metastore</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.jdbc.Driver</value>
+    <description>Driver class name for a JDBC metastore</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>USERNAME</value>
+    <description>username to use against metastore database</description>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>PASSWORD</value>
+    <description>password to use against metastore database</description>
+  </property>
+</configuration>
+```
+
+然后，按键盘上的“ESC”键退出vim编辑状态，再输入:wq，保存并退出vim编辑器。由于Hive在连接MySQL时需要JDBC驱动，所以首先需要下载对应版本的驱动，然后将驱动移动到/usr/local/hive/lib中。
+
+```
+#解压
+tar -zxvf mysql-connector-java-5.1.47.tar.gz
+#将mysql-connector-java-5.1.47.tar.gz拷贝到/usr/local/hive/lib目录下
+cp mysql-connector-java-5.1.47/mysql-connector-java-5.1.47-bin.jar /usr/local/hive/lib
+```
+
+启动hive（启动hive之前，请先启动hadoop集群）。
+
+```
+./usr/local/hadoop/sbin/start-all.sh #启动hadoop，如果已经启动，则不用执行该命令
+hive  #启动hive
+```
+
+## 5.4. Spark和Hive的整合
+
+Hive的计算引擎默认为MapReduce，如果想要用Spark作为Hive的计算引擎，可以参考文章编译Spark源码支持Hive并部署
+
+
 
