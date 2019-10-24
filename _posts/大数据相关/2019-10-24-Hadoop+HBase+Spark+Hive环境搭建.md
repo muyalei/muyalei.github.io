@@ -28,8 +28,11 @@ tags:
 Hadoop等大数据开源框架是不支持Windows系统的，所以需要先安装一个Linux双系统。当然，如果你有一台单独的电脑用来安装Ubuntu系统，就不需要安装双系统了。
 
 双系统安装
+
 请参考安装指南：
+
 第一步：[制定系统启动U盘](https://links.jianshu.com/go?to=https%3A%2F%2Fjingyan.baidu.com%2Farticle%2F0f5fb099ef132c6d8234ea5e.html)
+
 第二步：[安装双系统](https://links.jianshu.com/go?to=https%3A%2F%2Fjingyan.baidu.com%2Farticle%2Fdca1fa6fa3b905f1a44052bd.html)
 
 
