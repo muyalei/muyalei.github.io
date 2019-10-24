@@ -1081,4 +1081,16 @@ hive  #启动hive
 Hive的计算引擎默认为MapReduce，如果想要用Spark作为Hive的计算引擎，可以参考文章编译Spark源码支持Hive并部署
 
 
+# 6. 报错整理
+
+* 6.1 错误信息："ECDSA host key for ip has changed"或者"Host key verification failed."
+  
+  解决方法：
+
+* 6.2 错误信息：Hive在spark2.0.0启动时 "无法访问../lib/spark-assembly-\*.jar: 没有那个文件或目录的解决办法"
+
+  解决方法：
+
+
+
 
