@@ -191,7 +191,7 @@ export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 
 添加环境变量后，结果如下图所示，按 esc 退出编辑模式，然后输入:+wq ，按回车保存（也可以按shift + zz 进行保存）。
 
-![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_1.png]()
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_1.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-10-24-Hadoop%2BHBase%2BSpark%2BHive%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_%E5%9B%BE%E7%89%87_1.png)
 
 最后，需要让该环境变量生效，执行如下代码：
 
@@ -329,7 +329,7 @@ jps
 
 如果安装成功，则会出现如下如下进程
 
-![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_1.png]()
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_2.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-10-24-Hadoop%2BHBase%2BSpark%2BHive%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_%E5%9B%BE%E7%89%87_2.png)
 
 成功启动后，可以访问 Web 界面 http://localhost:50070 查看 NameNode 和 Datanode 信息，还可以在线查看 HDFS 中的文件。
 
@@ -803,9 +803,9 @@ bin/stop-hbase.sh
 
 如果hbase启动成功，则使用jps命令会出现如下进程
 
-![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_3.png]()
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_3.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-10-24-Hadoop%2BHBase%2BSpark%2BHive%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_%E5%9B%BE%E7%89%87_3.png)
 
-![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_4.png]()
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_4.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-10-24-Hadoop%2BHBase%2BSpark%2BHive%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_%E5%9B%BE%E7%89%87_4.png)
 
 
 # 4. 安装Spark内存计算引擎
@@ -940,7 +940,7 @@ bin/run-example SparkPi 2>&1 | grep "Pi is"
 
 运行结果如下图所示，可以得到π 的 14位小数近似值：
 
-![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_5.png]()
+![2019-10-24-Hadoop+HBase+Spark+Hive环境搭建_图片_5.png](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/img/2019-10-24-Hadoop%2BHBase%2BSpark%2BHive%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA_%E5%9B%BE%E7%89%87_5.png)
 
 在主机的浏览器输入http://master:8079（集群模式）或者http://localhost:8079(单机模式)就可以看到有两个节点在spark集群上。
 
