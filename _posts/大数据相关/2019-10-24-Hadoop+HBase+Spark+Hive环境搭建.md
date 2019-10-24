@@ -24,11 +24,19 @@ tags:
  
 自用防丢失地址：[自用防丢失](https://pan.baidu.com/disk/home?#/all?vmode=list&path=%2F%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3_%E5%AE%89%E8%A3%85%E5%8C%85)
 
-# 1.安装centos7
- 
-与原文不同，我这里是安装了虚拟机，在虚拟机上安装了centos7
+# 1. Windows下安装Ubuntu双系统
+Hadoop等大数据开源框架是不支持Windows系统的，所以需要先安装一个Linux双系统。当然，如果你有一台单独的电脑用来安装Ubuntu系统，就不需要安装双系统了。
+
+双系统安装
+请参考安装指南：
+第一步：[制定系统启动U盘](https://links.jianshu.com/go?to=https%3A%2F%2Fjingyan.baidu.com%2Farticle%2F0f5fb099ef132c6d8234ea5e.html)
+第二步：[安装双系统](https://links.jianshu.com/go?to=https%3A%2F%2Fjingyan.baidu.com%2Farticle%2Fdca1fa6fa3b905f1a44052bd.html)
+
 
 # 2.搭建Hadoop平台
+
+Hadoop是Apache 公司开发的一款可靠的、可扩展性的、分布式计算的开源软件。以Hadoop分布式文件系统（HDFS）和分布式运算编程框架（MapReduce）为核心，允许在集群服务器上使用简单的编程模型对大数据集进行分布式处理。下面，请跟着作者一步步搭建自己的Hadoop平台吧。作者：杨赟快跑
+链接：https://www.jianshu.com/p/a4a0e7e4e4b7
 
 ## 2.1更新源
 
