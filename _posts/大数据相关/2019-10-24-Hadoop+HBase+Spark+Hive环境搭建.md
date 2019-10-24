@@ -1085,11 +1085,11 @@ Hive的计算引擎默认为MapReduce，如果想要用Spark作为Hive的计算�
 
 * 6.1 错误信息："ECDSA host key for ip has changed"或者"Host key verification failed."
   
-  解决方法：
+  解决方法：[https://github.com/muyalei/muyalei.github.io/blob/gh-pages/_posts/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/2019-10-24-ssh%E7%99%BB%E5%BD%95%E6%88%96%E8%80%85%E5%90%AF%E5%8A%A8hadoop%E3%80%81hbase%E6%97%B6%E6%8A%A5%E9%94%99ECDSA%20host%20key%20for%20ip%20has%20changed%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.md](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/_posts/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/2019-10-24-ssh%E7%99%BB%E5%BD%95%E6%88%96%E8%80%85%E5%90%AF%E5%8A%A8hadoop%E3%80%81hbase%E6%97%B6%E6%8A%A5%E9%94%99ECDSA%20host%20key%20for%20ip%20has%20changed%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.md)
 
 * 6.2 错误信息：Hive在spark2.0.0启动时 "无法访问../lib/spark-assembly-\*.jar: 没有那个文件或目录的解决办法"
 
-  解决方法：
+  解决方法：[https://github.com/muyalei/muyalei.github.io/blob/gh-pages/_posts/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/2019-10-24-Hive%E5%9C%A8spark2.0.0%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AEspark-assembly-*.jar:%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B8%AA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.md](https://github.com/muyalei/muyalei.github.io/blob/gh-pages/_posts/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3/2019-10-24-Hive%E5%9C%A8spark2.0.0%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AEspark-assembly-*.jar:%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B8%AA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.md)
 
 
 
