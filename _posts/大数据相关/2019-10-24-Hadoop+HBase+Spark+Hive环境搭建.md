@@ -1062,6 +1062,8 @@ vim hive-site.xml
 
 然后，按键盘上的“ESC”键退出vim编辑状态，再输入:wq，保存并退出vim编辑器。由于Hive在连接MySQL时需要JDBC驱动，所以首先需要下载对应版本的驱动，然后将驱动移动到/usr/local/hive/lib中。
 
+注：我是用了centos7+mariadb，用的jdbc驱动程序是:[https://pan.baidu.com/disk/home#/all?path=%2F%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3_%E5%AE%89%E8%A3%85%E5%8C%85&vmode=list](https://pan.baidu.com/disk/home#/all?path=%2F%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3_%E5%AE%89%E8%A3%85%E5%8C%85&vmode=list)
+
 ```
 #解压
 tar -zxvf mysql-connector-java-5.1.47.tar.gz
