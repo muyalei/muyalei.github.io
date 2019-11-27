@@ -156,7 +156,7 @@ cat ./id_rsa.pub >> ./authorized_keys  # 加入授权
 
 ## 2.3 安装JAVA环境
 
-Java环境推荐使用 Oracle 的 JDK，首先，准备好文件[jdk-8u162-linux-x64.tar.gz](链接:https://pan.baidu.com/s/1jPbN3DjIzV0Ln3UFS9a1tw)(密码:q67c)，然后将文件移到/usr/local目录下：
+Java环境推荐使用 Oracle 的 JDK，首先，准备好文件[jdk-8u162-linux-x64.tar.gz](https://pan.baidu.com/s/1jPbN3DjIzV0Ln3UFS9a1tw)(密码:q67c)，然后将文件移到/usr/local目录下：
 
 ```
 mv jdk-8u162-linux-x64.tar.gz /usr/local
