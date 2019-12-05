@@ -156,8 +156,25 @@ curl -XGET 'http://localhost:9200/_cluster/state?pretty'
 ***注意***：ES可以通过`-d`参数指定后台运行、`-p {绝对路径}`参数指定ES的pid文件位置，例如 `./elasticsearch -d -p /usr/local/es`
 
 
+
 ### 安装kibana
 
-过程参考开头的链接。
+接下来我们需要安装一个 Kibana 来帮助可视化管理 Elasticsearch，依然还是通过 Apt 安装，只需要任意一台主机安装即可，因为集群是一体的，所以 Kibana 在任意一台主机只要能连接到 Elasticsearch 即可，安装命令如下：
+```
+sudo apt-get install kibana
+```
+安装之后修改 /etc/kibana/kibana.yml，设置公开访问和绑定的端口：
+```
+server.port: 5601
+server.host: "0.0.0.0"
+pid.file: /usr/loca/kibana/kibana.pid
+```
+然后启动服务：
+```
+sudo systemctl daemon-reload
+sudo systemctl enable kibana.service
+sudo systemctl start kibana.service
+```
+这样我们可以在浏览器输入该台主机的 IP 加端口，查看 Kibana 管理页面了，更详细设置参考文章开头的链接。
 
 ***注意***：kibana没有提供后台运行的参数，要后台运行kibana，使用`nohup ./kibana >/dev/null 2>&1 &`
