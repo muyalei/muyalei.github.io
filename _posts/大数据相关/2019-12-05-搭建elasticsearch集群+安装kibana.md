@@ -153,8 +153,26 @@ curl -XGET 'http://localhost:9200/_cluster/state?pretty'
 ```
 可以看到这里输出了集群的相关信息，同时 nodes 字段里面包含了每个节点的详细信息，这样一个基本的集群就构建完成了。
 
-***注意***：ES可以通过`-d`参数指定后台运行、`-p {绝对路径}`参数指定ES的pid文件位置，例如 `./elasticsearch -d -p /usr/local/es`
+***注意***：
 
+（1）ES可以通过`-d`参数指定后台运行、`-p {绝对路径}`参数指定ES的pid文件位置，例如 `./elasticsearch -d -p /usr/local/es`
+
+（2）elasticsearch配置jdk（不同版本的ES需要的jdk版本不同，如果当前系统java版本与要安装的ES需要的java版本不相符，可以安装适合ES的java版本，然后将该版本的java路径告诉ES即可）
+
+编辑bin/elasticsearch
+
+可以看到elasticsearch使用环境变量JAVA_HOME中配置的jdk：
+```
+if [ -x "$JAVA_HOME/bin/java" ]; then
+JAVA="$JAVA_HOME/bin/java"
+else
+JAVA=`which java`
+fi
+```
+直接修改为指定好的jdk即可
+```
+JAVA="/usr/java/jdk1.8.0_111/bin/java"
+```
 
 
 ### 安装kibana
