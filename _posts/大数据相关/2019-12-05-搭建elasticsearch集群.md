@@ -153,5 +153,11 @@ curl -XGET 'http://localhost:9200/_cluster/state?pretty'
 ```
 可以看到这里输出了集群的相关信息，同时 nodes 字段里面包含了每个节点的详细信息，这样一个基本的集群就构建完成了。
 
+***注意***：ES可以通过`-d`参数指定后台运行、`-p {绝对路径}`参数指定ES的pid文件位置，例如 `./elasticsearch -d -p /usr/local/es`
 
 
+### 安装kibana
+
+过程参考开头的链接。
+
+***注意***：kibana没有提供后台运行的参数，要后台运行kibana，使用`nohup ./kibana >/dev/null 2>&1 &`
