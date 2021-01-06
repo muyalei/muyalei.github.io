@@ -1,0 +1,44 @@
+---
+layout: default
+author: muyalei
+title: 反爬策略之字体反爬
+date: 2021-01-06
+tags:
+    - 爬虫相关
+---
+
+
+***鄙人原创，转载请注明出处***
+
+
+***参考：***
+
+[https://blog.csdn.net/m0_49077792/article/details/111369149](https://blog.csdn.net/m0_49077792/article/details/111369149)</p>
+[https://www.downdawn.com/blog/detail/33/](https://www.downdawn.com/blog/detail/33/)</p>
+[https://zhuanlan.zhihu.com/p/99497149](https://zhuanlan.zhihu.com/p/99497149)</p>
+[https://www.cnblogs.com/xuchunlin/p/11427959.html](https://www.cnblogs.com/xuchunlin/p/11427959.html)</p>
+
+## 简介
+
+大众点评网站使用的反爬策略包括封cookie、封ua、封IP、滑块验证条、图片验证码、字体反爬，字体反爬策略又分为字体库反爬、css映射文件反爬，大众点评都有使用。
+
+*** 字体库反爬处理思路：***
+
+（1）找到字体文件--woff或ttf，使用python第三方模块footTools将字体文件解析为xml，从中按序提取字体文件对应的编码</p>
+（2）按序读取woff或ttf字体文件中的字符。一般来说，字体文件库中的字符及其顺序不会改变，一次读取后续复用即可，如果遇上随机变动的，需要借助ocr，参考：（url忘了）</p>
+（3）将编码、字符组成dict，将抓取到页面中加密字符还原。</p>
+
+***css字体文件反爬思路：***
+
+（1）点击`Elements`分析面板上加密字符，右侧出现该加密字符对应css字体文件url，这个css文件中可能有多个.svg文件，对应着每个class类型的坐标与字符映射关系</p>
+（2）查看字宽，找规律，点评有3种映射关系，大同小异，一般横纵坐标中，一个坐标除以字宽得到的是这个字符在svg文件中所在行的索引值，另一个坐标除以字宽是这个字符在svg文件中所在行</p>
+（3）解析各个class类的映射文件，组成dict，将抓取页面中加密字符还原</p>
+
+## 详细步骤
+
+### 字体库反爬
+
+如上图，可以看到评论信息中有的字符不能正常显示
+
+
+### css字体文件映射反爬
